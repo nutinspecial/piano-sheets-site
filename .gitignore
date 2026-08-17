@@ -14,6 +14,7 @@ __pycache__/
 
 # Playlist Builder raw audio staging (uploaded to R2, not committed)
 r2-upload/
+audio_qa_report.csv
 
 # Wrangler local cache/account state
 .wrangler/
