@@ -1,0 +1,346 @@
+---
+// src/pages/playlist.astro
+// ── Ambient piano playlist: browse/search + continuous shuffle player ─────
+import CoffeeButton from "../components/CoffeeButton.astro";
+import Layout from "../layouts/Layout.astro";
+import tracks from "../data/tracks.json";
+
+function formatDuration(sec: number): string {
+  if (!sec) return "--:--";
+  const m = Math.floor(sec / 60);
+  const s = Math.round(sec % 60).toString().padStart(2, "0");
+  return `${m}:${s}`;
+}
+
+const categories = ["All", ...Array.from(new Set(tracks.map((t) => t.category))).sort()];
+const totalMinutes = Math.round(tracks.reduce((sum, t) => sum + t.duration, 0) / 60);
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "MusicPlaylist",
+  "name": "Big Piano Small Piano — Ambient Piano Playlist",
+  "description": "Free ambient piano music to study, sleep or relax to. Original piano covers, streamed continuously.",
+  "url": "https://bigpianosmallpiano.pages.dev/playlist",
+  "numTracks": tracks.length,
+};
+---
+
+<Layout
+  title="Piano Music for Studying &amp; Sleeping — Free Playlist"
+  description="Free ambient piano playlist — hundreds of original piano covers to study, sleep or relax to. Search, filter by mood, and stream continuously. No ads, no sign-up."
+>
+  <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+
+  <!-- HERO -->
+  <section class="relative overflow-hidden border-b border-surface-border">
+    <div class="absolute inset-0 bg-keys-pattern opacity-50 pointer-events-none"></div>
+    <div class="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gold to-transparent"></div>
+    <div class="relative max-w-3xl mx-auto px-4 sm:px-6 py-8 sm:py-12 text-center flex flex-col items-center gap-2">
+      <p class="text-gold text-xs tracking-[0.25em] uppercase font-mono">Ambient piano</p>
+      <h1 class="font-display text-4xl sm:text-5xl font-semibold text-ivory leading-tight">
+        Piano <span class="italic text-gold">Playlist</span>
+      </h1>
+      <p class="text-ivory/50 text-sm max-w-md leading-relaxed">
+        {tracks.length} original piano covers &middot; ~{totalMinutes} minutes &middot; free to stream, no ads.
+      </p>
+    </div>
+  </section>
+
+  <!-- BROWSE -->
+  <section class="max-w-3xl mx-auto px-4 sm:px-6 py-8 space-y-4 pb-40">
+
+    <!-- Search -->
+    <div class="relative">
+      <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-ivory/30 pointer-events-none" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+      </svg>
+      <input
+        id="search-input"
+        type="search"
+        placeholder="Search tracks…"
+        aria-label="Search playlist"
+        autocomplete="off"
+        class="w-full bg-surface border border-surface-border rounded-lg pl-9 pr-4 py-2.5 text-sm text-ivory placeholder-ivory/30 focus:outline-none focus:border-gold/60 transition-colors"
+      />
+    </div>
+
+    <!-- Category chips -->
+    <div id="category-chips" class="flex flex-wrap gap-2">
+      {categories.map((cat, i) => (
+        <button
+          data-category={cat}
+          class={`chip-btn px-3 py-1.5 rounded-full text-xs font-medium border transition-all
+            ${i === 0 ? "border-gold bg-gold/10 text-gold" : "border-surface-border text-ivory/50 hover:border-gold/40 hover:text-ivory/80"}`}>
+          {cat}
+        </button>
+      ))}
+    </div>
+
+    <!-- Controls row -->
+    <div class="flex items-center justify-between gap-3 pt-1">
+      <p id="track-count" class="text-ivory/30 text-xs font-mono">{tracks.length} tracks</p>
+      <button id="shuffle-toggle" class="flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-lg border border-gold/40 bg-gold/10 text-gold transition-all">
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M16 3h5v5M4 20 20.5 3.5M21 16v5h-5M15 15l5.5 5.5M4 4l5 5"/>
+        </svg>
+        Shuffle
+      </button>
+    </div>
+
+    <!-- No-results -->
+    <p id="no-results" class="hidden text-center py-16 text-ivory/40 font-display italic text-lg">
+      No tracks found.
+    </p>
+
+    <!-- Track list -->
+    <div id="track-list" class="divide-y divide-surface-border border border-surface-border rounded-xl overflow-hidden">
+      {tracks.map((t, i) => (
+        <button
+          type="button"
+          class="track-row w-full flex items-center gap-3 px-4 py-3 text-left hover:bg-surface-raised transition-colors group"
+          data-index={i}
+          data-title={t.title.toLowerCase()}
+          data-category={t.category}
+        >
+          <span class="track-play-indicator w-8 h-8 rounded-full border border-surface-border flex items-center justify-center flex-shrink-0 text-ivory/40 group-hover:text-gold group-hover:border-gold/50 transition-all">
+            <svg class="icon-play w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+            <svg class="icon-playing w-3.5 h-3.5 hidden" fill="currentColor" viewBox="0 0 24 24"><rect x="6" y="6" width="4" height="12" rx="1"/><rect x="14" y="6" width="4" height="12" rx="1"/></svg>
+          </span>
+          <span class="flex-1 min-w-0">
+            <span class="block text-ivory/85 text-sm font-medium truncate track-title-text">{t.title}</span>
+            <span class="block text-ivory/30 text-xs mt-0.5">{t.category}</span>
+          </span>
+          <span class="text-ivory/30 text-xs font-mono flex-shrink-0">{formatDuration(t.duration)}</span>
+        </button>
+      ))}
+    </div>
+
+    <div class="pt-6">
+      <CoffeeButton
+        variant="inline"
+        message="This whole playlist is free to stream — if it's keeping you company while you study or wind down, a coffee helps keep it going."
+      />
+    </div>
+  </section>
+
+  <!-- STICKY PLAYER -->
+  <div id="player-bar" class="fixed bottom-0 left-0 right-0 z-40 border-t border-surface-border bg-ebony/95 backdrop-blur-sm translate-y-full transition-transform duration-300">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 py-3">
+      <!-- Progress -->
+      <input id="progress-slider" type="range" min="0" max="1000" value="0" class="w-full accent-gold cursor-pointer h-1 mb-2" />
+      <div class="flex items-center gap-3">
+        <div class="min-w-0 flex-1">
+          <p id="now-playing-title" class="text-ivory text-sm font-medium truncate">—</p>
+          <p class="text-ivory/30 text-xs font-mono">
+            <span id="time-current">0:00</span> / <span id="time-total">0:00</span>
+          </p>
+        </div>
+        <button id="prev-btn" class="w-9 h-9 flex items-center justify-center text-ivory/60 hover:text-gold transition-colors flex-shrink-0" aria-label="Previous">
+          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M6 6h2v12H6zm3.5 6 8.5 6V6z"/></svg>
+        </button>
+        <button id="play-pause-btn" class="w-11 h-11 rounded-full bg-gold hover:bg-gold-dark text-ebony flex items-center justify-center transition-colors flex-shrink-0" aria-label="Play/Pause">
+          <svg id="pb-play-icon" class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+          <svg id="pb-pause-icon" class="w-5 h-5 hidden" fill="currentColor" viewBox="0 0 24 24"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>
+        </button>
+        <button id="next-btn" class="w-9 h-9 flex items-center justify-center text-ivory/60 hover:text-gold transition-colors flex-shrink-0" aria-label="Next">
+          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M16 6h2v12h-2zM6 6l8.5 6L6 18z"/></svg>
+        </button>
+      </div>
+    </div>
+    <audio id="audio-el" preload="metadata"></audio>
+  </div>
+
+  <script define:vars={{ tracks }}>
+    (function () {
+      const $ = (id) => document.getElementById(id);
+      const audio = $("audio-el");
+      const playerBar = $("player-bar");
+      const playPauseBtn = $("play-pause-btn");
+      const playIcon = $("pb-play-icon");
+      const pauseIcon = $("pb-pause-icon");
+      const nowPlayingTitle = $("now-playing-title");
+      const timeCurrent = $("time-current");
+      const timeTotal = $("time-total");
+      const progressSlider = $("progress-slider");
+      const prevBtn = $("prev-btn");
+      const nextBtn = $("next-btn");
+      const shuffleToggle = $("shuffle-toggle");
+      const searchInput = $("search-input");
+      const trackList = $("track-list");
+      const noResults = $("no-results");
+      const trackCount = $("track-count");
+      const chips = document.querySelectorAll(".chip-btn");
+      const rows = Array.from(trackList.querySelectorAll(".track-row"));
+
+      let shuffleOn = true;
+      let currentIndex = -1;
+      let queue = [];
+      let activeCategory = "All";
+
+      function fmtTime(sec) {
+        if (!isFinite(sec) || sec < 0) sec = 0;
+        const m = Math.floor(sec / 60);
+        const s = Math.floor(sec % 60).toString().padStart(2, "0");
+        return `${m}:${s}`;
+      }
+
+      function shuffleArray(arr) {
+        const a = arr.slice();
+        for (let i = a.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [a[i], a[j]] = [a[j], a[i]];
+        }
+        return a;
+      }
+
+      function visibleIndices() {
+        return rows
+          .filter((r) => r.style.display !== "none")
+          .map((r) => Number(r.dataset.index));
+      }
+
+      function buildQueue(startIndex) {
+        const visible = visibleIndices();
+        if (shuffleOn) {
+          const rest = shuffleArray(visible.filter((i) => i !== startIndex));
+          queue = [startIndex, ...rest];
+        } else {
+          const sorted = visible.slice().sort((a, b) => a - b);
+          const pos = sorted.indexOf(startIndex);
+          queue = [...sorted.slice(pos), ...sorted.slice(0, pos)];
+        }
+      }
+
+      function highlightRow(index) {
+        rows.forEach((r) => {
+          const isActive = Number(r.dataset.index) === index;
+          r.classList.toggle("bg-gold/5", isActive);
+          r.querySelector(".icon-play").classList.toggle("hidden", isActive);
+          r.querySelector(".icon-playing").classList.toggle("hidden", !isActive);
+          r.querySelector(".track-play-indicator").classList.toggle("text-gold", isActive);
+          r.querySelector(".track-play-indicator").classList.toggle("border-gold/50", isActive);
+          r.querySelector(".track-title-text").classList.toggle("text-gold", isActive);
+        });
+      }
+
+      function playIndex(index) {
+        const track = tracks[index];
+        if (!track) return;
+        currentIndex = index;
+        audio.src = track.url;
+        audio.play().catch(() => {});
+        nowPlayingTitle.textContent = track.title;
+        highlightRow(index);
+        playerBar.classList.remove("translate-y-full");
+        document.title = `▶ ${track.title} — Big Piano Small Piano`;
+      }
+
+      function playFromRow(index) {
+        buildQueue(index);
+        playIndex(index);
+      }
+
+      function playNext() {
+        if (currentIndex === -1) return;
+        const posInQueue = queue.indexOf(currentIndex);
+        const nextIndex = queue[(posInQueue + 1) % queue.length];
+        if (nextIndex === undefined) return;
+        currentIndex = nextIndex;
+        playIndex(nextIndex);
+      }
+
+      function playPrev() {
+        if (currentIndex === -1) return;
+        const posInQueue = queue.indexOf(currentIndex);
+        const prevIndex = queue[(posInQueue - 1 + queue.length) % queue.length];
+        if (prevIndex === undefined) return;
+        currentIndex = prevIndex;
+        playIndex(prevIndex);
+      }
+
+      // Row click → play
+      rows.forEach((row) => {
+        row.addEventListener("click", () => playFromRow(Number(row.dataset.index)));
+      });
+
+      // Transport controls
+      playPauseBtn.addEventListener("click", () => {
+        if (currentIndex === -1) {
+          const visible = visibleIndices();
+          if (visible.length === 0) return;
+          const start = shuffleOn ? visible[Math.floor(Math.random() * visible.length)] : visible[0];
+          playFromRow(start);
+          return;
+        }
+        if (audio.paused) audio.play().catch(() => {});
+        else audio.pause();
+      });
+      prevBtn.addEventListener("click", playPrev);
+      nextBtn.addEventListener("click", playNext);
+
+      audio.addEventListener("play", () => {
+        playIcon.classList.add("hidden");
+        pauseIcon.classList.remove("hidden");
+      });
+      audio.addEventListener("pause", () => {
+        playIcon.classList.remove("hidden");
+        pauseIcon.classList.add("hidden");
+      });
+      audio.addEventListener("ended", playNext);
+      audio.addEventListener("timeupdate", () => {
+        if (!audio.duration) return;
+        timeCurrent.textContent = fmtTime(audio.currentTime);
+        timeTotal.textContent = fmtTime(audio.duration);
+        progressSlider.value = String(Math.round((audio.currentTime / audio.duration) * 1000));
+      });
+      progressSlider.addEventListener("input", () => {
+        if (!audio.duration) return;
+        audio.currentTime = (Number(progressSlider.value) / 1000) * audio.duration;
+      });
+
+      // Shuffle toggle
+      shuffleToggle.addEventListener("click", () => {
+        shuffleOn = !shuffleOn;
+        shuffleToggle.classList.toggle("border-gold/40", shuffleOn);
+        shuffleToggle.classList.toggle("bg-gold/10", shuffleOn);
+        shuffleToggle.classList.toggle("text-gold", shuffleOn);
+        shuffleToggle.classList.toggle("border-surface-border", !shuffleOn);
+        shuffleToggle.classList.toggle("text-ivory/50", !shuffleOn);
+        if (currentIndex !== -1) buildQueue(currentIndex);
+      });
+
+      // Search + category filter
+      function applyFilters() {
+        const query = (searchInput.value || "").toLowerCase().trim();
+        let visible = 0;
+        rows.forEach((row) => {
+          const matchesQuery = !query || row.dataset.title.includes(query);
+          const matchesCategory = activeCategory === "All" || row.dataset.category === activeCategory;
+          const show = matchesQuery && matchesCategory;
+          row.style.display = show ? "" : "none";
+          if (show) visible++;
+        });
+        noResults.classList.toggle("hidden", visible > 0);
+        trackList.classList.toggle("hidden", visible === 0);
+        trackCount.textContent = `${visible} track${visible === 1 ? "" : "s"}`;
+      }
+
+      searchInput.addEventListener("input", applyFilters);
+      chips.forEach((chip) => {
+        chip.addEventListener("click", () => {
+          activeCategory = chip.dataset.category;
+          chips.forEach((c) => {
+            const active = c === chip;
+            c.classList.toggle("border-gold", active);
+            c.classList.toggle("bg-gold/10", active);
+            c.classList.toggle("text-gold", active);
+            c.classList.toggle("border-surface-border", !active);
+            c.classList.toggle("text-ivory/50", !active);
+          });
+          applyFilters();
+        });
+      });
+    })();
+  </script>
+
+</Layout>

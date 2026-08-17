@@ -12,6 +12,12 @@ __pycache__/
 .venv/
 *.egg-info/
 
+# Playlist Builder raw audio staging (uploaded to R2, not committed)
+r2-upload/
+
+# Wrangler local cache/account state
+.wrangler/
+
 # Environment variables — NEVER commit your actual API key
 .env
 .env.local
