@@ -401,8 +401,8 @@
   },
   {
     "id": "akaza",
-    "title": "Akaza",
-    "category": "Uncategorized",
+    "title": "Akaza's Love Theme",
+    "category": "Anime",
     "filename": "akaza.wav",
     "duration": 64,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/akaza.wav"
@@ -633,16 +633,16 @@
   },
   {
     "id": "curhs-love-you-with",
-    "title": "Curhs Love You With",
-    "category": "Uncategorized",
+    "title": "Love You With All My Heart",
+    "category": "K-Drama",
     "filename": "curhs-love-you-with.mp3",
     "duration": 240,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/curhs-love-you-with.mp3"
   },
   {
     "id": "dandelion-promise",
-    "title": "Dandelion Promise",
-    "category": "Uncategorized",
+    "title": "A Dandelion's Promise",
+    "category": "Pop Covers",
     "filename": "dandelion-promise.mp3",
     "duration": 162,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/dandelion-promise.mp3"
@@ -818,7 +818,7 @@
   {
     "id": "final-form-the-start-2",
     "title": "From the Start",
-    "category": "Laufey",
+    "category": "Pop Covers",
     "filename": "final-form-the-start-2.mp3",
     "duration": 135,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/final-form-the-start-2.mp3"
@@ -826,7 +826,7 @@
   {
     "id": "fireworks",
     "title": "Fireworks Festival",
-    "category": "Weathering With You",
+    "category": "Anime",
     "filename": "fireworks.mp3",
     "duration": 158,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/fireworks.mp3"
@@ -1130,7 +1130,7 @@
   {
     "id": "let-u-break-heart-again",
     "title": "Let You Break My Heart Again",
-    "category": "Laufey",
+    "category": "Pop Covers",
     "filename": "let-u-break-heart-again.mp3",
     "duration": 202,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/let-u-break-heart-again.mp3"
@@ -1178,7 +1178,7 @@
   {
     "id": "love-full",
     "title": "Love",
-    "category": "IU",
+    "category": "Pop Covers",
     "filename": "love-full.mp3",
     "duration": 280,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/love-full.mp3"
@@ -1314,7 +1314,7 @@
   {
     "id": "michi",
     "title": "Michi Teyu Ku (Overflowing)",
-    "category": "Fujii Kaze",
+    "category": "Pop Covers",
     "filename": "michi.mp3",
     "duration": 298,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/michi.mp3"
@@ -1890,7 +1890,7 @@
   {
     "id": "sudden-shower",
     "title": "Sudden Shower",
-    "category": "Uncategorized",
+    "category": "K-Drama",
     "filename": "sudden-shower.mp3",
     "duration": 236,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/sudden-shower.mp3"
