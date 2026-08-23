@@ -1,7 +1,7 @@
 [
   {
     "id": "across-the-meadows",
-    "title": "Across The Meadows",
+    "title": "Across the Meadows",
     "category": "Fontaine",
     "filename": "across-the-meadows.mp3",
     "duration": 99,
@@ -41,8 +41,8 @@
   },
   {
     "id": "les-tendres-souhaits",
-    "title": "Les Tendres Souhaits",
-    "category": "Fontaine",
+    "title": "Les tendres souhaits",
+    "category": "Veluriyam Mirage",
     "filename": "les-tendres-souhaits.mp3",
     "duration": 101,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/les-tendres-souhaits.mp3"
@@ -89,7 +89,7 @@
   },
   {
     "id": "vespers-of-pluviose",
-    "title": "Vespers Of Pluviose",
+    "title": "Vespers of Pluviose",
     "category": "Fontaine",
     "filename": "vespers-of-pluviose.mp3",
     "duration": 70,
@@ -121,7 +121,7 @@
   },
   {
     "id": "good-night-liyue",
-    "title": "Good Night Liyue",
+    "title": "Good Night, Liyue",
     "category": "Liyue",
     "filename": "good-night-liyue.mp3",
     "duration": 57,
@@ -209,7 +209,7 @@
   },
   {
     "id": "gone-with-the-wind",
-    "title": "Gone With The Wind",
+    "title": "Gone With the Wind",
     "category": "Sumeru",
     "filename": "gone-with-the-wind.mp3",
     "duration": 85,
@@ -362,7 +362,7 @@
   {
     "id": "after-so-many-words",
     "title": "After So Many Words",
-    "category": "Uncategorized",
+    "category": "Natlan",
     "filename": "after-so-many-words.mp3",
     "duration": 100,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/after-so-many-words.mp3"
@@ -433,8 +433,8 @@
   },
   {
     "id": "all-passed-with-the-rain",
-    "title": "All Passed With The Rain",
-    "category": "Uncategorized",
+    "title": "All Passed With the Rain",
+    "category": "Fontaine",
     "filename": "all-passed-with-the-rain.mp3",
     "duration": 170,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/all-passed-with-the-rain.mp3"
@@ -449,8 +449,8 @@
   },
   {
     "id": "another-day-in-mondstadt",
-    "title": "Another Day In Mondstadt",
-    "category": "Uncategorized",
+    "title": "Another Day in Mondstadt",
+    "category": "Mondstadt",
     "filename": "another-day-in-mondstadt.wav",
     "duration": 57,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/another-day-in-mondstadt.wav"
@@ -561,8 +561,8 @@
   },
   {
     "id": "clear-sky-over-liyue",
-    "title": "Clear Sky Over Liyue",
-    "category": "Uncategorized",
+    "title": "Clear Sky over Liyue",
+    "category": "Liyue",
     "filename": "clear-sky-over-liyue.mp3",
     "duration": 92,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/clear-sky-over-liyue.mp3"
@@ -577,8 +577,8 @@
   },
   {
     "id": "clio-s-memoirs-theatre-troupe-theme",
-    "title": "Clio's Memoirs (theatre Troupe Theme)",
-    "category": "Uncategorized",
+    "title": "Clio's Memoirs",
+    "category": "Fontaine",
     "filename": "clio-s-memoirs-theatre-troupe-theme.mp3",
     "duration": 107,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/clio-s-memoirs-theatre-troupe-theme.mp3"
@@ -626,15 +626,15 @@
   {
     "id": "cozy-company",
     "title": "Cozy Company",
-    "category": "Uncategorized",
+    "category": "Golden Apple Archipelago",
     "filename": "cozy-company.mp3",
     "duration": 162,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/cozy-company.mp3"
   },
   {
     "id": "cozy-in-the-light",
-    "title": "Cozy In The Light",
-    "category": "Uncategorized",
+    "title": "Cozy in the Light",
+    "category": "Natlan",
     "filename": "cozy-in-the-light.mp3",
     "duration": 108,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/cozy-in-the-light.mp3"
@@ -690,7 +690,7 @@
   {
     "id": "desert-melody",
     "title": "Desert Melody",
-    "category": "Uncategorized",
+    "category": "ZZZ",
     "filename": "desert-melody.mp3",
     "duration": 63,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/desert-melody.mp3"
@@ -794,7 +794,7 @@
   {
     "id": "eventide-chant",
     "title": "Eventide Chant",
-    "category": "Uncategorized",
+    "category": "Natlan",
     "filename": "eventide-chant.mp3",
     "duration": 84,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/eventide-chant.mp3"
@@ -849,8 +849,8 @@
   },
   {
     "id": "field-of-flowers-bgm",
-    "title": "Field Of Flowers BGM",
-    "category": "Uncategorized",
+    "title": "Field of Flowers BGM",
+    "category": "Honkai Starrail",
     "filename": "field-of-flowers-bgm.mp3",
     "duration": 132,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/field-of-flowers-bgm.mp3"
@@ -985,8 +985,8 @@
   },
   {
     "id": "hadi-not-seen-the-sun",
-    "title": "Hadi Not Seen The Sun",
-    "category": "Uncategorized",
+    "title": "Had I Not Seen The Sun",
+    "category": "Honkai Starrail",
     "filename": "hadi-not-seen-the-sun.mp3",
     "duration": 152,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/hadi-not-seen-the-sun.mp3"
@@ -1121,8 +1121,8 @@
   },
   {
     "id": "introduction-to-a-little-friend",
-    "title": "Introduction To A Little Friend",
-    "category": "Uncategorized",
+    "title": "Introduction to a Little Friend",
+    "category": "Natlan",
     "filename": "introduction-to-a-little-friend.mp3",
     "duration": 59,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/introduction-to-a-little-friend.mp3"
@@ -1314,7 +1314,7 @@
   {
     "id": "maiden-s-longing",
     "title": "Maiden's Longing",
-    "category": "Uncategorized",
+    "category": "Liyue",
     "filename": "maiden-s-longing.mp3",
     "duration": 84,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/maiden-s-longing.mp3"
@@ -1434,7 +1434,7 @@
   {
     "id": "mesmerizing-waves",
     "title": "Mesmerizing Waves",
-    "category": "Uncategorized",
+    "category": "Golden Apple Archipelago",
     "filename": "mesmerizing-waves.mp3",
     "duration": 180,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/mesmerizing-waves.mp3"
@@ -1786,7 +1786,7 @@
   {
     "id": "regression",
     "title": "Regression",
-    "category": "Uncategorized",
+    "category": "Honkai Impact",
     "filename": "regression.mp3",
     "duration": 127,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/regression.mp3"
@@ -1882,7 +1882,7 @@
   {
     "id": "sakura-scented-kiseru",
     "title": "Sakura Scented Kiseru",
-    "category": "Uncategorized",
+    "category": "Inazuma",
     "filename": "sakura-scented-kiseru.mp3",
     "duration": 85,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/sakura-scented-kiseru.mp3"
@@ -2162,7 +2162,7 @@
   {
     "id": "tender-strength-2",
     "title": "Tender Strength",
-    "category": "Uncategorized",
+    "category": "Mondstadt",
     "filename": "tender-strength-2.mp3",
     "duration": 104,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/tender-strength-2.mp3"
@@ -2186,7 +2186,7 @@
   {
     "id": "the-nights-wish",
     "title": "The Nights' Wish",
-    "category": "Uncategorized",
+    "category": "Natlan",
     "filename": "the-nights-wish.mp3",
     "duration": 122,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/the-nights-wish.mp3"
@@ -2265,8 +2265,8 @@
   },
   {
     "id": "trace-of-grace-2",
-    "title": "Trace Of Grace",
-    "category": "Uncategorized",
+    "title": "Trace of Grace",
+    "category": "Liyue",
     "filename": "trace-of-grace-2.wav",
     "duration": 121,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/trace-of-grace-2.wav"
@@ -2401,8 +2401,8 @@
   },
   {
     "id": "when-all-becomes-a-monument",
-    "title": "When All Becomes A Monument",
-    "category": "Uncategorized",
+    "title": "When All Becomes a Monument",
+    "category": "Natlan",
     "filename": "when-all-becomes-a-monument.mp3",
     "duration": 103,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/when-all-becomes-a-monument.mp3"
@@ -2433,8 +2433,8 @@
   },
   {
     "id": "whirl-of-chalchiuhtlicue",
-    "title": "Whirl Of Chalchiuhtlicue",
-    "category": "Uncategorized",
+    "title": "Whirl of Chalchiuhtlicue",
+    "category": "Natlan",
     "filename": "whirl-of-chalchiuhtlicue.wav",
     "duration": 127,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/whirl-of-chalchiuhtlicue.wav"
@@ -2474,7 +2474,7 @@
   {
     "id": "wordless-cliffs",
     "title": "Wordless Cliffs",
-    "category": "Uncategorized",
+    "category": "Liyue",
     "filename": "wordless-cliffs.mp3",
     "duration": 117,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/wordless-cliffs.mp3"
