@@ -328,17 +328,9 @@
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/2village-green-night.mp3"
   },
   {
-    "id": "a-mild-melody",
-    "title": "A Mild Melody",
-    "category": "Uncategorized",
-    "filename": "a-mild-melody.mp3",
-    "duration": 108,
-    "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/a-mild-melody.mp3"
-  },
-  {
     "id": "a-mild-melody-2",
     "title": "A Mild Melody",
-    "category": "Uncategorized",
+    "category": "Liyue",
     "filename": "a-mild-melody-2.wav",
     "duration": 104,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/a-mild-melody-2.wav"
@@ -374,22 +366,6 @@
     "filename": "after-tea-party.wav",
     "duration": 134,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/after-tea-party.wav"
-  },
-  {
-    "id": "ah-ge",
-    "title": "Ah Ge",
-    "category": "Uncategorized",
-    "filename": "ah-ge.mp3",
-    "duration": 61,
-    "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/ah-ge.mp3"
-  },
-  {
-    "id": "ah-ge-2",
-    "title": "Ah Ge 2",
-    "category": "Uncategorized",
-    "filename": "ah-ge-2.mp3",
-    "duration": 111,
-    "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/ah-ge-2.mp3"
   },
   {
     "id": "aino-house",
@@ -584,17 +560,9 @@
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/clio-s-memoirs-theatre-troupe-theme.mp3"
   },
   {
-    "id": "columbina-theme",
-    "title": "Columbina Theme",
-    "category": "Uncategorized",
-    "filename": "columbina-theme.wav",
-    "duration": 148,
-    "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/columbina-theme.wav"
-  },
-  {
     "id": "columbina-theme-edited2",
-    "title": "Columbina Theme Edited2",
-    "category": "Uncategorized",
+    "title": "Columbina Theme (To Where She Flies - Slow Ver.)",
+    "category": "Nod Krai",
     "filename": "columbina-theme-edited2.wav",
     "duration": 136,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/columbina-theme-edited2.wav"
@@ -808,14 +776,6 @@
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/eye-of.mp3"
   },
   {
-    "id": "fading-stories",
-    "title": "Fading Stories",
-    "category": "Uncategorized",
-    "filename": "fading-stories.mp3",
-    "duration": 259,
-    "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/fading-stories.mp3"
-  },
-  {
     "id": "fading-stories-2",
     "title": "Fading Stories",
     "category": "Uncategorized",
@@ -856,36 +816,20 @@
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/field-of-flowers-bgm.mp3"
   },
   {
-    "id": "final-form-the-start",
-    "title": "Final Form The Start",
-    "category": "Uncategorized",
-    "filename": "final-form-the-start.mp3",
-    "duration": 119,
-    "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/final-form-the-start.mp3"
-  },
-  {
     "id": "final-form-the-start-2",
-    "title": "Final Form The Start",
-    "category": "Uncategorized",
+    "title": "The Start",
+    "category": "Laufey",
     "filename": "final-form-the-start-2.mp3",
     "duration": 135,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/final-form-the-start-2.mp3"
   },
   {
     "id": "fireworks",
-    "title": "Fireworks",
-    "category": "Uncategorized",
+    "title": "Fireworks Festival",
+    "category": "Weathering With You",
     "filename": "fireworks.mp3",
     "duration": 158,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/fireworks.mp3"
-  },
-  {
-    "id": "fireworks-with-start",
-    "title": "Fireworks With Start",
-    "category": "Uncategorized",
-    "filename": "fireworks-with-start.mp3",
-    "duration": 158,
-    "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/fireworks-with-start.mp3"
   },
   {
     "id": "first-ember",
@@ -966,14 +910,6 @@
     "filename": "gentle-winds.mp3",
     "duration": 75,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/gentle-winds.mp3"
-  },
-  {
-    "id": "gentle-winds-2",
-    "title": "Gentle Winds",
-    "category": "Uncategorized",
-    "filename": "gentle-winds-2.mp3",
-    "duration": 471,
-    "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/gentle-winds-2.mp3"
   },
   {
     "id": "goddes",
@@ -1058,23 +994,15 @@
   {
     "id": "hinoki-wood",
     "title": "Hinoki Wood",
-    "category": "Uncategorized",
+    "category": "Chill Guy",
     "filename": "hinoki-wood.mp3",
     "duration": 86,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/hinoki-wood.mp3"
   },
   {
-    "id": "hinoki-wood-2",
-    "title": "Hinoki Wood",
-    "category": "Uncategorized",
-    "filename": "hinoki-wood-2.mp3",
-    "duration": 27,
-    "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/hinoki-wood-2.mp3"
-  },
-  {
     "id": "hisui-morning",
-    "title": "Hisui Morning",
-    "category": "Uncategorized",
+    "title": "Half-Finished Heaven",
+    "category": "Nod Krai",
     "filename": "hisui-morning.wav",
     "duration": 129,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/hisui-morning.wav"
@@ -1201,19 +1129,11 @@
   },
   {
     "id": "let-u-break-heart-again",
-    "title": "Let U Break Heart Again",
-    "category": "Uncategorized",
+    "title": "Let You Break My Heart Again",
+    "category": "Laufey",
     "filename": "let-u-break-heart-again.mp3",
     "duration": 202,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/let-u-break-heart-again.mp3"
-  },
-  {
-    "id": "let-u-break-heart-again-2",
-    "title": "Let U Break Heart Again",
-    "category": "Uncategorized",
-    "filename": "let-u-break-heart-again-2.mp3",
-    "duration": 601,
-    "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/let-u-break-heart-again-2.mp3"
   },
   {
     "id": "like-the-movies",
@@ -1257,19 +1177,11 @@
   },
   {
     "id": "love-full",
-    "title": "Love Full",
-    "category": "Uncategorized",
+    "title": "Love",
+    "category": "IU",
     "filename": "love-full.mp3",
     "duration": 280,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/love-full.mp3"
-  },
-  {
-    "id": "love-full-2",
-    "title": "Love Full",
-    "category": "Uncategorized",
-    "filename": "love-full-2.mp3",
-    "duration": 369,
-    "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/love-full-2.mp3"
   },
   {
     "id": "lullaby",
@@ -1336,44 +1248,12 @@
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/masquerade.mp3"
   },
   {
-    "id": "master-night-wind-1",
-    "title": "Master Night Wind 1",
-    "category": "Uncategorized",
-    "filename": "master-night-wind-1.mp3",
-    "duration": 83,
-    "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/master-night-wind-1.mp3"
-  },
-  {
     "id": "master-night-wind-1-2",
-    "title": "Master Night Wind 1 2",
-    "category": "Uncategorized",
+    "title": "Beyond the Flute's Whispers",
+    "category": "Natlan",
     "filename": "master-night-wind-1-2.mp3",
     "duration": 82,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/master-night-wind-1-2.mp3"
-  },
-  {
-    "id": "matsuri",
-    "title": "Matsuri",
-    "category": "Uncategorized",
-    "filename": "matsuri.mp3",
-    "duration": 61,
-    "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/matsuri.mp3"
-  },
-  {
-    "id": "matsuri-2",
-    "title": "Matsuri",
-    "category": "Uncategorized",
-    "filename": "matsuri-2.mp3",
-    "duration": 61,
-    "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/matsuri-2.mp3"
-  },
-  {
-    "id": "matsuri-3",
-    "title": "Matsuri",
-    "category": "Uncategorized",
-    "filename": "matsuri-3.mp3",
-    "duration": 165,
-    "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/matsuri-3.mp3"
   },
   {
     "id": "matsuri-normal",
@@ -1417,19 +1297,11 @@
   },
   {
     "id": "merry-christmas-mr-lawrence",
-    "title": "Merry Christmas Mr Lawrence",
-    "category": "Uncategorized",
+    "title": "Merry Christmas, Mr. Lawrence",
+    "category": "Ryuichi Sakamoto",
     "filename": "merry-christmas-mr-lawrence.mp3",
     "duration": 331,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/merry-christmas-mr-lawrence.mp3"
-  },
-  {
-    "id": "merry-christmas-mr-lawrence-2",
-    "title": "Merry Christmas Mr Lawrence 2",
-    "category": "Uncategorized",
-    "filename": "merry-christmas-mr-lawrence-2.mp3",
-    "duration": 333,
-    "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/merry-christmas-mr-lawrence-2.mp3"
   },
   {
     "id": "mesmerizing-waves",
@@ -1441,27 +1313,11 @@
   },
   {
     "id": "michi",
-    "title": "Michi",
-    "category": "Uncategorized",
+    "title": "Michi Teyu Ku (Overflowing)",
+    "category": "Fujii Kaze",
     "filename": "michi.mp3",
     "duration": 298,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/michi.mp3"
-  },
-  {
-    "id": "michi-2",
-    "title": "Michi",
-    "category": "Uncategorized",
-    "filename": "michi-2.mp3",
-    "duration": 60,
-    "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/michi-2.mp3"
-  },
-  {
-    "id": "michi-3",
-    "title": "Michi 3",
-    "category": "Uncategorized",
-    "filename": "michi-3.mp3",
-    "duration": 488,
-    "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/michi-3.mp3"
   },
   {
     "id": "michi-louder",
@@ -1560,22 +1416,6 @@
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/natlan.mp3"
   },
   {
-    "id": "natlan-compilation-2024",
-    "title": "Natlan Compilation 2024",
-    "category": "Uncategorized",
-    "filename": "natlan-compilation-2024.mp3",
-    "duration": 1175,
-    "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/natlan-compilation-2024.mp3"
-  },
-  {
-    "id": "natlan-compilation-2024-2",
-    "title": "Natlan Compilation 2024 2",
-    "category": "Uncategorized",
-    "filename": "natlan-compilation-2024-2.mp3",
-    "duration": 1275,
-    "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/natlan-compilation-2024-2.mp3"
-  },
-  {
     "id": "natlan-concert",
     "title": "To the End of All Wars",
     "category": "Natlan",
@@ -1624,25 +1464,17 @@
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/natlan2.mp3"
   },
   {
-    "id": "neuvillete",
-    "title": "Neuvillete",
-    "category": "Uncategorized",
-    "filename": "neuvillete.mp3",
-    "duration": 183,
-    "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/neuvillete.mp3"
-  },
-  {
     "id": "neuvillete-edited2",
-    "title": "Neuvillete Edited2",
-    "category": "Uncategorized",
+    "title": "Neuvillette",
+    "category": "Fontaine",
     "filename": "neuvillete-edited2.mp3",
     "duration": 183,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/neuvillete-edited2.mp3"
   },
   {
     "id": "night-2",
-    "title": "Night 2",
-    "category": "Uncategorized",
+    "title": "Frosted Hue of Stars",
+    "category": "Natlan",
     "filename": "night-2.mp3",
     "duration": 65,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/night-2.mp3"
@@ -1697,19 +1529,11 @@
   },
   {
     "id": "overfire",
-    "title": "Overfire",
-    "category": "Uncategorized",
+    "title": "The Song Burning in the Embers",
+    "category": "Fontaine",
     "filename": "overfire.mp3",
     "duration": 164,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/overfire.mp3"
-  },
-  {
-    "id": "overfire-2",
-    "title": "Overfire",
-    "category": "Uncategorized",
-    "filename": "overfire-2.mp3",
-    "duration": 180,
-    "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/overfire-2.mp3"
   },
   {
     "id": "passing-memories",
@@ -1736,17 +1560,9 @@
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/porco-rosso.mp3"
   },
   {
-    "id": "port-osmo-night",
-    "title": "Port Osmo Night",
-    "category": "Uncategorized",
-    "filename": "port-osmo-night.mp3",
-    "duration": 138,
-    "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/port-osmo-night.mp3"
-  },
-  {
     "id": "port-osmo-night-2",
-    "title": "Port Osmo Night",
-    "category": "Uncategorized",
+    "title": "Sleepless Night",
+    "category": "Fontaine",
     "filename": "port-osmo-night-2.wav",
     "duration": 138,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/port-osmo-night-2.wav"
@@ -1806,14 +1622,6 @@
     "filename": "resurgense-edited2-2.mp3",
     "duration": 98,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/resurgense-edited2-2.mp3"
-  },
-  {
-    "id": "richard",
-    "title": "Richard",
-    "category": "Uncategorized",
-    "filename": "richard.mp3",
-    "duration": 203,
-    "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/richard.mp3"
   },
   {
     "id": "richard-edited2",
@@ -2550,22 +2358,6 @@
     "filename": "1.mp3",
     "duration": 119,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/1.mp3"
-  },
-  {
-    "id": "2",
-    "title": "河源山歌(2)",
-    "category": "Uncategorized",
-    "filename": "2.mp3",
-    "duration": 125,
-    "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/2.mp3"
-  },
-  {
-    "id": "2-2",
-    "title": "河源山歌2",
-    "category": "Uncategorized",
-    "filename": "2-2.mp3",
-    "duration": 125,
-    "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/2-2.mp3"
   },
   {
     "id": "track-6",
