@@ -9,7 +9,7 @@
   },
   {
     "id": "ann-house-edited3",
-    "title": "Ann House Edited3",
+    "title": "Ann's Quiescent Residence",
     "category": "Fontaine",
     "filename": "ann-house-edited3.mp3",
     "duration": 99,
@@ -17,7 +17,7 @@
   },
   {
     "id": "conscrcating",
-    "title": "Conscrcating",
+    "title": "Coruscating Street",
     "category": "Fontaine",
     "filename": "conscrcating.mp3",
     "duration": 118,
@@ -57,7 +57,7 @@
   },
   {
     "id": "luxr-stars-edited2",
-    "title": "Luxr Stars Edited2",
+    "title": "Lustrous Stars",
     "category": "Fontaine",
     "filename": "luxr-stars-edited2.mp3",
     "duration": 116,
@@ -137,7 +137,7 @@
   },
   {
     "id": "dawn",
-    "title": "Dawn",
+    "title": "Before Dawn, at the Winery",
     "category": "Mondstadt",
     "filename": "dawn.mp3",
     "duration": 129,
@@ -145,7 +145,7 @@
   },
   {
     "id": "day",
-    "title": "Day",
+    "title": "A New Day with Hope",
     "category": "Mondstadt",
     "filename": "day.mp3",
     "duration": 107,
@@ -169,7 +169,7 @@
   },
   {
     "id": "pure",
-    "title": "Pure",
+    "title": "Pure Sky",
     "category": "Mondstadt",
     "filename": "pure.mp3",
     "duration": 77,
@@ -185,7 +185,7 @@
   },
   {
     "id": "springvale-2",
-    "title": "Springvale 2",
+    "title": "Whence the Flow Cometh",
     "category": "Mondstadt",
     "filename": "springvale-2.mp3",
     "duration": 89,
@@ -193,7 +193,7 @@
   },
   {
     "id": "springvale-first",
-    "title": "Springvale First",
+    "title": "Ripples of Daydream",
     "category": "Mondstadt",
     "filename": "springvale-first.mp3",
     "duration": 82,
@@ -225,7 +225,7 @@
   },
   {
     "id": "riddles",
-    "title": "Riddles",
+    "title": "For Riddles, for Wonders",
     "category": "Sumeru",
     "filename": "riddles.mp3",
     "duration": 144,
@@ -401,8 +401,8 @@
   },
   {
     "id": "aisa-bathhouse-1",
-    "title": "Aisa Bathhouse 1",
-    "category": "Uncategorized",
+    "title": "Aisa Bathhouse OST 1",
+    "category": "Inazuma",
     "filename": "aisa-bathhouse-1.mp3",
     "duration": 88,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/aisa-bathhouse-1.mp3"
@@ -417,8 +417,8 @@
   },
   {
     "id": "aisa-bathhouse-2-edited2",
-    "title": "Aisa Bathhouse 2 Edited2",
-    "category": "Uncategorized",
+    "title": "Aisa Bathhouse OST 2",
+    "category": "Inazuma",
     "filename": "aisa-bathhouse-2-edited2.mp3",
     "duration": 96,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/aisa-bathhouse-2-edited2.mp3"
@@ -457,8 +457,8 @@
   },
   {
     "id": "astra-to-you",
-    "title": "Astra To You",
-    "category": "Uncategorized",
+    "title": "Astrum Unicum / Stars, Rebirth and You",
+    "category": "Wuthering Waves",
     "filename": "astra-to-you.mp3",
     "duration": 138,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/astra-to-you.mp3"
@@ -489,8 +489,8 @@
   },
   {
     "id": "between-pledge",
-    "title": "Between Pledge",
-    "category": "Uncategorized",
+    "title": "A Distant Farewell",
+    "category": "Natlan",
     "filename": "between-pledge.mp3",
     "duration": 103,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/between-pledge.mp3"
@@ -537,16 +537,16 @@
   },
   {
     "id": "capitino",
-    "title": "Capitino",
-    "category": "Uncategorized",
+    "title": "Metaphor for Calamity",
+    "category": "Natlan",
     "filename": "capitino.mp3",
     "duration": 91,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/capitino.mp3"
   },
   {
     "id": "caress-of-the-three-mothers",
-    "title": "Caress Of The Three Mothers",
-    "category": "Uncategorized",
+    "title": "The Caress of Three Mothers",
+    "category": "Sumeru",
     "filename": "caress-of-the-three-mothers.mp3",
     "duration": 97,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/caress-of-the-three-mothers.mp3"
@@ -657,8 +657,8 @@
   },
   {
     "id": "creeks-of-nostalgia-2",
-    "title": "Creeks Of Nostalgia",
-    "category": "Uncategorized",
+    "title": "Creeks of Nolstagia",
+    "category": "Liyue",
     "filename": "creeks-of-nostalgia-2.wav",
     "duration": 118,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/creeks-of-nostalgia-2.wav"
@@ -729,8 +729,8 @@
   },
   {
     "id": "ed-subi",
-    "title": "Ed Subi",
-    "category": "Uncategorized",
+    "title": "Ed e subito sera",
+    "category": "Fontaine",
     "filename": "ed-subi.mp3",
     "duration": 61,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/ed-subi.mp3"
@@ -769,8 +769,8 @@
   },
   {
     "id": "emilie",
-    "title": "Emilie",
-    "category": "Uncategorized",
+    "title": "Le Souffle du Parfum",
+    "category": "Fontaine",
     "filename": "emilie.mp3",
     "duration": 92,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/emilie.mp3"
@@ -841,8 +841,8 @@
   },
   {
     "id": "falling-maples-sad-edited2",
-    "title": "Falling Maples Sad Edited2",
-    "category": "Uncategorized",
+    "title": "Dream of Scattered Petals (Sad Version)",
+    "category": "Inazuma",
     "filename": "falling-maples-sad-edited2.mp3",
     "duration": 78,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/falling-maples-sad-edited2.mp3"
@@ -953,8 +953,8 @@
   },
   {
     "id": "forest-of-blessings-2nd",
-    "title": "Forest Of Blessings 2nd",
-    "category": "Uncategorized",
+    "title": "Morning Song in the Forest (Re-recorded)",
+    "category": "Simulanka",
     "filename": "forest-of-blessings-2nd.mp3",
     "duration": 84,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/forest-of-blessings-2nd.mp3"
@@ -1033,8 +1033,8 @@
   },
   {
     "id": "heart-break",
-    "title": "Heart Break",
-    "category": "Uncategorized",
+    "title": "If I Can Stop One Heart From Breaking",
+    "category": "Honkai Starrail",
     "filename": "heart-break.mp3",
     "duration": 124,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/heart-break.mp3"
@@ -1089,8 +1089,8 @@
   },
   {
     "id": "holy-grail",
-    "title": "Holy Grail",
-    "category": "Uncategorized",
+    "title": "Saber Theme",
+    "category": "Honkai Starrail",
     "filename": "holy-grail.mp3",
     "duration": 70,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/holy-grail.mp3"
@@ -1185,8 +1185,8 @@
   },
   {
     "id": "les-murmus-3",
-    "title": "Les Murmus 3",
-    "category": "Uncategorized",
+    "title": "Les murmures des flots",
+    "category": "Fontaine",
     "filename": "les-murmus-3.mp3",
     "duration": 105,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/les-murmus-3.mp3"
@@ -1329,8 +1329,8 @@
   },
   {
     "id": "masquerade",
-    "title": "Masquerade",
-    "category": "Uncategorized",
+    "title": "The Last Rose of the Sinner",
+    "category": "Fontaine",
     "filename": "masquerade.mp3",
     "duration": 88,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/masquerade.mp3"
@@ -1577,16 +1577,16 @@
   },
   {
     "id": "natlan-concert",
-    "title": "Natlan Concert",
-    "category": "Uncategorized",
+    "title": "To the End of All Wars",
+    "category": "Natlan",
     "filename": "natlan-concert.mp3",
     "duration": 66,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/natlan-concert.mp3"
   },
   {
     "id": "natlan-maple",
-    "title": "Natlan Maple",
-    "category": "Uncategorized",
+    "title": "The Nocturnal Firmament's Luster",
+    "category": "Natlan",
     "filename": "natlan-maple.mp3",
     "duration": 85,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/natlan-maple.mp3"
@@ -1689,8 +1689,8 @@
   },
   {
     "id": "opera-eclipse-2",
-    "title": "OPERA Eclipse",
-    "category": "Uncategorized",
+    "title": "Clair de lune",
+    "category": "Fontaine",
     "filename": "opera-eclipse-2.wav",
     "duration": 119,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/opera-eclipse-2.wav"
@@ -1801,8 +1801,8 @@
   },
   {
     "id": "resurgense-edited2-2",
-    "title": "Resurgense Edited2",
-    "category": "Uncategorized",
+    "title": "Surging Reminiscence",
+    "category": "Fontaine",
     "filename": "resurgense-edited2-2.mp3",
     "duration": 98,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/resurgense-edited2-2.mp3"
@@ -1921,8 +1921,8 @@
   },
   {
     "id": "sangonomiya-shrine-3",
-    "title": "Sangonomiya Shrine",
-    "category": "Uncategorized",
+    "title": "Illuminated Coral Palace",
+    "category": "Inazuma",
     "filename": "sangonomiya-shrine-3.wav",
     "duration": 88,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/sangonomiya-shrine-3.wav"
@@ -1961,8 +1961,8 @@
   },
   {
     "id": "simu",
-    "title": "Simu",
-    "category": "Uncategorized",
+    "title": "The Parade of Flying Squirrels Variations",
+    "category": "Simulanka",
     "filename": "simu.mp3",
     "duration": 89,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/simu.mp3"
@@ -1977,8 +1977,8 @@
   },
   {
     "id": "simulakra-2",
-    "title": "Simulakra 2",
-    "category": "Uncategorized",
+    "title": "Leisure in Painting",
+    "category": "Simulanka",
     "filename": "simulakra-2.mp3",
     "duration": 111,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/simulakra-2.mp3"
@@ -2017,8 +2017,8 @@
   },
   {
     "id": "song-cinn",
-    "title": "Song Cinn",
-    "category": "Uncategorized",
+    "title": "Lullaby of the New Moon (I): Somnias a Luna",
+    "category": "Nod Krai",
     "filename": "song-cinn.mp3",
     "duration": 153,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/song-cinn.mp3"
@@ -2241,8 +2241,8 @@
   },
   {
     "id": "thinker-theatre-night-w-start",
-    "title": "Thinker Theatre Night W Start",
-    "category": "Uncategorized",
+    "title": "Dreamlike Reflection",
+    "category": "Veluriyam Mirage",
     "filename": "thinker-theatre-night-w-start.mp3",
     "duration": 97,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/thinker-theatre-night-w-start.mp3"
@@ -2281,8 +2281,8 @@
   },
   {
     "id": "treasured-beyond",
-    "title": "Treasured Beyond",
-    "category": "Uncategorized",
+    "title": "Treasured Above All",
+    "category": "Fontaine",
     "filename": "treasured-beyond.mp3",
     "duration": 63,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/treasured-beyond.mp3"
