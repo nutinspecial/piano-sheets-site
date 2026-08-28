@@ -304,14 +304,6 @@
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/2025-mondstadt.mp3"
   },
   {
-    "id": "2nod-krai-copy",
-    "title": "2nod Krai Copy",
-    "category": "Uncategorized",
-    "filename": "2nod-krai-copy.wav",
-    "duration": 601,
-    "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/2nod-krai-copy.wav"
-  },
-  {
     "id": "2stars-and-beyond",
     "title": "2stars And Beyond",
     "category": "Uncategorized",
@@ -362,15 +354,15 @@
   {
     "id": "after-tea-party",
     "title": "After Tea Party",
-    "category": "Uncategorized",
+    "category": "Nod Krai",
     "filename": "after-tea-party.wav",
     "duration": 134,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/after-tea-party.wav"
   },
   {
     "id": "aino-house",
-    "title": "Aino House",
-    "category": "Uncategorized",
+    "title": "Fresh Baked Egg Rolls",
+    "category": "Nod Krai",
     "filename": "aino-house.mp3",
     "duration": 56,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/aino-house.mp3"
@@ -769,8 +761,8 @@
   },
   {
     "id": "eye-of",
-    "title": "Eye Of",
-    "category": "Uncategorized",
+    "title": "Shimmering Water Like Flickering Souls",
+    "category": "Nod Krai",
     "filename": "eye-of.mp3",
     "duration": 112,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/eye-of.mp3"
@@ -1497,8 +1489,8 @@
   },
   {
     "id": "nod-khrai",
-    "title": "Nod Khrai",
-    "category": "Uncategorized",
+    "title": "Nod-Krai (Version 6.0 OST)",
+    "category": "Nod Krai",
     "filename": "nod-khrai.mp3",
     "duration": 120,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/nod-khrai.mp3"
@@ -1506,7 +1498,7 @@
   {
     "id": "nod-krai-chill",
     "title": "Nod Krai Chill",
-    "category": "Uncategorized",
+    "category": "Nod Krai",
     "filename": "nod-krai-chill.wav",
     "duration": 130,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/nod-krai-chill.wav"
@@ -1656,6 +1648,62 @@
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/road-not-taken-2.mp3"
   },
   {
+    "id": "golden-hall",
+    "title": "Unpromised Farewell",
+    "category": "Nod Krai",
+    "filename": "golden-hall.wav",
+    "duration": 124,
+    "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/golden-hall.wav"
+  },
+  {
+    "id": "raven",
+    "title": "Raven Beneath the Tender Moon",
+    "category": "Nod Krai",
+    "filename": "raven.wav",
+    "duration": 142,
+    "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/raven.wav"
+  },
+  {
+    "id": "sunny-summer-fontinalia",
+    "title": "Sunny Summer Fontinalia",
+    "category": "Nod Krai",
+    "filename": "sunny-summer-fontinalia.wav",
+    "duration": 93,
+    "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/sunny-summer-fontinalia.wav"
+  },
+  {
+    "id": "lyn-demo",
+    "title": "Companion on a Rainy Night",
+    "category": "Nod Krai",
+    "filename": "lyn-demo.wav",
+    "duration": 156,
+    "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/lyn-demo.wav"
+  },
+  {
+    "id": "old-mashion",
+    "title": "Disorder and Early Sorrow",
+    "category": "Nod Krai",
+    "filename": "old-mashion.wav",
+    "duration": 128,
+    "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/old-mashion.wav"
+  },
+  {
+    "id": "snezhnograd-night",
+    "title": "Snezhnograd (Night)",
+    "category": "Nod Krai",
+    "filename": "snezhnograd-night.wav",
+    "duration": 159,
+    "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/snezhnograd-night.wav"
+  },
+  {
+    "id": "marionate",
+    "title": "La mare de larmes",
+    "category": "Nod Krai",
+    "filename": "marionate.wav",
+    "duration": 93,
+    "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/marionate.wav"
+  },
+  {
     "id": "romaintime",
     "title": "Fields After Dusk",
     "category": "Nod Krai",
@@ -1697,16 +1745,16 @@
   },
   {
     "id": "sanctum",
-    "title": "Sanctum",
-    "category": "Uncategorized",
+    "title": "A Lie of Aila",
+    "category": "Nod Krai",
     "filename": "sanctum.mp3",
     "duration": 130,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/sanctum.mp3"
   },
   {
     "id": "sandrome-theme",
-    "title": "Sandrome Theme",
-    "category": "Uncategorized",
+    "title": "Haunting Sandrone Theme – 'A Sitting on a Gate'",
+    "category": "Nod Krai",
     "filename": "sandrome-theme.mp3",
     "duration": 79,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/sandrome-theme.mp3"
@@ -1830,22 +1878,6 @@
     "filename": "song-cinn.mp3",
     "duration": 153,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/song-cinn.mp3"
-  },
-  {
-    "id": "song-cinn-kalimba",
-    "title": "Song Cinn Kalimba",
-    "category": "Uncategorized",
-    "filename": "song-cinn-kalimba.mp3",
-    "duration": 76,
-    "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/song-cinn-kalimba.mp3"
-  },
-  {
-    "id": "song-cinn-kalimba-2",
-    "title": "Song Cinn Kalimba",
-    "category": "Uncategorized",
-    "filename": "song-cinn-kalimba-2.wav",
-    "duration": 76,
-    "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/song-cinn-kalimba-2.wav"
   },
   {
     "id": "sound-of-rain",

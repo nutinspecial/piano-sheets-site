@@ -1,0 +1,81 @@
+---
+// src/pages/playlist/nod-krai.astro
+// ── Nod Krai region piano playlist — SEO landing page ────────────────────
+import CoffeeButton from "../../components/CoffeeButton.astro";
+import PlaylistPlayer from "../../components/PlaylistPlayer.astro";
+import Layout from "../../layouts/Layout.astro";
+import allTracks from "../../data/tracks.json";
+
+const tracks = allTracks
+  .filter((t) => t.category === "Nod Krai")
+  .sort((a, b) => a.title.localeCompare(b.title));
+
+const totalMinutes = Math.round(tracks.reduce((sum, t) => sum + t.duration, 0) / 60);
+
+const siteUrl = "https://bigpianosmallpiano.pages.dev";
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "MusicPlaylist",
+  "name": "Nod Krai Piano Music — Big Piano Small Piano",
+  "description":
+    "Every Nod Krai OST covered on piano, streamed continuously — calming Genshin Impact music to study, sleep or relax to.",
+  "url": `${siteUrl}/playlist/nod-krai`,
+  "numTracks": tracks.length,
+  "track": tracks.map((t) => ({
+    "@type": "MusicRecording",
+    "name": t.title,
+    "duration": `PT${Math.floor(t.duration / 60)}M${t.duration % 60}S`,
+    "associatedMedia": { "@type": "MediaObject", "contentUrl": t.url },
+  })),
+};
+---
+
+<Layout
+  title="Nod Krai Piano Music to Study &amp; Sleep to — Free Playlist"
+  description={`All ${tracks.length} Nod Krai OSTs covered on piano — ~${totalMinutes} minutes of calming Genshin Impact music to study, sleep or relax to. Free to stream, no ads, no sign-up.`}
+>
+  <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+
+  <!-- HERO -->
+  <section class="relative overflow-hidden border-b border-surface-border">
+    <div class="absolute inset-0 bg-keys-pattern opacity-50 pointer-events-none"></div>
+    <div class="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gold to-transparent"></div>
+    <div class="relative max-w-3xl mx-auto px-4 sm:px-6 py-8 sm:py-12 text-center flex flex-col items-center gap-2">
+      <p class="text-gold text-xs tracking-[0.25em] uppercase font-mono">Genshin Impact &middot; Region</p>
+      <h1 class="font-display text-4xl sm:text-5xl font-semibold text-ivory leading-tight">
+        Nod Krai <span class="italic text-gold">Piano</span>
+      </h1>
+      <p class="text-ivory/50 text-sm max-w-md leading-relaxed">
+        {tracks.length} original piano covers &middot; ~{totalMinutes} minutes &middot; free to stream, no ads.
+      </p>
+      <a
+        href="/playlist"
+        class="mt-2 inline-flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-full border border-surface-border text-ivory/50 hover:border-gold/40 hover:text-ivory/80 transition-colors"
+      >
+        &larr; All regions playlist
+      </a>
+    </div>
+  </section>
+
+  <!-- INTRO -->
+  <section class="max-w-3xl mx-auto px-4 sm:px-6 pt-8">
+    <p class="text-ivory/60 text-sm leading-relaxed">
+      Nod Krai is the snowbound northern region introduced in Genshin Impact
+      version 6.0 — Snezhnograd, Hiisi Island, the Silvermoon Hall and the
+      Sanctum of the Oathbearer. Its soundtrack leans quiet and wistful: sparse
+      melodies, cold air, a music box left running. These are my piano covers of
+      those themes, looped back to back into one continuous set for studying,
+      reading or drifting off. Press play, or shuffle the whole thing.
+    </p>
+  </section>
+
+  <PlaylistPlayer tracks={tracks} showCategories={false}>
+    <div slot="footer">
+      <CoffeeButton
+        variant="inline"
+        message="Every Nod Krai cover here is free to stream — if it's keeping you company while you study or wind down, a coffee helps keep it going."
+      />
+    </div>
+  </PlaylistPlayer>
+</Layout>
