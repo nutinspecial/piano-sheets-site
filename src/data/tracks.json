@@ -1369,8 +1369,8 @@
   },
   {
     "id": "moon",
-    "title": "Moon",
-    "category": "Uncategorized",
+    "title": "Beyond the Full Moonlight",
+    "category": "Nod Krai",
     "filename": "moon.wav",
     "duration": 187,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/moon.wav"
@@ -1497,7 +1497,7 @@
   },
   {
     "id": "nod-krai-chill",
-    "title": "Nod Krai Chill",
+    "title": "To the Glowing Night",
     "category": "Nod Krai",
     "filename": "nod-krai-chill.wav",
     "duration": 130,
@@ -1672,6 +1672,22 @@
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/sunny-summer-fontinalia.wav"
   },
   {
+    "id": "barrons",
+    "title": "Dreams of Joy Departed",
+    "category": "Nod Krai",
+    "filename": "barrons.mp3",
+    "duration": 92,
+    "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/barrons.mp3"
+  },
+  {
+    "id": "gladsome-ramble",
+    "title": "Gladsome Ramble",
+    "category": "Nod Krai",
+    "filename": "gladsome-ramble.wav",
+    "duration": 171,
+    "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/gladsome-ramble.wav"
+  },
+  {
     "id": "lyn-demo",
     "title": "Companion on a Rainy Night",
     "category": "Nod Krai",
@@ -1698,7 +1714,7 @@
   {
     "id": "marionate",
     "title": "La mare de larmes",
-    "category": "Nod Krai",
+    "category": "Uncategorized",
     "filename": "marionate.wav",
     "duration": 93,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/marionate.wav"
