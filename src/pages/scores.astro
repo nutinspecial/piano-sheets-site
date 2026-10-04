@@ -56,6 +56,7 @@ const jsonLd = {
 ---
 
 <Layout
+  floatingCoffee={false}
   title="Free Piano Sheet Music & Scores — Big Piano Small Piano"
   description={`Download ${totalScores} free piano scores and sheet music from Big Piano Small Piano. Piano arrangements, transcriptions, and PDF downloads for every video.`}
 >
@@ -80,17 +81,17 @@ const jsonLd = {
       <div class="flex items-center gap-8 pt-4 border-t border-surface-border/60">
         <div class="text-center">
           <p class="font-display text-2xl font-semibold text-gold">{totalScores}</p>
-          <p class="text-ivory/40 text-xs uppercase tracking-widest mt-0.5">Scores</p>
+          <p class="text-ivory-muted text-xs uppercase tracking-widest mt-0.5">Scores</p>
         </div>
         <div class="w-px h-8 bg-surface-border"></div>
         <div class="text-center">
           <p class="font-display text-2xl font-semibold text-ivory">{totalSongs}</p>
-          <p class="text-ivory/40 text-xs uppercase tracking-widest mt-0.5">Songs</p>
+          <p class="text-ivory-muted text-xs uppercase tracking-widest mt-0.5">Songs</p>
         </div>
         <div class="w-px h-8 bg-surface-border"></div>
         <div class="text-center">
           <p class="font-display text-2xl font-semibold text-ivory">Free</p>
-          <p class="text-ivory/40 text-xs uppercase tracking-widest mt-0.5">Always</p>
+          <p class="text-ivory-muted text-xs uppercase tracking-widest mt-0.5">Always</p>
         </div>
       </div>
     </div>
@@ -102,7 +103,7 @@ const jsonLd = {
     <!-- Search + filter bar -->
     <div class="flex flex-col sm:flex-row gap-3 items-stretch sm:items-center mb-6">
       <div class="relative flex-1">
-        <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-ivory/30 pointer-events-none" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-ivory-muted pointer-events-none" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
           <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
         </svg>
         <input
@@ -111,16 +112,16 @@ const jsonLd = {
           placeholder="Search by song title…"
           aria-label="Search piano scores"
           autocomplete="off"
-          class="w-full bg-surface border border-surface-border rounded-lg pl-9 pr-4 py-2.5 text-sm text-ivory placeholder-ivory/30 focus:outline-none focus:border-gold/60 transition-colors"
+          class="search-field"
         />
       </div>
-      <p class="text-ivory/40 text-sm sm:text-right flex-shrink-0 self-center">
+      <p class="text-ivory-muted text-sm sm:text-right flex-shrink-0 self-center">
         <span id="score-count">{scoreRows.length}</span> score{scoreRows.length !== 1 ? "s" : ""} available
       </p>
     </div>
 
     <!-- Empty state -->
-    <p id="no-scores" class="hidden text-center py-16 text-ivory/40 font-display italic text-lg">
+    <p id="no-scores" class="hidden text-center py-16 text-ivory-muted font-display italic text-lg">
       No scores found for that search.
     </p>
 
@@ -129,10 +130,10 @@ const jsonLd = {
       <table class="w-full text-sm" id="scores-table">
         <thead>
           <tr class="bg-surface-raised border-b border-surface-border">
-            <th class="text-left px-5 py-3 text-ivory/50 font-medium tracking-wide text-xs uppercase w-full">Song Title</th>
-            <th class="text-left px-5 py-3 text-ivory/50 font-medium tracking-wide text-xs uppercase whitespace-nowrap">Score Credit</th>
-            <th class="text-left px-5 py-3 text-ivory/50 font-medium tracking-wide text-xs uppercase whitespace-nowrap">Source</th>
-            <th class="text-left px-5 py-3 text-ivory/50 font-medium tracking-wide text-xs uppercase whitespace-nowrap">Download</th>
+            <th class="text-left px-5 py-3 text-ivory-muted font-medium tracking-wide text-xs uppercase w-full">Song Title</th>
+            <th class="text-left px-5 py-3 text-ivory-muted font-medium tracking-wide text-xs uppercase whitespace-nowrap">Score Credit</th>
+            <th class="text-left px-5 py-3 text-ivory-muted font-medium tracking-wide text-xs uppercase whitespace-nowrap">Source</th>
+            <th class="text-left px-5 py-3 text-ivory-muted font-medium tracking-wide text-xs uppercase whitespace-nowrap">Download</th>
           </tr>
         </thead>
         <tbody id="scores-tbody">
@@ -151,7 +152,7 @@ const jsonLd = {
                 </a>
               </td>
               <!-- Credit -->
-              <td class="px-5 py-3.5 text-ivory/50 whitespace-nowrap">
+              <td class="px-5 py-3.5 text-ivory-muted whitespace-nowrap">
                 {row.credits && row.credits[0] ? row.credits[0] : "—"}
               </td>
               <!-- Source label -->
@@ -191,7 +192,7 @@ const jsonLd = {
             {row.title}
           </a>
           {row.credits && row.credits[0] && (
-            <p class="text-ivory/50 text-xs">Arranged by {row.credits[0]}</p>
+            <p class="text-ivory-muted text-xs">Arranged by {row.credits[0]}</p>
           )}
           <div class="flex items-center justify-between pt-1">
             <span class="inline-block bg-gold-subtle border border-gold/20 text-gold text-xs px-2 py-0.5 rounded font-mono">
@@ -212,10 +213,10 @@ const jsonLd = {
     <!-- No scores fallback if Python found none -->
     {scoreRows.length === 0 && (
       <div class="text-center py-20">
-        <p class="font-display italic text-2xl text-ivory/30 mb-3">No scores found yet.</p>
-        <p class="text-ivory/40 text-sm max-w-sm mx-auto">
-          Run the Python sync script after adding score links to your YouTube descriptions —
-          they'll appear here automatically.
+        <p class="font-display italic text-2xl text-ivory-muted mb-3">No scores found yet.</p>
+        <p class="text-ivory-muted text-sm max-w-sm mx-auto">
+          New scores are added as covers go up. In the meantime, every performance is on
+          the YouTube channel.
         </p>
       </div>
     )}
@@ -232,7 +233,7 @@ const jsonLd = {
       <h2 class="font-display text-2xl sm:text-3xl font-semibold text-ivory">
         Want more? Watch on YouTube.
       </h2>
-      <p class="text-ivory/50 text-sm max-w-md">
+      <p class="text-ivory-muted text-sm max-w-md">
         Every score here comes from a full performance video. Click any song title
         to watch the video, or browse the full channel below.
       </p>
@@ -281,11 +282,3 @@ const jsonLd = {
 
 </Layout>
 
-<style>
-  .btn-gold {
-    @apply inline-flex items-center gap-2 bg-gold hover:bg-gold-dark text-ebony font-medium text-sm px-5 py-2.5 rounded-lg transition-colors duration-200;
-  }
-  .btn-outline {
-    @apply inline-flex items-center gap-2 border border-surface-border hover:border-gold/50 text-ivory/80 hover:text-gold text-sm px-5 py-2.5 rounded-lg transition-colors duration-200;
-  }
-</style>

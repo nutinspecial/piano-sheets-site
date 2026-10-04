@@ -12,7 +12,7 @@ const tracks = allTracks
 
 const totalMinutes = Math.round(tracks.reduce((sum, t) => sum + t.duration, 0) / 60);
 
-const siteUrl = "https://bigpianosmallpiano.pages.dev";
+const siteUrl = "https://bigpianosmallpiano.com";
 
 const jsonLd = {
   "@context": "https://schema.org",
@@ -32,6 +32,7 @@ const jsonLd = {
 ---
 
 <Layout
+  floatingCoffee={false}
   title="Nod Krai Piano Music to Study &amp; Sleep to — Free Playlist"
   description={`All ${tracks.length} Nod Krai OSTs covered on piano — ~${totalMinutes} minutes of calming Genshin Impact music to study, sleep or relax to. Free to stream, no ads, no sign-up.`}
 >
@@ -46,12 +47,12 @@ const jsonLd = {
       <h1 class="font-display text-4xl sm:text-5xl font-semibold text-ivory leading-tight">
         Nod Krai <span class="italic text-gold">Piano</span>
       </h1>
-      <p class="text-ivory/50 text-sm max-w-md leading-relaxed">
+      <p class="text-ivory-muted text-sm max-w-md leading-relaxed">
         {tracks.length} original piano covers &middot; ~{totalMinutes} minutes &middot; free to stream, no ads.
       </p>
       <a
         href="/playlist"
-        class="mt-2 inline-flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-full border border-surface-border text-ivory/50 hover:border-gold/40 hover:text-ivory/80 transition-colors"
+        class="mt-2 inline-flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-full border border-surface-border text-ivory-muted hover:border-gold/40 hover:text-ivory/80 transition-colors"
       >
         &larr; All regions playlist
       </a>

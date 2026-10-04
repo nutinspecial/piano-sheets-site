@@ -8,7 +8,7 @@ const jsonLd = {
   "@type": "WebApplication",
   "name": "Free Online Instrument Tuner — Big Piano Small Piano",
   "description": "Free chromatic tuner for guitar, violin, ukulele and more. Uses your microphone to detect pitch in real time. Play reference tones to tune by ear.",
-  "url": "https://bigpianosmallpiano.pages.dev/tuner",
+  "url": "https://bigpianosmallpiano.com/tuner",
   "applicationCategory": "MusicApplication",
   "operatingSystem": "Any",
   "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
@@ -39,7 +39,7 @@ const instruments = [
       <h1 class="font-display text-4xl sm:text-5xl font-semibold text-ivory leading-tight">
         Free Online <span class="italic text-gold">Tuner</span>
       </h1>
-      <p class="text-ivory/50 text-sm max-w-md leading-relaxed">
+      <p class="text-ivory-muted text-sm max-w-md leading-relaxed">
         Chromatic tuner for guitar, violin, ukulele and more.
         Detects pitch from your mic — or play a reference tone to tune by ear.
       </p>
@@ -54,13 +54,13 @@ const instruments = [
 
       <!-- Note display -->
       <div class="text-center space-y-1">
-        <p class="text-ivory/40 text-xs uppercase tracking-widest font-mono">Detected note</p>
+        <p class="text-ivory-muted text-xs uppercase tracking-widest font-mono">Detected note</p>
         <div class="flex items-end justify-center gap-2">
           <span id="note-name" class="font-display text-8xl font-semibold text-ivory leading-none">—</span>
-          <span id="note-octave" class="font-display text-4xl text-ivory/40 leading-none mb-2"></span>
+          <span id="note-octave" class="font-display text-4xl text-ivory-muted leading-none mb-2"></span>
         </div>
-        <p id="note-freq" class="text-ivory/30 text-sm font-mono">— Hz</p>
-        <p id="cents-label" class="text-ivory/50 text-sm font-mono h-5"></p>
+        <p id="note-freq" class="text-ivory-muted text-sm font-mono">— Hz</p>
+        <p id="cents-label" class="text-ivory-muted text-sm font-mono h-5"></p>
       </div>
 
       <!-- Tuning meter -->
@@ -74,7 +74,7 @@ const instruments = [
             style="left:50%; background:#888">
           </div>
         </div>
-        <div class="flex justify-between text-xs text-ivory/20 font-mono px-1">
+        <div class="flex justify-between text-xs text-ivory-muted font-mono px-1">
           <span>−50¢</span><span>−25¢</span><span>0</span><span>+25¢</span><span>+50¢</span>
         </div>
       </div>
@@ -82,21 +82,21 @@ const instruments = [
       <!-- Tuning status badge -->
       <div class="text-center">
         <span id="tune-status"
-          class="inline-block px-4 py-1.5 rounded-full text-sm font-medium bg-surface-raised text-ivory/40 border border-surface-border">
+          class="inline-block px-4 py-1.5 rounded-full text-sm font-medium bg-surface-raised text-ivory-muted border border-surface-border">
           Waiting for mic…
         </span>
       </div>
 
       <!-- Start / Stop mic button -->
       <button id="mic-btn"
-        class="w-full flex items-center justify-center gap-3 bg-gold hover:bg-gold-dark text-ebony font-semibold py-4 rounded-xl transition-colors text-base">
+        class="w-full flex items-center justify-center gap-3 bg-gold hover:bg-gold-light text-ebony font-semibold py-4 rounded-xl transition-colors text-base">
         <svg id="mic-icon" class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
           <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3zm-1 18.93A8.001 8.001 0 0 1 4.07 13H2a10 10 0 0 0 9 9.93V24h2v-1.07A10 10 0 0 0 22 13h-2.07A8.001 8.001 0 0 1 13 19.93V22h-2v-2.07z"/>
         </svg>
         <span id="mic-label">Start Tuner</span>
       </button>
 
-      <p class="text-ivory/30 text-xs text-center">
+      <p class="text-ivory-muted text-xs text-center">
         Your browser will ask for microphone permission. Audio stays on your device — nothing is sent anywhere.
       </p>
     </div>
@@ -105,7 +105,7 @@ const instruments = [
     <div class="bg-surface border border-surface-border rounded-xl p-5 space-y-4">
       <div class="flex items-center justify-between">
         <div>
-          <p class="text-ivory/40 text-xs uppercase tracking-widest font-mono mb-0.5">Reference tones</p>
+          <p class="text-ivory-muted text-xs uppercase tracking-widest font-mono mb-0.5">Reference tones</p>
           <p class="text-ivory/60 text-sm">Play a note to tune by ear</p>
         </div>
         <!-- Instrument selector -->
@@ -128,10 +128,10 @@ const instruments = [
       <div class="flex items-center gap-3 pt-1">
         <label class="flex items-center gap-2 cursor-pointer select-none">
           <input type="checkbox" id="sustain-toggle" class="w-4 h-4 accent-gold" />
-          <span class="text-ivory/50 text-sm">Hold tone while playing</span>
+          <span class="text-ivory-muted text-sm">Hold tone while playing</span>
         </label>
         <div class="flex items-center gap-2 ml-auto">
-          <span class="text-ivory/30 text-xs font-mono">Vol</span>
+          <span class="text-ivory-muted text-xs font-mono">Vol</span>
           <input id="ref-vol" type="range" min="0" max="100" value="70"
             class="w-20 accent-gold cursor-pointer" />
         </div>
@@ -142,7 +142,7 @@ const instruments = [
     <div class="grid sm:grid-cols-2 gap-4">
       <div class="bg-surface border border-surface-border rounded-xl p-4">
         <h2 class="font-display text-base font-semibold text-ivory mb-2">How to use</h2>
-        <ul class="text-ivory/50 text-xs space-y-1.5 leading-relaxed">
+        <ul class="text-ivory-muted text-xs space-y-1.5 leading-relaxed">
           <li>• Click <strong class="text-ivory/70">Start Tuner</strong> and allow mic access</li>
           <li>• Play a single note on your instrument</li>
           <li>• Watch the needle — centre = in tune</li>
@@ -152,7 +152,7 @@ const instruments = [
       </div>
       <div class="bg-surface border border-surface-border rounded-xl p-4">
         <h2 class="font-display text-base font-semibold text-ivory mb-2">Standard tuning</h2>
-        <ul class="text-ivory/50 text-xs space-y-1 leading-relaxed font-mono">
+        <ul class="text-ivory-muted text-xs space-y-1 leading-relaxed font-mono">
           <li><span class="text-ivory/70">Guitar:</span>  E A D G B E</li>
           <li><span class="text-ivory/70">Violin:</span>  G D A E</li>
           <li><span class="text-ivory/70">Ukulele:</span> G C E A</li>
@@ -171,7 +171,7 @@ const instruments = [
     <div class="bg-surface border border-gold/20 rounded-xl p-5 text-center space-y-3">
       <p class="font-display text-lg text-ivory">Want to hear these notes in context?</p>
       <div class="flex flex-wrap gap-3 justify-center">
-        <a href="/instrument" class="inline-flex items-center gap-2 bg-gold hover:bg-gold-dark text-ebony font-medium text-sm px-5 py-2.5 rounded-lg transition-colors">
+        <a href="/instrument" class="inline-flex items-center gap-2 bg-gold hover:bg-gold-light text-ebony font-medium text-sm px-5 py-2.5 rounded-lg transition-colors">
           Play Virtual Instrument
         </a>
         <a href="/metronome" class="inline-flex items-center gap-2 border border-surface-border hover:border-gold/50 text-ivory/70 hover:text-gold text-sm px-5 py-2.5 rounded-lg transition-colors">
@@ -276,7 +276,7 @@ const instruments = [
         needle.style.left     = "50%";
         needle.style.background = "#888";
         tuneStatus.textContent = "Play a note…";
-        tuneStatus.className   = "inline-block px-4 py-1.5 rounded-full text-sm font-medium bg-surface-raised text-ivory/40 border border-surface-border";
+        tuneStatus.className   = "inline-block px-4 py-1.5 rounded-full text-sm font-medium bg-surface-raised text-ivory-muted border border-surface-border";
         return;
       }
       noteName.textContent   = result.name;
@@ -319,7 +319,7 @@ const instruments = [
         micRunning = true;
         micLabel.textContent = "Stop Tuner";
         micBtn.classList.replace("bg-gold","bg-red-700");
-        micBtn.classList.replace("hover:bg-gold-dark","hover:bg-red-900");
+        micBtn.classList.replace("hover:bg-gold-light","hover:bg-red-900");
         micBtn.classList.replace("text-ebony","text-white");
         tuneStatus.textContent = "Listening…";
         tunerLoop();
@@ -335,11 +335,11 @@ const instruments = [
       micRunning = false;
       micLabel.textContent = "Start Tuner";
       micBtn.classList.replace("bg-red-700","bg-gold");
-      micBtn.classList.replace("hover:bg-red-900","hover:bg-gold-dark");
+      micBtn.classList.replace("hover:bg-red-900","hover:bg-gold-light");
       micBtn.classList.replace("text-white","text-ebony");
       updateTunerUI(null);
       tuneStatus.textContent = "Waiting for mic…";
-      tuneStatus.className   = "inline-block px-4 py-1.5 rounded-full text-sm font-medium bg-surface-raised text-ivory/40 border border-surface-border";
+      tuneStatus.className   = "inline-block px-4 py-1.5 rounded-full text-sm font-medium bg-surface-raised text-ivory-muted border border-surface-border";
     }
 
     micBtn.addEventListener("click", () => {
@@ -405,10 +405,9 @@ const instruments = [
         const btn    = document.createElement("button");
         btn.className = "flex flex-col items-center px-4 py-2.5 rounded-xl border border-surface-border hover:border-gold/50 hover:bg-gold/5 transition-all group";
         btn.innerHTML = `<span class="font-display text-ivory/80 group-hover:text-gold font-semibold text-lg transition-colors">${parsed.name}</span>
-                         <span class="text-ivory/30 text-xs font-mono">${parsed.octave} · ${freq.toFixed(0)}Hz</span>`;
-        btn.addEventListener("mousedown", () => playRef(freq));
-        btn.addEventListener("mouseup",   () => { if (!sustainTgl.checked) {} });
-        btn.addEventListener("touchstart", e => { e.preventDefault(); playRef(freq); });
+                         <span class="text-ivory-muted text-xs font-mono">${parsed.octave} · ${freq.toFixed(0)}Hz</span>`;
+        btn.type = "button";
+        btn.addEventListener("click", () => playRef(freq));
         stringBtns.appendChild(btn);
       });
     }
@@ -429,9 +428,9 @@ const instruments = [
               : "border-surface-border hover:border-gold/50 hover:bg-gold/5"
             } group`;
           btn.innerHTML = `<span class="font-mono text-ivory/70 group-hover:text-gold text-xs font-medium">${note}</span>
-                           <span class="text-ivory/25 font-mono" style="font-size:10px">${octave}</span>`;
-          btn.addEventListener("mousedown", () => playRef(freq));
-          btn.addEventListener("touchstart", e => { e.preventDefault(); playRef(freq); });
+                           <span class="text-ivory-muted font-mono" style="font-size:10px">${octave}</span>`;
+          btn.type = "button";
+          btn.addEventListener("click", () => playRef(freq));
           chromGrid.appendChild(btn);
         });
       }

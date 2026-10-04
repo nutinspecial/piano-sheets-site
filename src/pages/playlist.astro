@@ -15,12 +15,13 @@ const jsonLd = {
   "@type": "MusicPlaylist",
   "name": "Big Piano Small Piano — Ambient Piano Playlist",
   "description": "Free ambient piano music to study, sleep or relax to. Original piano covers, streamed continuously.",
-  "url": "https://bigpianosmallpiano.pages.dev/playlist",
+  "url": "https://bigpianosmallpiano.com/playlist",
   "numTracks": tracks.length,
 };
 ---
 
 <Layout
+  floatingCoffee={false}
   title="Piano Music for Studying &amp; Sleeping — Free Playlist"
   description="Free ambient piano playlist — hundreds of original piano covers to study, sleep or relax to. Search, filter by mood, and stream continuously. No ads, no sign-up."
 >
@@ -35,7 +36,7 @@ const jsonLd = {
       <h1 class="font-display text-4xl sm:text-5xl font-semibold text-ivory leading-tight">
         Piano <span class="italic text-gold">Playlist</span>
       </h1>
-      <p class="text-ivory/50 text-sm max-w-md leading-relaxed">
+      <p class="text-ivory-muted text-sm max-w-md leading-relaxed">
         {tracks.length} original piano covers &middot; ~{totalMinutes} minutes &middot; free to stream, no ads.
       </p>
       {nodKraiCount > 0 && (

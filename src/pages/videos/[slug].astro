@@ -72,6 +72,7 @@ const jsonLd = {
 ---
 
 <Layout
+  floatingCoffee={false}
   title={`${video.title} | Big Piano Small Piano`}
   description={metaDescription || `Watch ${video.title} — a piano cover by Big Piano Small Piano.`}
   image={video.thumbnail || "/og-default.jpg"}
@@ -82,7 +83,7 @@ const jsonLd = {
 
   <!-- ── Breadcrumb ──────────────────────────────────────────────────────── -->
   <div class="max-w-4xl mx-auto px-4 sm:px-6 pt-6">
-    <nav class="text-xs text-ivory/40 flex items-center gap-1.5" aria-label="Breadcrumb">
+    <nav class="text-xs text-ivory-muted flex items-center gap-1.5" aria-label="Breadcrumb">
       <a href="/" class="hover:text-gold transition-colors">Home</a>
       <span>/</span>
       <a href="/#videos" class="hover:text-gold transition-colors">Videos</a>
@@ -99,7 +100,7 @@ const jsonLd = {
       <h1 class="font-display text-3xl sm:text-4xl lg:text-5xl font-semibold text-ivory leading-tight mb-3">
         {video.title}
       </h1>
-      <div class="flex flex-wrap items-center gap-4 text-sm text-ivory/40">
+      <div class="flex flex-wrap items-center gap-4 text-sm text-ivory-muted">
         <time datetime={video.publishedAt}>{displayDate}</time>
         {video.viewCount > 0 && (
           <span>
@@ -147,7 +148,7 @@ const jsonLd = {
                   Download score {s.scoreLinks.length > 1 ? i + 1 : ""} ↗
                 </a>
                 {s.credits && s.credits.length > 0 && (
-                  <span class="text-ivory/40 sm:ml-auto flex-shrink-0">
+                  <span class="text-ivory-muted sm:ml-auto flex-shrink-0">
                     Arranged by {s.credits[0]}
                   </span>
                 )}
@@ -155,7 +156,7 @@ const jsonLd = {
             ))
           )}
         </ul>
-        <p class="mt-4 text-xs text-ivory/30">
+        <p class="mt-4 text-xs text-ivory-muted">
           Also see the <a href="/scores" class="text-gold hover:underline">full Free Piano Scores page</a> for all available sheet music.
         </p>
       </section>
@@ -175,9 +176,6 @@ const jsonLd = {
   </article>
 
   <hr class="gold-rule max-w-4xl mx-auto" />
-  <div class="max-w-4xl mx-auto px-4 sm:px-6">
-  <CoffeeButton variant="section" />
-  </div>
   <!-- ══════════════════════════ RELATED VIDEOS ═══════════════════════════════ -->
   {related.length > 0 && (
     <section class="max-w-4xl mx-auto px-4 sm:px-6 py-12">
@@ -195,7 +193,7 @@ const jsonLd = {
                   src={v.thumbnail}
                   alt={v.title}
                   width="320" height="180"
-                  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  class="w-full h-full object-cover motion-safe:group-hover:scale-105 transition-transform duration-500"
                   loading="lazy"
                 />
               </div>

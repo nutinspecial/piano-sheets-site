@@ -4,6 +4,8 @@
 import CoffeeButton from "../components/CoffeeButton.astro";
 import Layout from "../layouts/Layout.astro";
 import videos from "../data/videos.json";
+import scores from "../data/scores.json";
+import tracks from "../data/tracks.json";
 
 // Format ISO 8601 duration (PT4M33S) into "4:33"
 function formatDuration(iso: string): string {
@@ -31,6 +33,8 @@ function formatDate(iso: string): string {
 }
 
 const totalVideos   = videos.length;
+const totalScores   = scores.length;
+const totalTracks   = tracks.length;
 const channelUrl    = "https://www.youtube.com/channel/UCsKtOGplqKz3uGt9XD8VexQ";
 const latestVideo   = videos[0];  // already sorted newest-first by the Python script
 ---
@@ -77,22 +81,22 @@ const latestVideo   = videos[0];  // already sorted newest-first by the Python s
         </a>
       </div>
 
-      <!-- Stats row -->
-      <div class="flex items-center gap-8 pt-4 border-t border-surface-border/60 mt-2">
-        <div class="text-center">
-          <p class="font-display text-2xl font-semibold text-ivory">{totalVideos}</p>
-          <p class="text-ivory/40 text-xs uppercase tracking-widest mt-0.5">Videos</p>
-        </div>
-        <div class="w-px h-8 bg-surface-border"></div>
-        <div class="text-center">
-          <p class="font-display text-2xl font-semibold text-gold">Free</p>
-          <p class="text-ivory/40 text-xs uppercase tracking-widest mt-0.5">Sheet Music</p>
-        </div>
-        <div class="w-px h-8 bg-surface-border"></div>
-        <div class="text-center">
-          <p class="font-display text-2xl font-semibold text-ivory">YT</p>
-          <p class="text-ivory/40 text-xs uppercase tracking-widest mt-0.5">Channel</p>
-        </div>
+      <!-- Stats row: real counts from the synced data -->
+      <div class="flex items-center gap-4 sm:gap-8 pt-4 border-t border-surface-border/60 mt-2">
+        <a href="#videos" class="text-center group/stat">
+          <span class="block font-display text-2xl font-semibold text-ivory group-hover/stat:text-gold transition-colors tabular-nums">{totalVideos}</span>
+          <span class="block text-ivory-muted text-xs uppercase tracking-wider sm:tracking-widest mt-0.5">Videos</span>
+        </a>
+        <div class="w-px h-8 bg-surface-border" aria-hidden="true"></div>
+        <a href="/scores" class="text-center group/stat">
+          <span class="block font-display text-2xl font-semibold text-gold group-hover/stat:text-gold-light transition-colors tabular-nums">{totalScores}</span>
+          <span class="block text-ivory-muted text-xs uppercase tracking-wider sm:tracking-widest mt-0.5">Free scores</span>
+        </a>
+        <div class="w-px h-8 bg-surface-border" aria-hidden="true"></div>
+        <a href="/playlist" class="text-center group/stat">
+          <span class="block font-display text-2xl font-semibold text-ivory group-hover/stat:text-gold transition-colors tabular-nums">{totalTracks}</span>
+          <span class="block text-ivory-muted text-xs uppercase tracking-wider sm:tracking-widest mt-0.5">Playlist tracks</span>
+        </a>
       </div>
     </div>
   </section>
@@ -104,13 +108,13 @@ const latestVideo   = videos[0];  // already sorted newest-first by the Python s
 
       <a
         href={`/videos/${latestVideo.slug}`}
-        class="group grid sm:grid-cols-[1fr_auto] gap-6 items-center bg-surface rounded-xl border border-surface-border p-5 sm:p-6 hover:border-gold/40 transition-all duration-300 hover:shadow-gold-glow"
+        class="group grid grid-cols-1 sm:grid-cols-[minmax(0,1fr)_auto] gap-6 items-center bg-surface rounded-xl border border-surface-border p-5 sm:p-6 hover:border-gold/40 transition-all duration-300"
       >
-        <div class="space-y-2">
+        <div class="space-y-2 min-w-0">
           <h2 class="font-display text-2xl sm:text-3xl font-semibold text-ivory group-hover:text-gold transition-colors leading-snug">
             {latestVideo.title}
           </h2>
-          <p class="text-ivory/50 text-sm">{formatDate(latestVideo.publishedAt)}</p>
+          <p class="text-ivory-muted text-sm">{formatDate(latestVideo.publishedAt)}</p>
           <p class="text-ivory/60 text-sm line-clamp-2 max-w-xl leading-relaxed">
             {latestVideo.description.slice(0, 180)}…
           </p>
@@ -146,7 +150,7 @@ const latestVideo   = videos[0];  // already sorted newest-first by the Python s
       <!-- Search bar -->
       <div class="relative w-full sm:w-72">
         <svg
-          class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-ivory/30 pointer-events-none"
+          class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-ivory-muted pointer-events-none"
           fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"
         >
           <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
@@ -157,13 +161,13 @@ const latestVideo   = videos[0];  // already sorted newest-first by the Python s
           placeholder="Search songs…"
           aria-label="Search videos"
           autocomplete="off"
-          class="w-full bg-surface border border-surface-border rounded-lg pl-9 pr-4 py-2.5 text-sm text-ivory placeholder-ivory/30 focus:outline-none focus:border-gold/60 transition-colors"
+          class="search-field"
         />
       </div>
     </div>
 
     <!-- No-results message (hidden by default) -->
-    <p id="no-results" class="hidden text-center py-16 text-ivory/40 text-sm font-display italic text-lg">
+    <p id="no-results" class="hidden text-center py-16 text-ivory-muted text-sm font-display italic text-lg">
       No videos found for that search.
     </p>
 
@@ -171,18 +175,17 @@ const latestVideo   = videos[0];  // already sorted newest-first by the Python s
     <div id="video-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
       {videos.map((video, i) => (
         <article
-          class="reveal video-card group bg-surface rounded-xl border border-surface-border overflow-hidden hover:border-gold/40 transition-all duration-300 hover:shadow-card hover:-translate-y-0.5 flex flex-col"
-          style={`animation-delay: ${Math.min(i, 11) * 60}ms`}
+          class="video-card group bg-surface rounded-xl border border-surface-border overflow-hidden hover:border-gold/40 transition-all duration-300 hover:shadow-card motion-safe:hover:-translate-y-0.5 flex flex-col"
           data-title={video.title.toLowerCase()}
         >
           <!-- Thumbnail -->
-          <a href={`/videos/${video.slug}`} class="block overflow-hidden aspect-video bg-surface-raised flex-shrink-0">
+          <a href={`/videos/${video.slug}`} tabindex="-1" aria-hidden="true" class="relative block overflow-hidden aspect-video bg-surface-raised flex-shrink-0">
             {video.thumbnail ? (
               <img
                 src={video.thumbnail}
-                alt={video.title}
+                alt=""
                 width="480" height="270"
-                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                class="w-full h-full object-cover motion-safe:group-hover:scale-105 transition-transform duration-500"
                 loading={i < 6 ? "eager" : "lazy"}
               />
             ) : (
@@ -204,9 +207,9 @@ const latestVideo   = videos[0];  // already sorted newest-first by the Python s
             <a href={`/videos/${video.slug}`} class="font-display font-semibold text-ivory group-hover:text-gold transition-colors leading-snug line-clamp-2">
               {video.title}
             </a>
-            <p class="text-ivory/40 text-xs mt-auto">{formatDate(video.publishedAt)}</p>
+            <p class="text-ivory-muted text-xs mt-auto">{formatDate(video.publishedAt)}</p>
             {video.viewCount > 0 && (
-              <p class="text-ivory/30 text-xs">{formatViews(video.viewCount)} views</p>
+              <p class="text-ivory-muted text-xs">{formatViews(video.viewCount)} views</p>
             )}
           </div>
         </article>
@@ -258,13 +261,3 @@ const latestVideo   = videos[0];  // already sorted newest-first by the Python s
 
 </Layout>
 
-<style>
-  .btn-gold {
-    @apply inline-flex items-center gap-2 bg-gold hover:bg-gold-dark text-ebony font-medium text-sm px-5 py-2.5 rounded-lg transition-colors duration-200;
-  }
-  .btn-outline {
-    @apply inline-flex items-center gap-2 border border-surface-border hover:border-gold/50 text-ivory/80 hover:text-gold text-sm px-5 py-2.5 rounded-lg transition-colors duration-200;
-  }
-  /* Make thumbnail wrapper relative so duration badge positions correctly */
-  .video-card a.block { position: relative; }
-</style>

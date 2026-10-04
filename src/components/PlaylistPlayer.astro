@@ -37,7 +37,7 @@ const categories = showCategories
 
   <!-- Search -->
   <div class="relative">
-    <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-ivory/30 pointer-events-none" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+    <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-ivory-muted pointer-events-none" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
       <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
     </svg>
     <input
@@ -46,18 +46,20 @@ const categories = showCategories
       placeholder="Search tracks…"
       aria-label="Search playlist"
       autocomplete="off"
-      class="w-full bg-surface border border-surface-border rounded-lg pl-9 pr-4 py-2.5 text-sm text-ivory placeholder-ivory/30 focus:outline-none focus:border-gold/60 transition-colors"
+      class="search-field"
     />
   </div>
 
   <!-- Category chips -->
   {categories.length > 0 && (
-    <div id="category-chips" class="flex flex-wrap gap-2">
+    <div id="category-chips" class="flex flex-wrap gap-2" role="group" aria-label="Filter by region">
       {categories.map((cat, i) => (
         <button
+          type="button"
           data-category={cat}
-          class={`chip-btn px-3 py-1.5 rounded-full text-xs font-medium border transition-all
-            ${i === 0 ? "border-gold bg-gold/10 text-gold" : "border-surface-border text-ivory/50 hover:border-gold/40 hover:text-ivory/80"}`}>
+          aria-pressed={i === 0 ? "true" : "false"}
+          class={`chip-btn px-3.5 py-2 rounded-full text-xs font-medium border transition-all
+            ${i === 0 ? "border-gold bg-gold/10 text-gold" : "border-surface-border text-ivory-muted hover:border-gold/40 hover:text-ivory/80"}`}>
           {cat}
         </button>
       ))}
@@ -66,8 +68,8 @@ const categories = showCategories
 
   <!-- Controls row -->
   <div class="flex items-center justify-between gap-3 pt-1">
-    <p id="track-count" class="text-ivory/30 text-xs font-mono">{tracks.length} tracks</p>
-    <button id="shuffle-toggle" class="flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-lg border border-gold/40 bg-gold/10 text-gold transition-all">
+    <p id="track-count" class="text-ivory-muted text-xs font-mono" aria-live="polite">{tracks.length} tracks</p>
+    <button id="shuffle-toggle" type="button" aria-pressed="true" class="flex items-center gap-1.5 text-xs font-medium px-3.5 py-2 rounded-lg border border-gold/40 bg-gold/10 text-gold transition-all">
       <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" d="M16 3h5v5M4 20 20.5 3.5M21 16v5h-5M15 15l5.5 5.5M4 4l5 5"/>
       </svg>
@@ -76,7 +78,7 @@ const categories = showCategories
   </div>
 
   <!-- No-results -->
-  <p id="no-results" class="hidden text-center py-16 text-ivory/40 font-display italic text-lg">
+  <p id="no-results" class="hidden text-center py-16 text-ivory-muted font-display italic text-lg">
     No tracks found.
   </p>
 
@@ -90,15 +92,15 @@ const categories = showCategories
         data-title={t.title.toLowerCase()}
         data-category={t.category}
       >
-        <span class="track-play-indicator w-8 h-8 rounded-full border border-surface-border flex items-center justify-center flex-shrink-0 text-ivory/40 group-hover:text-gold group-hover:border-gold/50 transition-all">
+        <span class="track-play-indicator w-8 h-8 rounded-full border border-surface-border flex items-center justify-center flex-shrink-0 text-ivory-muted group-hover:text-gold group-hover:border-gold/50 transition-all">
           <svg class="icon-play w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
           <svg class="icon-playing w-3.5 h-3.5 hidden" fill="currentColor" viewBox="0 0 24 24"><rect x="6" y="6" width="4" height="12" rx="1"/><rect x="14" y="6" width="4" height="12" rx="1"/></svg>
         </span>
         <span class="flex-1 min-w-0">
           <span class="block text-ivory/85 text-sm font-medium truncate track-title-text">{t.title}</span>
-          <span class="block text-ivory/30 text-xs mt-0.5">{t.category}</span>
+          <span class="block text-ivory-muted text-xs mt-0.5">{t.category}</span>
         </span>
-        <span class="text-ivory/30 text-xs font-mono flex-shrink-0">{formatDuration(t.duration)}</span>
+        <span class="text-ivory-muted text-xs font-mono flex-shrink-0">{formatDuration(t.duration)}</span>
       </button>
     ))}
   </div>
@@ -109,25 +111,26 @@ const categories = showCategories
 </section>
 
 <!-- STICKY PLAYER -->
-<div id="player-bar" class="fixed bottom-0 left-0 right-0 z-40 border-t border-surface-border bg-ebony/95 backdrop-blur-sm translate-y-full transition-transform duration-300">
+<div id="player-bar" inert role="region" aria-label="Player" class="fixed bottom-0 left-0 right-0 z-40 border-t border-surface-border bg-ebony/95 backdrop-blur-sm translate-y-full transition-transform duration-300">
   <div class="max-w-3xl mx-auto px-4 sm:px-6 py-3">
     <!-- Progress -->
-    <input id="progress-slider" type="range" min="0" max="1000" value="0" class="w-full accent-gold cursor-pointer h-1 mb-2" />
+    <input id="progress-slider" type="range" min="0" max="1000" value="0" aria-label="Seek" aria-valuetext="0:00" class="w-full accent-gold cursor-pointer h-1 mb-2" />
     <div class="flex items-center gap-3">
       <div class="min-w-0 flex-1">
         <p id="now-playing-title" class="text-ivory text-sm font-medium truncate">—</p>
-        <p class="text-ivory/30 text-xs font-mono">
+        <p id="player-status" class="hidden text-gold-light text-xs truncate" role="status"></p>
+        <p class="text-ivory-muted text-xs font-mono">
           <span id="time-current">0:00</span> / <span id="time-total">0:00</span>
         </p>
       </div>
-      <button id="prev-btn" class="w-9 h-9 flex items-center justify-center text-ivory/60 hover:text-gold transition-colors flex-shrink-0" aria-label="Previous">
+      <button id="prev-btn" type="button" class="w-11 h-11 flex items-center justify-center text-ivory/60 hover:text-gold transition-colors flex-shrink-0" aria-label="Previous">
         <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M6 6h2v12H6zm3.5 6 8.5 6V6z"/></svg>
       </button>
-      <button id="play-pause-btn" class="w-11 h-11 rounded-full bg-gold hover:bg-gold-dark text-ebony flex items-center justify-center transition-colors flex-shrink-0" aria-label="Play/Pause">
+      <button id="play-pause-btn" class="w-11 h-11 rounded-full bg-gold hover:bg-gold-light text-ebony flex items-center justify-center transition-colors flex-shrink-0" type="button" aria-label="Play">
         <svg id="pb-play-icon" class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
         <svg id="pb-pause-icon" class="w-5 h-5 hidden" fill="currentColor" viewBox="0 0 24 24"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>
       </button>
-      <button id="next-btn" class="w-9 h-9 flex items-center justify-center text-ivory/60 hover:text-gold transition-colors flex-shrink-0" aria-label="Next">
+      <button id="next-btn" type="button" class="w-11 h-11 flex items-center justify-center text-ivory/60 hover:text-gold transition-colors flex-shrink-0" aria-label="Next">
         <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M16 6h2v12h-2zM6 6l8.5 6L6 18z"/></svg>
       </button>
     </div>
@@ -149,6 +152,9 @@ const categories = showCategories
     const progressSlider = $("progress-slider");
     const prevBtn = $("prev-btn");
     const nextBtn = $("next-btn");
+    const playerStatus = $("player-status");
+    const media = "mediaSession" in navigator ? navigator.mediaSession : null;
+    let failedInARow = 0;
     const shuffleToggle = $("shuffle-toggle");
     const searchInput = $("search-input");
     const trackList = $("track-list");
@@ -217,7 +223,14 @@ const categories = showCategories
       nowPlayingTitle.textContent = track.title;
       highlightRow(index);
       playerBar.classList.remove("translate-y-full");
+      playerBar.inert = false;
+      if (media) media.metadata = new MediaMetadata({ title: track.title, artist: siteName, album: track.category });
       document.title = `▶ ${track.title} — ${siteName}`;
+    }
+
+    function showStatus(msg) {
+      playerStatus.textContent = msg;
+      playerStatus.classList.toggle("hidden", !msg);
     }
 
     function playFromRow(index) {
@@ -266,17 +279,47 @@ const categories = showCategories
     audio.addEventListener("play", () => {
       playIcon.classList.add("hidden");
       pauseIcon.classList.remove("hidden");
+      playPauseBtn.setAttribute("aria-label", "Pause");
+      if (media) media.playbackState = "playing";
     });
     audio.addEventListener("pause", () => {
       playIcon.classList.remove("hidden");
       pauseIcon.classList.add("hidden");
+      playPauseBtn.setAttribute("aria-label", "Play");
+      if (media) media.playbackState = "paused";
     });
+    audio.addEventListener("playing", () => { failedInARow = 0; showStatus(""); });
     audio.addEventListener("ended", playNext);
+
+    // A missing or broken file skips ahead instead of stalling the whole set
+    audio.addEventListener("error", () => {
+      if (currentIndex === -1) return;
+      failedInARow++;
+      if (failedInARow >= Math.min(queue.length, 5)) {
+        failedInARow = 0;
+        showStatus("Tracks aren't loading right now. Check your connection, then press play to retry.");
+        return;
+      }
+      showStatus("Couldn't load \u201c" + tracks[currentIndex].title + "\u201d, skipping.");
+      playNext();
+    });
+
+    // Lock-screen, headphone and media-key controls for background listening
+    if (media) {
+      media.setActionHandler("play", () => audio.play().catch(() => {}));
+      media.setActionHandler("pause", () => audio.pause());
+      media.setActionHandler("previoustrack", playPrev);
+      media.setActionHandler("nexttrack", playNext);
+      try {
+        media.setActionHandler("seekto", (d) => { if (audio.duration) audio.currentTime = d.seekTime; });
+      } catch (_) {}
+    }
     audio.addEventListener("timeupdate", () => {
       if (!audio.duration) return;
       timeCurrent.textContent = fmtTime(audio.currentTime);
       timeTotal.textContent = fmtTime(audio.duration);
       progressSlider.value = String(Math.round((audio.currentTime / audio.duration) * 1000));
+      progressSlider.setAttribute("aria-valuetext", fmtTime(audio.currentTime) + " of " + fmtTime(audio.duration));
     });
     progressSlider.addEventListener("input", () => {
       if (!audio.duration) return;
@@ -286,11 +329,12 @@ const categories = showCategories
     // Shuffle toggle
     shuffleToggle.addEventListener("click", () => {
       shuffleOn = !shuffleOn;
+      shuffleToggle.setAttribute("aria-pressed", String(shuffleOn));
       shuffleToggle.classList.toggle("border-gold/40", shuffleOn);
       shuffleToggle.classList.toggle("bg-gold/10", shuffleOn);
       shuffleToggle.classList.toggle("text-gold", shuffleOn);
       shuffleToggle.classList.toggle("border-surface-border", !shuffleOn);
-      shuffleToggle.classList.toggle("text-ivory/50", !shuffleOn);
+      shuffleToggle.classList.toggle("text-ivory-muted", !shuffleOn);
       if (currentIndex !== -1) buildQueue(currentIndex);
     });
 
@@ -316,11 +360,12 @@ const categories = showCategories
         activeCategory = chip.dataset.category;
         chips.forEach((c) => {
           const active = c === chip;
+          c.setAttribute("aria-pressed", String(active));
           c.classList.toggle("border-gold", active);
           c.classList.toggle("bg-gold/10", active);
           c.classList.toggle("text-gold", active);
           c.classList.toggle("border-surface-border", !active);
-          c.classList.toggle("text-ivory/50", !active);
+          c.classList.toggle("text-ivory-muted", !active);
         });
         applyFilters();
       });

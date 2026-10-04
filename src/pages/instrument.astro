@@ -8,7 +8,7 @@ const jsonLd = {
   "@type": "WebApplication",
   "name": "Free Virtual Piano & Kalimba — Big Piano Small Piano",
   "description": "Play virtual piano and kalimba in your browser. Switch instruments, change sounds, use the built-in metronome with wood/electronic/drum beats, and record your playing.",
-  "url": "https://bigpianosmallpiano.pages.dev/instrument",
+  "url": "https://bigpianosmallpiano.com/instrument",
   "applicationCategory": "MusicApplication",
   "operatingSystem": "Any",
   "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
@@ -30,7 +30,7 @@ const jsonLd = {
       <h1 class="font-display text-4xl sm:text-5xl font-semibold text-ivory leading-tight">
         Virtual <span class="italic text-gold">Instrument</span>
       </h1>
-      <p class="text-ivory/50 text-sm max-w-md">Play piano or kalimba in your browser. Record your performance, practice with the metronome.</p>
+      <p class="text-ivory-muted text-sm max-w-md">Play piano or kalimba in your browser. Record your performance, practice with the metronome.</p>
     </div>
   </section>
 
@@ -45,7 +45,7 @@ const jsonLd = {
           🎹 Piano
         </button>
         <button data-inst="kalimba" id="btn-kalimba"
-          class="inst-btn px-4 py-2 text-sm font-medium text-ivory/50 hover:text-ivory transition-all">
+          class="inst-btn px-4 py-2 text-sm font-medium text-ivory-muted hover:text-ivory transition-all">
           ✦ Kalimba
         </button>
       </div>
@@ -61,14 +61,14 @@ const jsonLd = {
 
       <!-- Octave (piano) -->
       <div id="octave-ctrl" class="flex items-center gap-2">
-        <button id="oct-down" class="w-7 h-7 rounded border border-surface-border text-ivory/50 hover:text-gold text-sm flex items-center justify-center">−</button>
+        <button id="oct-down" type="button" aria-label="Octave down" class="w-10 h-10 rounded-lg border border-surface-border text-ivory-muted hover:text-gold text-base flex items-center justify-center">−</button>
         <span class="text-ivory/60 text-xs font-mono">Oct <span id="oct-display">4</span></span>
-        <button id="oct-up"   class="w-7 h-7 rounded border border-surface-border text-ivory/50 hover:text-gold text-sm flex items-center justify-center">+</button>
+        <button id="oct-up"   type="button" aria-label="Octave up" class="w-10 h-10 rounded-lg border border-surface-border text-ivory-muted hover:text-gold text-base flex items-center justify-center">+</button>
       </div>
 
       <!-- Volume -->
       <div class="flex items-center gap-2 ml-auto">
-        <span class="text-ivory/30 text-xs font-mono">Vol</span>
+        <span class="text-ivory-muted text-xs font-mono">Vol</span>
         <input id="inst-vol" type="range" min="0" max="100" value="75"
           class="w-20 accent-gold cursor-pointer" />
       </div>
@@ -80,10 +80,10 @@ const jsonLd = {
     <div class="bg-surface border border-surface-border rounded-xl overflow-hidden">
       <!-- Keyboard label row -->
       <div class="px-4 pt-3 pb-1 flex items-center justify-between">
-        <p class="text-ivory/30 text-xs font-mono">Click keys or use keyboard (A S D F G H J K = white keys, W E T Y U = black keys)</p>
+        <p class="text-ivory-muted text-xs font-mono">Click keys or use keyboard (A S D F G H J K = white keys, W E T Y U = black keys)</p>
       </div>
       <!-- Piano keys -->
-      <div id="piano-keys" class="relative flex h-36 sm:h-44 px-3 pb-3 select-none overflow-x-auto">
+      <div id="piano-keys" role="group" aria-label="Piano keyboard. Play with keys A to K, and W E T Y U for black keys." class="relative flex h-36 sm:h-44 px-3 pb-3 select-none overflow-x-auto" style="touch-action:none;">
         <!-- injected by JS -->
       </div>
     </div>
@@ -92,7 +92,7 @@ const jsonLd = {
   <!-- KALIMBA -->
   <div id="kalimba-section" class="hidden max-w-4xl mx-auto px-4 sm:px-6 pt-4">
     <div class="bg-surface border border-surface-border rounded-xl p-6">
-      <p class="text-ivory/30 text-xs font-mono text-center mb-5">Click tines or use number keys 1–9 then Q W E R T Y U</p>
+      <p class="text-ivory-muted text-xs font-mono text-center mb-5">Click tines or use number keys 1–9 then Q W E R T Y U</p>
       <!-- Kalimba tines -->
       <div id="kalimba-tines" class="flex items-end justify-center gap-1.5 h-40"></div>
       <!-- Note labels below tines -->
@@ -108,11 +108,11 @@ const jsonLd = {
 
         <!-- Metronome -->
         <div class="space-y-3">
-          <p class="text-ivory/40 text-xs uppercase tracking-widest font-mono">Metronome</p>
+          <p class="text-ivory-muted text-xs uppercase tracking-widest font-mono">Metronome</p>
           <div class="flex items-center gap-3">
-            <button id="m-minus" class="w-8 h-8 rounded border border-surface-border text-ivory/50 hover:text-gold text-lg flex items-center justify-center">−</button>
+            <button id="m-minus" type="button" aria-label="Slower" class="w-10 h-10 rounded-lg border border-surface-border text-ivory-muted hover:text-gold text-lg flex items-center justify-center">−</button>
             <span id="m-bpm" class="font-display text-3xl font-semibold text-ivory min-w-[52px] text-center tabular-nums">80</span>
-            <button id="m-plus"  class="w-8 h-8 rounded border border-surface-border text-ivory/50 hover:text-gold text-lg flex items-center justify-center">+</button>
+            <button id="m-plus"  type="button" aria-label="Faster" class="w-10 h-10 rounded-lg border border-surface-border text-ivory-muted hover:text-gold text-lg flex items-center justify-center">+</button>
             <input id="m-slider" type="range" min="20" max="220" value="80" class="flex-1 accent-gold cursor-pointer" />
           </div>
           <!-- Beat dots -->
@@ -123,7 +123,7 @@ const jsonLd = {
               {[2,3,4].map(n => (
                 <button data-sig={n}
                   class={`sig-btn w-8 h-8 rounded border text-xs font-mono transition-all
-                    ${n===4?'border-gold bg-gold/10 text-gold':'border-surface-border text-ivory/40 hover:border-gold/40'}`}>
+                    ${n===4?'border-gold bg-gold/10 text-gold':'border-surface-border text-ivory-muted hover:border-gold/40'}`}>
                   {n}
                 </button>
               ))}
@@ -138,7 +138,7 @@ const jsonLd = {
             </select>
             <!-- Start/stop -->
             <button id="m-start"
-              class="flex items-center gap-1.5 bg-gold hover:bg-gold-dark text-ebony text-xs font-semibold px-4 py-2 rounded-lg transition-colors ml-auto">
+              class="flex items-center gap-1.5 bg-gold hover:bg-gold-light text-ebony text-xs font-semibold px-4 py-2 rounded-lg transition-colors ml-auto">
               <svg id="m-play-icon" class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
               <svg id="m-stop-icon" class="w-3.5 h-3.5 hidden" fill="currentColor" viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="1"/></svg>
               <span id="m-start-label">Start</span>
@@ -148,8 +148,8 @@ const jsonLd = {
 
         <!-- Recorder -->
         <div class="space-y-3 sm:border-l sm:border-surface-border sm:pl-4">
-          <p class="text-ivory/40 text-xs uppercase tracking-widest font-mono">Recorder</p>
-          <p class="text-ivory/40 text-xs">Records your playing. Download as WAV when done.</p>
+          <p class="text-ivory-muted text-xs uppercase tracking-widest font-mono">Recorder</p>
+          <p class="text-ivory-muted text-xs">Records your playing. Download as WAV when done.</p>
 
           <div class="flex items-center gap-2">
             <!-- Record -->
@@ -159,10 +159,10 @@ const jsonLd = {
               <span id="rec-label">Record</span>
             </button>
             <!-- Timer -->
-            <span id="rec-timer" class="font-mono text-sm text-ivory/30">0:00</span>
+            <span id="rec-timer" class="font-mono text-sm text-ivory-muted">0:00</span>
             <!-- Download -->
             <a id="rec-download" href="#" download="bigpiano-recording.wav"
-              class="hidden ml-auto flex items-center gap-1.5 bg-gold hover:bg-gold-dark text-ebony text-xs font-semibold px-3 py-2 rounded-lg transition-colors">
+              class="hidden ml-auto flex items-center gap-1.5 bg-gold hover:bg-gold-light text-ebony text-xs font-semibold px-3 py-2 rounded-lg transition-colors">
               ↓ Download
             </a>
           </div>
@@ -352,7 +352,7 @@ const jsonLd = {
       whiteKeys.forEach((key, i) => {
         const el = document.createElement("div");
         el.className = [
-          "white-key absolute bottom-0 rounded-b-lg border border-gray-700",
+          "white-key absolute bottom-0 rounded-b-lg border border-surface-border",
           "cursor-pointer transition-colors duration-75",
           "bg-ivory hover:bg-gold/20 active:bg-gold/40",
           "flex items-end justify-center pb-1",
@@ -372,7 +372,7 @@ const jsonLd = {
           el.className = [
             "black-key absolute rounded-b-lg",
             "cursor-pointer z-10 transition-colors duration-75",
-            "bg-ebony hover:bg-gray-700 active:bg-gold/60",
+            "bg-ebony hover:bg-surface-raised active:bg-gold/60",
           ].join(" ");
           // Position: between white keys wi and wi+1 in octave o
           const whitePos = o * 7 + wi + 0.65;
@@ -388,11 +388,17 @@ const jsonLd = {
         const freq = parseFloat(key.dataset.freq);
         let releaser = null;
 
-        key.addEventListener("mousedown",  e => { e.preventDefault(); releaser = playNote(freq); key.classList.add("active"); });
-        key.addEventListener("mouseup",    () => { if(releaser){releaser();releaser=null;} key.classList.remove("active"); });
-        key.addEventListener("mouseleave", () => { if(releaser){releaser();releaser=null;} key.classList.remove("active"); });
-        key.addEventListener("touchstart", e => { e.preventDefault(); releaser = playNote(freq); });
-        key.addEventListener("touchend",   () => { if(releaser){releaser();releaser=null;} });
+        const release = () => { if(releaser){releaser();releaser=null;} key.classList.remove("active"); };
+        key.setAttribute("aria-hidden", "true");
+        key.addEventListener("pointerdown", e => {
+          if (e.button !== 0) return;
+          e.preventDefault();
+          release();
+          releaser = playNote(freq);
+          key.classList.add("active");
+        });
+        // Any way a press can end (lift, slide off, cancelled touch) releases the note
+        ["pointerup", "pointerleave", "pointercancel"].forEach(ev => key.addEventListener(ev, release));
       });
     }
 
@@ -417,13 +423,16 @@ const jsonLd = {
         tine.className = "tine flex-shrink-0 rounded-t-full cursor-pointer transition-all active:scale-95 border-2 border-gold/30 hover:border-gold";
         tine.style.cssText = `width:22px; height:${height}px; background: linear-gradient(180deg, #E8CC80 0%, #8C6A1F 100%);`;
         tine.dataset.freq   = freq;
-        tine.addEventListener("mousedown",  e => { e.preventDefault(); playKalimbaNote(freq); tine.style.opacity="0.6"; });
-        tine.addEventListener("mouseup",    () => { tine.style.opacity="1"; });
-        tine.addEventListener("touchstart", e => { e.preventDefault(); playKalimbaNote(freq); });
+        tine.type = "button";
+        tine.setAttribute("aria-label", note.name);
+        tine.addEventListener("pointerdown", e => { if (e.button !== 0) return; e.preventDefault(); playKalimbaNote(freq); tine.style.opacity="0.6"; });
+        ["pointerup", "pointerleave", "pointercancel"].forEach(ev => tine.addEventListener(ev, () => { tine.style.opacity="1"; }));
+        // Enter / Space from the keyboard
+        tine.addEventListener("click", e => { if (e.detail === 0) playKalimbaNote(freq); });
         kalimbaTines.appendChild(tine);
 
         const label = document.createElement("span");
-        label.className = "text-ivory/40 font-mono flex-shrink-0 text-center";
+        label.className = "text-ivory-muted font-mono flex-shrink-0 text-center";
         label.style.cssText = "width:22px; font-size:9px";
         label.textContent = note.name;
         kalimbaLabels.appendChild(label);
@@ -541,7 +550,7 @@ const jsonLd = {
       mStartLabel.textContent = "Stop";
       mPlayIcon.classList.add("hidden"); mStopIcon.classList.remove("hidden");
       mStart.classList.replace("bg-gold","bg-red-700");
-      mStart.classList.replace("hover:bg-gold-dark","hover:bg-red-900");
+      mStart.classList.replace("hover:bg-gold-light","hover:bg-red-900");
       mStart.classList.replace("text-ebony","text-white");
     }
 
@@ -550,7 +559,7 @@ const jsonLd = {
       mStartLabel.textContent = "Start";
       mPlayIcon.classList.remove("hidden"); mStopIcon.classList.add("hidden");
       mStart.classList.replace("bg-red-700","bg-gold");
-      mStart.classList.replace("hover:bg-red-900","hover:bg-gold-dark");
+      mStart.classList.replace("hover:bg-red-900","hover:bg-gold-light");
       mStart.classList.replace("text-white","text-ebony");
     }
 
@@ -570,7 +579,7 @@ const jsonLd = {
       sigBtns.forEach(s => {
         const a = Number(s.dataset.sig) === mBeats;
         s.classList.toggle("border-gold",a); s.classList.toggle("bg-gold/10",a); s.classList.toggle("text-gold",a);
-        s.classList.toggle("border-surface-border",!a); s.classList.toggle("text-ivory/40",!a);
+        s.classList.toggle("border-surface-border",!a); s.classList.toggle("text-ivory-muted",!a);
       });
     }));
 
@@ -640,7 +649,7 @@ const jsonLd = {
         instBtns.forEach(b => {
           const a = b === btn;
           b.classList.toggle("bg-gold",a); b.classList.toggle("text-ebony",a);
-          b.classList.toggle("text-ivory/50",!a);
+          b.classList.toggle("text-ivory-muted",!a);
         });
         if (instrument === "piano") {
           pianoSection.classList.remove("hidden");

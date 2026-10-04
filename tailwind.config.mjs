@@ -6,7 +6,10 @@ export default {
     extend: {
       colors: {
         // ── Piano palette ──────────────────────────────────────────────
-        ivory:  "#F8F5EE",         // warm white — like piano keys
+        ivory: {
+          DEFAULT: "#F8F5EE",      // warm white — like piano keys
+          muted:   "#8F8B83",      // secondary text; ≥4.5:1 on every dark surface
+        },
         ebony:  "#0D0D0D",         // near-black — like the body of a grand
         gold: {
           DEFAULT: "#C9A84C",      // aged gold
@@ -31,8 +34,8 @@ export default {
           "repeating-linear-gradient(90deg, transparent 0px, transparent 18px, rgba(201,168,76,0.04) 18px, rgba(201,168,76,0.04) 20px)",
       },
       boxShadow: {
-        "gold-glow": "0 0 24px rgba(201,168,76,0.18)",
         "card":      "0 2px 12px rgba(0,0,0,0.6)",
+        "lift":      "0 8px 24px -6px rgba(0,0,0,0.7)",
       },
       animation: {
         "fade-up":   "fadeUp 0.5s ease forwards",

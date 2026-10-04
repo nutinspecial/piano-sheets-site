@@ -8,6 +8,8 @@ export interface Props {
   image?:      string;
   type?:       string;
   noindex?:    boolean;
+  /** Floating coffee button. Off on pages that already carry an inline ask. */
+  floatingCoffee?: boolean;
 }
 
 const {
@@ -16,9 +18,10 @@ const {
   image    = "/og-default.jpg",
   type     = "website",
   noindex  = false,
+  floatingCoffee = true,
 } = Astro.props;
 
-const siteUrl      = "https://bigpianosmallpiano.pages.dev";
+const siteUrl      = "https://bigpianosmallpiano.com";
 const canonicalURL = new URL(Astro.url.pathname, siteUrl).href;
 const fullTitle    = title.includes("Big Piano") ? title : `${title} | Big Piano Small Piano`;
 
@@ -32,7 +35,7 @@ const SOCIALS = {
 ---
 
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en" class="motion-safe:scroll-smooth">
 <head>
   <!-- Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-TFZRBF4T9L"></script>
@@ -63,30 +66,35 @@ const SOCIALS = {
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500&family=DM+Mono&display=swap" rel="stylesheet" />
   <link rel="preconnect" href="https://www.youtube.com" />
-  <style>
+  <style is:global>
     :root { color-scheme: dark; }
-    html  { background-color: #0D0D0D; }
-    body  { font-family: 'DM Sans', system-ui, sans-serif; }
-    .gold-rule { border:none;height:1px;background:linear-gradient(90deg,transparent,#C9A84C 40%,#C9A84C 60%,transparent); }
-    .reveal { opacity:0;transform:translateY(16px);transition:opacity .5s ease,transform .5s ease; }
-    .reveal.visible { opacity:1;transform:none; }
+    html  { background-color: theme('colors.ebony'); }
+    body  { font-family: theme('fontFamily.body'); }
+    ::selection { background: theme('colors.gold.DEFAULT / 35%'); color: theme('colors.ivory.DEFAULT'); }
+    :focus-visible { outline: 2px solid theme('colors.gold.DEFAULT'); outline-offset: 2px; }
+    .gold-rule { border:none;height:1px;background:linear-gradient(90deg,transparent,theme('colors.gold.DEFAULT') 40%,theme('colors.gold.DEFAULT') 60%,transparent); }
+
+    /* Shared controls */
+    .btn-gold    { @apply inline-flex items-center gap-2 bg-gold hover:bg-gold-light text-ebony font-medium text-sm px-5 py-2.5 rounded-lg transition-colors duration-200; }
+    .btn-outline { @apply inline-flex items-center gap-2 border border-surface-border hover:border-gold/50 text-ivory/80 hover:text-gold text-sm px-5 py-2.5 rounded-lg transition-colors duration-200; }
+    .search-field { @apply w-full bg-surface border border-surface-border rounded-lg pl-9 pr-4 py-2.5 text-sm text-ivory placeholder-ivory-muted focus:outline-none focus-visible:outline-none focus:border-gold/60 focus:ring-1 focus:ring-gold/40 transition-colors; }
 
     /* Social icon button */
-    .social-icon { display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:8px;border:1px solid rgba(255,255,255,.1);color:rgba(248,245,238,.4);transition:color .15s,border-color .15s,background .15s; }
-    .social-icon:hover { color:#C9A84C;border-color:rgba(201,168,76,.4);background:rgba(201,168,76,.06); }
+    .social-icon { display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:8px;border:1px solid theme('colors.surface.border');color:theme('colors.ivory.muted');transition:color .15s,border-color .15s,background .15s; }
+    .social-icon:hover { color:theme('colors.gold.DEFAULT');border-color:theme('colors.gold.DEFAULT / 40%');background:theme('colors.gold.DEFAULT / 6%'); }
     .social-icon svg { width:16px;height:16px; }
 
     /* Mobile nav */
     #mobile-drawer { display:none;position:fixed;inset:0;z-index:100; }
     #mobile-drawer.open { display:block; }
-    #drawer-backdrop { position:absolute;inset:0;background:rgba(0,0,0,.7); }
-    #drawer-panel { position:absolute;top:0;right:0;bottom:0;width:72vw;max-width:280px;background:#141414;border-left:1px solid #2A2A2A;display:flex;flex-direction:column;padding:1.5rem;gap:.25rem;overflow-y:auto; }
-    .drawer-link { display:block;padding:.75rem 1rem;color:rgba(248,245,238,.7);font-size:.95rem;border-radius:8px;text-decoration:none;transition:background .15s,color .15s; }
-    .drawer-link:hover,.drawer-link:active { background:#1C1C1C;color:#C9A84C; }
-    .drawer-link.gold { color:#C9A84C; }
-    .drawer-divider { height:1px;background:#2A2A2A;margin:.5rem 0; }
-    .drawer-close { align-self:flex-end;background:none;border:none;color:rgba(248,245,238,.4);font-size:1.5rem;cursor:pointer;padding:.25rem;margin-bottom:.5rem;line-height:1; }
-    .coffee-btn:hover { box-shadow:0 0 20px rgba(201,168,76,.25); }
+    #drawer-backdrop { position:absolute;inset:0;background:rgb(0 0 0 / .7); }
+    #drawer-panel { position:absolute;top:0;right:0;bottom:0;width:72vw;max-width:280px;background:theme('colors.surface.DEFAULT');border-left:1px solid theme('colors.surface.border');display:flex;flex-direction:column;padding:1.5rem;gap:.25rem;overflow-y:auto; }
+    .drawer-link { display:block;padding:.75rem 1rem;color:theme('colors.ivory.DEFAULT / 75%');font-size:.95rem;border-radius:8px;text-decoration:none;transition:background .15s,color .15s; }
+    .drawer-link:hover,.drawer-link:active { background:theme('colors.surface.raised');color:theme('colors.gold.DEFAULT'); }
+    .drawer-link.gold { color:theme('colors.gold.DEFAULT'); }
+    .drawer-divider { height:1px;background:theme('colors.surface.border');margin:.5rem 0; }
+    .drawer-close { align-self:flex-end;display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;background:none;border:none;color:theme('colors.ivory.muted');cursor:pointer;margin-bottom:.5rem;border-radius:8px; }
+    .drawer-close:hover { color:theme('colors.gold.DEFAULT'); }
   </style>
 </head>
 
@@ -105,7 +113,7 @@ const SOCIALS = {
       </a>
 
       <!-- Desktop nav links -->
-      <div class="hidden sm:flex items-center gap-0.5 text-sm flex-1 justify-center">
+      <div class="hidden xl:flex items-center gap-0.5 text-sm flex-1 justify-center">
         <a href="/"           class="nav-link">Videos</a>
         <a href="/scores"     class="nav-link">Free Scores</a>
         <a href="/playlist"   class="nav-link">Playlist</a>
@@ -113,7 +121,6 @@ const SOCIALS = {
         <a href="/tuner"      class="nav-link">Tuner</a>
         <a href="/instrument"  class="nav-link">Instrument</a>
         <a href="/note-reader" class="nav-link">Note Reader</a>
-        <a href="/tiktok"      class="nav-link">TikTok</a>
       </div>
 
       <!-- Desktop social icons + coffee -->
@@ -142,17 +149,17 @@ const SOCIALS = {
         )}
         <!-- Coffee button -->
         <a href={SOCIALS.coffee} target="_blank" rel="noopener noreferrer"
-          class="coffee-btn ml-1 inline-flex items-center gap-1.5 border border-gold/30 hover:border-gold/60 text-gold/70 hover:text-gold text-xs px-3 py-1.5 rounded-lg transition-all duration-200">
+          class="ml-1 inline-flex items-center gap-1.5 h-10 border border-gold/30 hover:border-gold/60 text-gold/80 hover:text-gold text-xs px-3 rounded-lg transition-all duration-200">
           ☕ Support
         </a>
       </div>
 
       <!-- Mobile hamburger -->
-      <button id="hamburger-btn" aria-label="Open menu"
-        class="sm:hidden flex flex-col justify-center items-center w-10 h-10 gap-1.5 rounded-lg border border-surface-border hover:border-gold/40 transition-colors">
-        <span class="w-5 h-0.5 bg-ivory/70 rounded-full"></span>
-        <span class="w-5 h-0.5 bg-ivory/70 rounded-full"></span>
-        <span class="w-5 h-0.5 bg-ivory/70 rounded-full"></span>
+      <button id="hamburger-btn" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-drawer"
+        class="xl:hidden flex flex-col justify-center items-center w-11 h-11 gap-1.5 rounded-lg border border-surface-border hover:border-gold/40 transition-colors">
+        <span class="w-5 h-0.5 bg-ivory/70 rounded-full" aria-hidden="true"></span>
+        <span class="w-5 h-0.5 bg-ivory/70 rounded-full" aria-hidden="true"></span>
+        <span class="w-5 h-0.5 bg-ivory/70 rounded-full" aria-hidden="true"></span>
       </button>
     </nav>
   </header>
@@ -161,21 +168,23 @@ const SOCIALS = {
   <div id="mobile-drawer" role="dialog" aria-modal="true" aria-label="Navigation menu">
     <div id="drawer-backdrop"></div>
     <div id="drawer-panel">
-      <button id="drawer-close" class="drawer-close" aria-label="Close menu">✕</button>
+      <button id="drawer-close" type="button" class="drawer-close" aria-label="Close menu">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
+      </button>
       <a href="/"           class="drawer-link">Videos</a>
       <a href="/scores"     class="drawer-link">Free Scores</a>
-      <a href="/playlist"   class="drawer-link">🎧 Playlist</a>
-      <a href="/playlist/nod-krai" class="drawer-link text-sm text-ivory/60">↳ Nod Krai region</a>
+      <a href="/playlist"   class="drawer-link">Playlist</a>
+      <a href="/playlist/nod-krai" class="drawer-link pl-8 text-sm">Nod Krai region</a>
       <div class="drawer-divider"></div>
-      <a href="/metronome"  class="drawer-link">🎵 Metronome</a>
-      <a href="/tuner"      class="drawer-link">🎸 Tuner</a>
-      <a href="/instrument"  class="drawer-link">🎹 Instrument</a>
-      <a href="/note-reader" class="drawer-link">🎵 Note Reader</a>
+      <a href="/metronome"  class="drawer-link">Metronome</a>
+      <a href="/tuner"      class="drawer-link">Tuner</a>
+      <a href="/instrument"  class="drawer-link">Instrument</a>
+      <a href="/note-reader" class="drawer-link">Note Reader</a>
       <div class="drawer-divider"></div>
-      <a href="/tiktok"     class="drawer-link">
+      <a href={SOCIALS.tiktok} target="_blank" rel="noopener noreferrer" class="drawer-link">
         <span class="flex items-center gap-2">
-          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.22 8.22 0 0 0 4.78 1.52V6.76a4.84 4.84 0 0 1-1.01-.07z"/></svg>
-          TikTok
+          <svg class="w-4 h-4" aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.22 8.22 0 0 0 4.78 1.52V6.76a4.84 4.84 0 0 1-1.01-.07z"/></svg>
+          TikTok ↗
         </span>
       </a>
       <a href={SOCIALS.youtube} target="_blank" rel="noopener noreferrer" class="drawer-link gold">
@@ -205,11 +214,11 @@ const SOCIALS = {
       <div class="flex flex-col sm:flex-row items-center justify-between gap-4 py-5 border-b border-surface-border">
         <div class="text-center sm:text-left">
           <p class="font-display text-ivory/80 text-base mb-1">Enjoying the free music &amp; tools?</p>
-          <p class="text-ivory/40 text-xs max-w-xs leading-relaxed">Every score, video and tool is free — a coffee helps keep it that way.</p>
+          <p class="text-ivory-muted text-xs max-w-xs leading-relaxed">Every score, video and tool is free — a coffee helps keep it that way.</p>
         </div>
         <a href={SOCIALS.coffee} target="_blank" rel="noopener noreferrer"
-          class="coffee-btn flex-shrink-0 inline-flex items-center gap-2 bg-gold hover:bg-gold-dark text-ebony font-semibold text-sm px-5 py-3 rounded-xl transition-all duration-200">
-          <span class="text-base">☕</span> Buy me a coffee
+          class="flex-shrink-0 inline-flex items-center gap-2 bg-gold hover:bg-gold-light text-ebony font-semibold text-sm px-5 py-3 rounded-xl transition-all duration-200">
+          Buy me a coffee
         </a>
       </div>
 
@@ -217,7 +226,7 @@ const SOCIALS = {
       <div class="flex flex-col items-center gap-5">
 
         <!-- Nav links -->
-        <div class="flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-xs text-ivory/40">
+        <div class="flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-sm text-ivory-muted">
           <a href="/"           class="hover:text-gold transition-colors">Videos</a>
           <a href="/scores"     class="hover:text-gold transition-colors">Free Scores</a>
           <a href="/playlist"   class="hover:text-gold transition-colors">Playlist</a>
@@ -225,7 +234,7 @@ const SOCIALS = {
           <a href="/tuner"      class="hover:text-gold transition-colors">Tuner</a>
           <a href="/instrument"  class="hover:text-gold transition-colors">Instrument</a>
           <a href="/note-reader" class="hover:text-gold transition-colors">Note Reader</a>
-          <a href="/tiktok"      class="hover:text-gold transition-colors">TikTok</a>
+          <a href={SOCIALS.tiktok} target="_blank" rel="noopener noreferrer" class="hover:text-gold transition-colors">TikTok ↗</a>
         </div>
 
         <!-- Social icons row -->
@@ -251,31 +260,46 @@ const SOCIALS = {
           )}
         </div>
 
-        <p class="text-ivory/25 text-xs">&copy; {new Date().getFullYear()} Big Piano Small Piano</p>
+        <p class="text-ivory-muted text-xs">&copy; {new Date().getFullYear()} Big Piano Small Piano</p>
       </div>
     </div>
   </footer>
 
   <!-- FLOATING COFFEE -->
-  <CoffeeButton variant="floating" />
+  {floatingCoffee && <CoffeeButton variant="floating" />}
 
   <script>
     const hamburger = document.getElementById("hamburger-btn");
     const drawer    = document.getElementById("mobile-drawer");
     const backdrop  = document.getElementById("drawer-backdrop");
     const closeBtn  = document.getElementById("drawer-close");
-    function openDrawer()  { drawer.classList.add("open");    document.body.style.overflow="hidden"; }
-    function closeDrawer() { drawer.classList.remove("open"); document.body.style.overflow=""; }
+    const focusable = () => Array.from(drawer.querySelectorAll("a, button"));
+    function openDrawer() {
+      drawer.classList.add("open");
+      document.body.style.overflow = "hidden";
+      hamburger.setAttribute("aria-expanded", "true");
+      closeBtn.focus();
+    }
+    function closeDrawer() {
+      if (!drawer.classList.contains("open")) return;
+      drawer.classList.remove("open");
+      document.body.style.overflow = "";
+      hamburger.setAttribute("aria-expanded", "false");
+      hamburger.focus();
+    }
     hamburger.addEventListener("click", openDrawer);
     closeBtn.addEventListener("click",  closeDrawer);
     backdrop.addEventListener("click",  closeDrawer);
     drawer.querySelectorAll("a").forEach(a => a.addEventListener("click", closeDrawer));
-    document.addEventListener("keydown", e => { if(e.key==="Escape") closeDrawer(); });
-    const observer = new IntersectionObserver(
-      entries => entries.forEach(e => { if(e.isIntersecting) e.target.classList.add("visible"); }),
-      { threshold: 0.08 }
-    );
-    document.querySelectorAll(".reveal").forEach(el => observer.observe(el));
+    document.addEventListener("keydown", e => {
+      if (!drawer.classList.contains("open")) return;
+      if (e.key === "Escape") { closeDrawer(); return; }
+      if (e.key !== "Tab") return;
+      const items = focusable();
+      const first = items[0], last = items[items.length - 1];
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    });
   </script>
 </body>
 </html>

@@ -36,7 +36,7 @@ const msg = message ?? defaultMessages[variant];
       href={URL}
       target="_blank"
       rel="noopener noreferrer"
-      class="coffee-btn flex-shrink-0 inline-flex items-center gap-2 bg-gold hover:bg-gold-dark text-ebony font-semibold text-sm px-4 py-2.5 rounded-lg transition-all duration-200 hover:shadow-gold-glow whitespace-nowrap"
+      class="coffee-btn flex-shrink-0 inline-flex items-center gap-2 bg-gold hover:bg-gold-light text-ebony font-semibold text-sm px-4 py-2.5 rounded-lg transition-all duration-200 whitespace-nowrap"
     >
       <span class="text-base leading-none">☕</span>
       Buy me a coffee
@@ -58,12 +58,12 @@ const msg = message ?? defaultMessages[variant];
       href={URL}
       target="_blank"
       rel="noopener noreferrer"
-      class="coffee-btn inline-flex items-center gap-2.5 bg-gold hover:bg-gold-dark text-ebony font-semibold text-base px-7 py-3.5 rounded-xl transition-all duration-200 hover:shadow-gold-glow mt-2"
+      class="coffee-btn inline-flex items-center gap-2.5 bg-gold hover:bg-gold-light text-ebony font-semibold text-base px-7 py-3.5 rounded-xl transition-all duration-200 mt-2"
     >
       <span class="text-lg leading-none">☕</span>
       Buy me a coffee
     </a>
-    <p class="text-ivory/25 text-xs">No pressure — every coffee is genuinely appreciated 🎹</p>
+    <p class="text-ivory-muted text-xs">No pressure — every coffee is genuinely appreciated 🎹</p>
   </section>
 )}
 
@@ -88,7 +88,7 @@ const msg = message ?? defaultMessages[variant];
       rel="noopener noreferrer"
       id="coffee-fab"
       aria-label="Buy me a coffee"
-      class="coffee-btn flex items-center gap-2 bg-gold hover:bg-gold-dark text-ebony font-semibold text-sm px-4 py-3 rounded-full shadow-gold-glow transition-all duration-200 hover:scale-105 whitespace-nowrap"
+      class="coffee-btn flex items-center gap-2 bg-gold hover:bg-gold-light text-ebony font-semibold text-sm px-4 py-3 rounded-full shadow-lift transition-all duration-200 motion-safe:hover:scale-105 whitespace-nowrap"
       style="pointer-events:auto"
     >
       <span class="text-base leading-none">☕</span>
@@ -115,9 +115,10 @@ const msg = message ?? defaultMessages[variant];
 
     // Appear after 15 seconds on page
     if (floatEl) {
+      const still = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
       floatEl.style.opacity = "0";
-      floatEl.style.transform = "translateY(16px)";
-      floatEl.style.transition = "opacity 0.5s ease, transform 0.5s ease";
+      floatEl.style.transform = still ? "none" : "translateY(16px)";
+      floatEl.style.transition = still ? "opacity 0.3s ease" : "opacity 0.5s cubic-bezier(.16,1,.3,1), transform 0.5s cubic-bezier(.16,1,.3,1)";
       floatEl.style.pointerEvents = "none";
       setTimeout(() => {
         floatEl.style.opacity = "1";
@@ -133,7 +134,7 @@ const msg = message ?? defaultMessages[variant];
     href={URL}
     target="_blank"
     rel="noopener noreferrer"
-    class="coffee-btn inline-flex items-center gap-1.5 text-ivory/40 hover:text-gold text-xs transition-colors duration-200"
+    class="coffee-btn inline-flex items-center gap-1.5 text-ivory-muted hover:text-gold text-xs transition-colors duration-200"
   >
     <span>☕</span>
     <span>{msg}</span>

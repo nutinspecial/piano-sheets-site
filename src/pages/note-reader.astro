@@ -18,7 +18,7 @@ import CoffeeButton from "../components/CoffeeButton.astro";
       <h1 class="font-display text-4xl sm:text-5xl font-semibold text-ivory leading-tight">
         Piano <span class="italic text-gold">Note Reader</span>
       </h1>
-      <p class="text-ivory/50 text-sm max-w-lg leading-relaxed">
+      <p class="text-ivory-muted text-sm max-w-lg leading-relaxed">
         Play any key and watch it appear on the staff. Learn to connect
         what you play with how it looks in sheet music.
       </p>
@@ -34,7 +34,7 @@ import CoffeeButton from "../components/CoffeeButton.astro";
           𝄞 Treble
         </button>
         <button id="clef-bass" data-clef="bass"
-          class="clef-btn px-5 py-2 text-sm font-medium text-ivory/50 hover:text-ivory transition-all">
+          class="clef-btn px-5 py-2 text-sm font-medium text-ivory-muted hover:text-ivory transition-all">
           𝄢 Bass
         </button>
       </div>
@@ -47,17 +47,17 @@ import CoffeeButton from "../components/CoffeeButton.astro";
         <span class="text-ivory/60 text-sm">Landmarks</span>
       </label>
       <button id="clear-btn"
-        class="ml-auto text-xs text-ivory/40 hover:text-gold border border-surface-border hover:border-gold/40 px-3 py-2 rounded-lg transition-all">
+        class="ml-auto text-xs text-ivory-muted hover:text-gold border border-surface-border hover:border-gold/40 px-3 py-2 rounded-lg transition-all">
         Clear
       </button>
       <button id="rec-btn"
-        class="flex items-center gap-1.5 border border-surface-border hover:border-red-500/50 text-ivory/50 hover:text-red-400 text-xs px-3 py-2 rounded-lg transition-all">
+        class="flex items-center gap-1.5 border border-surface-border hover:border-red-500/50 text-ivory-muted hover:text-red-400 text-xs px-3 py-2 rounded-lg transition-all">
         <span class="w-2 h-2 rounded-full bg-red-500"></span>
         <span id="rec-label">Record</span>
       </button>
-      <span id="rec-timer" class="text-ivory/30 text-xs font-mono">0:00</span>
+      <span id="rec-timer" class="text-ivory-muted text-xs font-mono">0:00</span>
       <a id="rec-download" href="#" download="note-reader.webm"
-        class="hidden text-xs bg-gold hover:bg-gold-dark text-ebony font-medium px-3 py-2 rounded-lg transition-colors">
+        class="hidden text-xs bg-gold hover:bg-gold-light text-ebony font-medium px-3 py-2 rounded-lg transition-colors">
         ↓ Save
       </a>
     </div>
@@ -75,11 +75,11 @@ import CoffeeButton from "../components/CoffeeButton.astro";
                 <div class="w-7 h-7 rounded-full border border-gold/30 flex items-center justify-center">
                   <span class="font-display text-sm text-ivory/80">{n}</span>
                 </div>
-                <span class="text-ivory/25 text-xs">{i+1}</span>
+                <span class="text-ivory-muted text-xs">{i+1}</span>
               </div>
             ))}
           </div>
-          <p class="text-ivory/30 text-xs mt-1 italic">"Every Good Boy Does Fine"</p>
+          <p class="text-ivory-muted text-xs mt-1 italic">"Every Good Boy Does Fine"</p>
         </div>
         <div class="w-px self-stretch bg-surface-border"></div>
         <div class="text-center">
@@ -91,7 +91,7 @@ import CoffeeButton from "../components/CoffeeButton.astro";
               </div>
             ))}
           </div>
-          <p class="text-ivory/30 text-xs mt-1 italic">"FACE"</p>
+          <p class="text-ivory-muted text-xs mt-1 italic">"FACE"</p>
         </div>
       </div>
       <div id="legend-bass" class="hidden bg-surface border border-surface-border rounded-xl px-4 py-3 flex items-center gap-4">
@@ -103,11 +103,11 @@ import CoffeeButton from "../components/CoffeeButton.astro";
                 <div class="w-7 h-7 rounded-full border border-gold/30 flex items-center justify-center">
                   <span class="font-display text-sm text-ivory/80">{n}</span>
                 </div>
-                <span class="text-ivory/25 text-xs">{i+1}</span>
+                <span class="text-ivory-muted text-xs">{i+1}</span>
               </div>
             ))}
           </div>
-          <p class="text-ivory/30 text-xs mt-1 italic">"Good Boys Do Fine Always"</p>
+          <p class="text-ivory-muted text-xs mt-1 italic">"Good Boys Do Fine Always"</p>
         </div>
         <div class="w-px self-stretch bg-surface-border"></div>
         <div class="text-center">
@@ -119,7 +119,7 @@ import CoffeeButton from "../components/CoffeeButton.astro";
               </div>
             ))}
           </div>
-          <p class="text-ivory/30 text-xs mt-1 italic">"All Cows Eat Grass"</p>
+          <p class="text-ivory-muted text-xs mt-1 italic">"All Cows Eat Grass"</p>
         </div>
       </div>
     </div>
@@ -134,9 +134,9 @@ import CoffeeButton from "../components/CoffeeButton.astro";
   <div class="max-w-4xl mx-auto px-4 sm:px-6 pt-4">
     <div class="bg-surface border border-surface-border rounded-xl overflow-hidden">
       <div class="flex items-center justify-between px-4 pt-3 pb-1">
-        <p class="text-ivory/30 text-xs font-mono">Play keys below — notes appear here</p>
+        <p class="text-ivory-muted text-xs font-mono">Play keys below — notes appear here</p>
         <div class="flex items-center gap-3">
-          <p class="text-ivory/20 text-xs font-mono" id="note-count">0 notes</p>
+          <p class="text-ivory-muted text-xs font-mono" id="note-count">0 notes</p>
           <div id="playing-indicator" class="w-2 h-2 rounded-full bg-surface-border transition-colors duration-100"></div>
         </div>
       </div>
@@ -151,11 +151,11 @@ import CoffeeButton from "../components/CoffeeButton.astro";
   <div class="max-w-4xl mx-auto px-4 sm:px-6 pt-4">
     <div class="bg-surface border border-surface-border rounded-xl overflow-hidden">
       <div class="px-4 pt-3 pb-1 flex items-center justify-between flex-wrap gap-2">
-        <p class="text-ivory/25 text-xs font-mono">A S D F G H J = white &nbsp;|&nbsp; W E T Y U = black &nbsp;|&nbsp; Swipe for more notes</p>
+        <p class="text-ivory-muted text-xs font-mono">A S D F G H J = white &nbsp;|&nbsp; W E T Y U = black &nbsp;|&nbsp; Swipe for more notes</p>
         <div class="flex items-center gap-2 flex-shrink-0">
-          <button id="oct-down" class="w-7 h-7 rounded border border-surface-border text-ivory/50 hover:text-gold text-sm flex items-center justify-center">−</button>
-          <span class="text-ivory/50 text-xs font-mono">Oct <span id="oct-label">4</span></span>
-          <button id="oct-up"   class="w-7 h-7 rounded border border-surface-border text-ivory/50 hover:text-gold text-sm flex items-center justify-center">+</button>
+          <button id="oct-down" type="button" aria-label="Octave down" class="w-10 h-10 rounded-lg border border-surface-border text-ivory-muted hover:text-gold text-base flex items-center justify-center">−</button>
+          <span class="text-ivory-muted text-xs font-mono">Oct <span id="oct-label">4</span></span>
+          <button id="oct-up"   type="button" aria-label="Octave up" class="w-10 h-10 rounded-lg border border-surface-border text-ivory-muted hover:text-gold text-base flex items-center justify-center">+</button>
         </div>
       </div>
       <div id="piano-keys" class="relative h-36 sm:h-44 px-3 pb-3 select-none"
@@ -173,20 +173,20 @@ import CoffeeButton from "../components/CoffeeButton.astro";
           <p class="text-gold text-xs tracking-[0.2em] uppercase font-mono mb-0.5">Note quiz</p>
           <p class="text-ivory/60 text-sm">Find this note on the piano. Alternates treble &amp; bass.</p>
         </div>
-        <button id="quiz-next" class="text-sm bg-gold hover:bg-gold-dark text-ebony font-medium px-4 py-2 rounded-lg transition-colors">New note →</button>
+        <button id="quiz-next" class="text-sm bg-gold hover:bg-gold-light text-ebony font-medium px-4 py-2 rounded-lg transition-colors">New note →</button>
       </div>
       <div class="grid sm:grid-cols-2 gap-4 items-center">
         <!-- Quiz canvas — staff + note drawn together, no z-index juggling -->
         <canvas id="quiz-canvas" width="320" height="160"
           class="w-full rounded-lg border border-surface-border" style="background:#141414;"></canvas>
         <div class="space-y-3">
-          <p class="text-ivory/50 text-sm">Play this note on the piano:</p>
+          <p class="text-ivory-muted text-sm">Play this note on the piano:</p>
           <div id="quiz-status"
             class="text-center py-3 rounded-lg border border-surface-border bg-surface-raised min-h-[60px] flex items-center justify-center">
-            <p class="font-display text-2xl text-ivory/40 italic">Waiting…</p>
+            <p class="font-display text-2xl text-ivory-muted italic">Waiting…</p>
           </div>
-          <p id="quiz-clef-label" class="text-xs font-mono text-ivory/30 text-center"></p>
-          <div class="flex items-center gap-3 text-xs font-mono text-ivory/30">
+          <p id="quiz-clef-label" class="text-xs font-mono text-ivory-muted text-center"></p>
+          <div class="flex items-center gap-3 text-xs font-mono text-ivory-muted">
             <span>✓ <span id="quiz-correct" class="text-green-400">0</span></span>
             <span>✗ <span id="quiz-wrong"   class="text-red-400">0</span></span>
           </div>
@@ -212,7 +212,7 @@ import CoffeeButton from "../components/CoffeeButton.astro";
             <span class="text-xl flex-shrink-0 mt-0.5">{item.icon}</span>
             <div>
               <p class="font-display text-ivory/80 text-sm font-semibold mb-1">{item.title}</p>
-              <p class="text-ivory/45 text-xs leading-relaxed">{item.tip}</p>
+              <p class="text-ivory-muted text-xs leading-relaxed">{item.tip}</p>
             </div>
           </div>
         ))}
@@ -603,7 +603,7 @@ import CoffeeButton from "../components/CoffeeButton.astro";
       const pool   = quizUseClef === "treble" ? QUIZ_TREBLE : QUIZ_BASS;
       quizNote     = pool[Math.floor(Math.random() * pool.length)];
       quizAnswered = false;
-      quizStatus.innerHTML = `<p class="font-display text-2xl text-ivory/40 italic">Waiting…</p>`;
+      quizStatus.innerHTML = `<p class="font-display text-2xl text-ivory-muted italic">Waiting…</p>`;
       quizClefLbl.textContent = quizUseClef === "treble" ? "𝄞 Treble clef" : "𝄢 Bass clef";
       drawQuizStaff();
     }
@@ -671,7 +671,7 @@ import CoffeeButton from "../components/CoffeeButton.astro";
 
       whites.forEach((k, i) => {
         const el = document.createElement("div");
-        el.className = "piano-key white-key absolute bottom-0 rounded-b-md border border-gray-700 cursor-pointer transition-colors duration-75 bg-ivory hover:bg-gold/20 flex items-end justify-center pb-1";
+        el.className = "piano-key white-key absolute bottom-0 rounded-b-md border border-surface-border cursor-pointer transition-colors duration-75 bg-ivory hover:bg-gold/20 flex items-end justify-center pb-1";
         el.style.cssText = `width:${KEY_W}px;left:${i*(KEY_W+1)}px;top:0;bottom:0;`;
         el.innerHTML = `<span style="font-size:8px" class="text-ebony/20 font-mono pointer-events-none select-none">${k.name}${k.octave}</span>`;
         el.dataset.note = k.name; el.dataset.octave = k.octave;
@@ -682,7 +682,7 @@ import CoffeeButton from "../components/CoffeeButton.astro";
         BLACK_SEMI.forEach((s, wi) => {
           if (s === -1) return;
           const el = document.createElement("div");
-          el.className = "piano-key black-key absolute rounded-b-md z-10 cursor-pointer transition-colors duration-75 bg-ebony hover:bg-gray-700";
+          el.className = "piano-key black-key absolute rounded-b-md z-10 cursor-pointer transition-colors duration-75 bg-ebony hover:bg-surface-raised";
           el.style.cssText = `width:${KEY_W*0.6}px;left:${(o*7+wi)*(KEY_W+1)+KEY_W*0.7}px;top:0;height:60%;box-shadow:0 4px 8px rgba(0,0,0,.8);`;
           el.dataset.note = NOTE_NAMES[s]; el.dataset.octave = octaveBase - 1 + o;
           pianoInner.appendChild(el);
@@ -719,20 +719,23 @@ import CoffeeButton from "../components/CoffeeButton.astro";
         setTimeout(() => el.classList.remove("active"), 200);
       }
 
+      // Tap plays a key; on touch, a swipe scrolls the keyboard (touch-action: pan-x).
+      // Mouse keeps click-and-drag glissando.
       pianoInner.querySelectorAll("[data-note]").forEach(el => {
-        el.addEventListener("mousedown",  e => { e.preventDefault(); trigger(el); });
-        el.addEventListener("touchstart", e => { e.preventDefault(); trigger(el); }, { passive:false });
+        el.setAttribute("aria-hidden", "true");
+        el.addEventListener("pointerdown", e => {
+          if (e.button !== 0) return;
+          if (e.pointerType === "mouse") e.preventDefault();
+          lastEl = null;
+          trigger(el);
+        });
       });
-      pianoOuter.addEventListener("mousemove", e => {
+      pianoOuter.addEventListener("pointermove", e => {
+        if (e.pointerType !== "mouse") return;
         if (e.buttons !== 1) { lastEl = null; return; }
         trigger(getKeyAt(e.clientX, e.clientY));
       });
-      pianoOuter.addEventListener("mouseup",    () => lastEl = null);
-      pianoOuter.addEventListener("mouseleave", () => lastEl = null);
-      pianoOuter.addEventListener("touchmove",  e => {
-        Array.from(e.changedTouches).forEach(t => { trigger(getKeyAt(t.clientX, t.clientY)); });
-      });
-      pianoOuter.addEventListener("touchend", () => lastEl = null);
+      ["pointerup", "pointerleave", "pointercancel"].forEach(ev => pianoOuter.addEventListener(ev, () => lastEl = null));
     }
 
     const KB = {"a":"C","w":"C#","s":"D","e":"D#","d":"E","f":"F","t":"F#","g":"G","y":"G#","h":"A","u":"A#","j":"B"};
@@ -795,7 +798,7 @@ import CoffeeButton from "../components/CoffeeButton.astro";
         document.querySelectorAll(".clef-btn").forEach(b => {
           const a = b === btn;
           b.classList.toggle("bg-gold",a); b.classList.toggle("text-ebony",a);
-          b.classList.toggle("text-ivory/50",!a);
+          b.classList.toggle("text-ivory-muted",!a);
         });
         legendTreble.classList.toggle("hidden", clef !== "treble");
         legendBass.classList.toggle("hidden",   clef !== "bass");
