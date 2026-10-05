@@ -5,6 +5,7 @@
 import CoffeeButton from "../components/CoffeeButton.astro";
 import Layout from "../layouts/Layout.astro";
 import scores from "../data/scores.json";
+import { pieceByVideoId, linkLabel } from "../lib/scores";
 
 const totalScores  = scores.reduce((n, s) => n + s.scoreLinks.length, 0);
 const totalSongs   = scores.length;
@@ -14,27 +15,13 @@ const scoreRows = scores.flatMap((s) =>
   s.scoreLinks.map((link: string, i: number) => ({
     videoId:     s.videoId,
     title:       s.title,
-    slug:        s.slug,
+    pageSlug:    pieceByVideoId.get(s.videoId)!.slug,
     thumbnail:   s.thumbnail,
     link,
     credits:     s.credits,
     publishedAt: s.publishedAt,
   }))
 );
-
-// Detect link source for a friendlier label
-function linkLabel(url: string): string {
-  if (url.includes("drive.google.com")) return "Google Drive";
-  if (url.includes("gumroad.com")) return "Gumroad";
-  if (url.includes("musescore.com"))    return "MuseScore";
-  if (url.includes("dropbox.com"))      return "Dropbox";
-  if (url.includes("imslp.org"))        return "IMSLP";
-  if (url.includes("mediafire.com"))    return "MediaFire";
-  if (url.includes("scribd.com"))       return "Scribd";
-  if (url.includes("1drv.ms") || url.includes("sharepoint.com")) return "OneDrive";
-  if (url.endsWith(".pdf"))             return "PDF";
-  return "Download";
-}
 
 // JSON-LD for the collection page
 const jsonLd = {
@@ -50,7 +37,7 @@ const jsonLd = {
   "hasPart": scores.slice(0, 10).map((s) => ({
     "@type":       "MusicComposition",
     "name":        s.title,
-    "url":         `https://bigpianosmallpiano.com/videos/${s.slug}`,
+    "url":         `https://bigpianosmallpiano.com/scores/${pieceByVideoId.get(s.videoId)!.slug}`,
   })),
 };
 ---
@@ -145,7 +132,7 @@ const jsonLd = {
               <!-- Song title -->
               <td class="px-5 py-3.5">
                 <a
-                  href={`/videos/${row.slug}`}
+                  href={`/scores/${row.pageSlug}`}
                   class="font-display text-ivory/90 hover:text-gold transition-colors leading-snug"
                 >
                   {row.title}
@@ -188,7 +175,7 @@ const jsonLd = {
           class="score-card bg-surface border border-surface-border rounded-xl p-4 space-y-2"
           data-title={row.title.toLowerCase()}
         >
-          <a href={`/videos/${row.slug}`} class="font-display text-ivory/90 hover:text-gold transition-colors leading-snug block">
+          <a href={`/scores/${row.pageSlug}`} class="font-display text-ivory/90 hover:text-gold transition-colors leading-snug block">
             {row.title}
           </a>
           {row.credits && row.credits[0] && (
@@ -235,7 +222,7 @@ const jsonLd = {
       </h2>
       <p class="text-ivory-muted text-sm max-w-md">
         Every score here comes from a full performance video. Click any song title
-        to watch the video, or browse the full channel below.
+        to open its score page and hear it, or browse the full channel below.
       </p>
       <div class="flex flex-wrap gap-3 justify-center mt-1">
         <a

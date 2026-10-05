@@ -5,6 +5,7 @@ import CoffeeButton from "../../components/CoffeeButton.astro";
 import Layout from "../../layouts/Layout.astro";
 import videos from "../../data/videos.json";
 import scores from "../../data/scores.json";
+import { pieceByVideoId } from "../../lib/scores";
 
 export async function getStaticPaths() {
   return videos.map((video) => ({
@@ -17,6 +18,7 @@ const { video } = Astro.props;
 
 // Find any scores associated with this video
 const videoScores = scores.filter((s) => s.videoId === video.videoId);
+const piece       = pieceByVideoId.get(video.videoId);
 
 // Build a clean meta description from the first 155 chars of description
 const metaDescription = video.description
@@ -157,7 +159,7 @@ const jsonLd = {
           )}
         </ul>
         <p class="mt-4 text-xs text-ivory-muted">
-          Also see the <a href="/scores" class="text-gold hover:underline">full Free Piano Scores page</a> for all available sheet music.
+          {piece && <>See the <a href={`/scores/${piece.slug}`} class="text-gold hover:underline">{piece.name} score page</a>, or </>}browse <a href="/scores" class="text-gold hover:underline">all free piano scores</a>.
         </p>
       </section>
     )}

@@ -1,0 +1,195 @@
+---
+// src/pages/scores/[slug].astro
+// ── One page per piece, built for people searching for the sheet ─────────
+// Targets: "[piece] piano sheet music", "[piece] piano score pdf".
+// The matching /videos/[slug] page stays the place for the full video notes;
+// this page leads with the download.
+import CoffeeButton from "../../components/CoffeeButton.astro";
+import Layout from "../../layouts/Layout.astro";
+import { pieces, relatedPieces, arranger, linkLabel, type Piece } from "../../lib/scores";
+
+export async function getStaticPaths() {
+  return pieces.map((piece) => ({
+    params: { slug: piece.slug },
+    props:  { piece },
+  }));
+}
+
+const { piece } = Astro.props as { piece: Piece };
+const latest   = piece.versions[0];
+const credit   = piece.versions.map(arranger).find(Boolean) ?? null;
+const context  = [piece.game, piece.region].filter(Boolean).join(" · ");
+const related  = relatedPieces(piece);
+
+const siteUrl  = "https://bigpianosmallpiano.com";
+const pageUrl  = `${siteUrl}/scores/${piece.slug}`;
+const embedUrl = `https://www.youtube.com/embed/${latest.videoId}`;
+
+const fromGame = piece.game ? ` from ${piece.game}` : "";
+const title    = `${piece.name} Piano Sheet Music (Free)`;
+const description =
+  `Free piano sheet music for ${piece.name}${fromGame}` +
+  (credit ? `, arranged by ${credit}` : "") +
+  `. Download the score and watch the piano cover by Big Piano Small Piano.`;
+
+const jsonLd = [
+  {
+    "@context": "https://schema.org",
+    "@type":    "MusicComposition",
+    "name":     piece.name,
+    "url":      pageUrl,
+    ...(credit && { "musicArrangement": { "@type": "MusicComposition", "name": `${piece.name} (piano)`, "composer": { "@type": "Person", "name": credit } } }),
+    "subjectOf": piece.versions.map((v) => ({
+      "@type":        "VideoObject",
+      "name":         v.title,
+      "thumbnailUrl": [v.thumbnail],
+      "uploadDate":   v.publishedAt,
+      "embedUrl":     `https://www.youtube.com/embed/${v.videoId}`,
+      "url":          `https://www.youtube.com/watch?v=${v.videoId}`,
+    })),
+  },
+  {
+    "@context": "https://schema.org",
+    "@type":    "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home",        "item": siteUrl },
+      { "@type": "ListItem", "position": 2, "name": "Free Scores", "item": `${siteUrl}/scores` },
+      { "@type": "ListItem", "position": 3, "name": piece.name,    "item": pageUrl },
+    ],
+  },
+];
+---
+
+<Layout
+  floatingCoffee={false}
+  title={title}
+  description={description}
+  image={latest.thumbnail || "/og-default.jpg"}
+>
+  <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+
+  <!-- ── Breadcrumb ──────────────────────────────────────────────────────── -->
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 pt-6">
+    <nav class="text-xs text-ivory-muted flex items-center gap-1.5" aria-label="Breadcrumb">
+      <a href="/" class="hover:text-gold transition-colors">Home</a>
+      <span>/</span>
+      <a href="/scores" class="hover:text-gold transition-colors">Free Scores</a>
+      <span>/</span>
+      <span class="text-ivory/60 truncate max-w-xs">{piece.name}</span>
+    </nav>
+  </div>
+
+  <article class="max-w-4xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
+
+    <!-- Title block -->
+    <header class="mb-8">
+      <p class="text-gold text-xs tracking-[0.25em] uppercase font-mono mb-3">Free piano sheet music</p>
+      <h1 class="font-display text-3xl sm:text-4xl lg:text-5xl font-semibold text-ivory leading-tight mb-3">
+        {piece.name}
+      </h1>
+      {context && <p class="text-sm text-ivory-muted">{context}</p>}
+    </header>
+
+    <!-- ── Downloads (the reason people land here) ───────────────────────── -->
+    <section class="mb-10 bg-surface rounded-xl border border-gold/20 p-5 sm:p-6" aria-labelledby="downloads">
+      <h2 id="downloads" class="font-display text-xl font-semibold text-ivory mb-4">Download the score</h2>
+      <ul class="space-y-3">
+        {piece.versions.flatMap((v) =>
+          v.scoreLinks.map((link: string, i: number) => (
+            <li class="flex flex-col sm:flex-row sm:items-center gap-3 border-b border-surface-border pb-3 last:border-0 last:pb-0">
+              <a
+                href={link}
+                target="_blank" rel="noopener noreferrer"
+                class="btn-gold self-start"
+                aria-label={`Download ${piece.name} piano score from ${linkLabel(link)}`}
+              >
+                Download from {linkLabel(link)} ↗
+              </a>
+              <div class="text-sm text-ivory-muted sm:ml-auto sm:text-right">
+                {arranger(v) && <p>Arranged by {arranger(v)}</p>}
+                {(piece.versions.length > 1 || v.scoreLinks.length > 1) && (
+                  <p class="text-xs">
+                    {v.scoreLinks.length > 1 ? `Part ${i + 1} · ` : ""}from the {new Date(v.publishedAt).getFullYear()} cover
+                  </p>
+                )}
+              </div>
+            </li>
+          ))
+        )}
+      </ul>
+      <p class="mt-4 text-xs text-ivory-muted">
+        Free to download. {credit && credit !== "Big Piano Small Piano"
+          ? `The arrangement belongs to ${credit}, so please credit them if you share or perform it.`
+          : "Please credit Big Piano Small Piano if you share it."}
+      </p>
+    </section>
+
+    <!-- ── Hear it ───────────────────────────────────────────────────────── -->
+    <section class="mb-10" aria-labelledby="listen">
+      <h2 id="listen" class="font-display text-xl font-semibold text-ivory mb-4">Hear how it sounds</h2>
+      <div class="relative aspect-video w-full rounded-xl overflow-hidden border border-surface-border shadow-card mb-4">
+        <iframe
+          src={embedUrl}
+          title={latest.title}
+          class="absolute inset-0 w-full h-full"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowfullscreen
+          loading="lazy"
+        ></iframe>
+      </div>
+      <ul class="text-sm space-y-1">
+        {piece.versions.map((v) => (
+          <li>
+            <a href={`/videos/${v.slug}`} class="text-gold hover:text-gold-light transition-colors">
+              {piece.versions.length > 1 ? v.title : "Video notes and description"} →
+            </a>
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <CoffeeButton
+      variant="inline"
+      message="This score is free. If it helps your playing, a coffee keeps more of them coming."
+    />
+  </article>
+
+  <!-- ── More scores ─────────────────────────────────────────────────────── -->
+  {related.length > 0 && (
+    <>
+      <hr class="gold-rule max-w-4xl mx-auto" />
+      <section class="max-w-4xl mx-auto px-4 sm:px-6 py-12">
+        <p class="text-gold text-xs tracking-[0.2em] uppercase font-mono mb-2">
+          {piece.region ? `More from ${piece.region}` : piece.game ? `More ${piece.game}` : "More free scores"}
+        </p>
+        <h2 class="font-display text-2xl font-semibold text-ivory mb-6">More piano sheets</h2>
+        <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4">
+          {related.map((p) => (
+            <a
+              href={`/scores/${p.slug}`}
+              class="group bg-surface rounded-xl border border-surface-border overflow-hidden hover:border-gold/40 transition-all duration-300 flex flex-col"
+            >
+              {p.versions[0].thumbnail && (
+                <div class="aspect-video overflow-hidden">
+                  <img
+                    src={p.versions[0].thumbnail}
+                    alt=""
+                    width="320" height="180"
+                    class="w-full h-full object-cover motion-safe:group-hover:scale-105 transition-transform duration-500"
+                    loading="lazy"
+                  />
+                </div>
+              )}
+              <p class="p-3 text-sm font-display text-ivory/80 group-hover:text-gold transition-colors line-clamp-2 leading-snug">
+                {p.name}
+              </p>
+            </a>
+          ))}
+        </div>
+        <p class="mt-6 text-sm">
+          <a href="/scores" class="text-gold hover:text-gold-light transition-colors">See all free piano scores →</a>
+        </p>
+      </section>
+    </>
+  )}
+</Layout>
