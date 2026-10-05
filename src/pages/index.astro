@@ -6,6 +6,7 @@ import Layout from "../layouts/Layout.astro";
 import videos from "../data/videos.json";
 import scores from "../data/scores.json";
 import tracks from "../data/tracks.json";
+import { pieceByVideoId } from "../lib/scores";
 
 // Format ISO 8601 duration (PT4M33S) into "4:33"
 function formatDuration(iso: string): string {
@@ -37,6 +38,7 @@ const totalScores   = scores.length;
 const totalTracks   = tracks.length;
 const channelUrl    = "https://www.youtube.com/channel/UCsKtOGplqKz3uGt9XD8VexQ";
 const latestVideo   = videos[0];  // already sorted newest-first by the Python script
+const latestPiece   = latestVideo && pieceByVideoId.get(latestVideo.videoId);
 ---
 
 <Layout
@@ -63,8 +65,8 @@ const latestVideo   = videos[0];  // already sorted newest-first by the Python s
       </h1>
 
       <p class="text-ivory/60 text-base sm:text-lg max-w-xl leading-relaxed">
-        Piano covers, tutorials and free sheet music. Every video archived here
-        — search by song, browse by date, download scores.
+        Piano covers, tutorials and free sheet music. Every video is archived here.
+        Search by song, browse by date and download the scores.
       </p>
 
       <!-- CTA row -->
@@ -106,21 +108,32 @@ const latestVideo   = videos[0];  // already sorted newest-first by the Python s
     <section class="max-w-6xl mx-auto px-4 sm:px-6 py-12">
       <p class="text-gold text-xs tracking-[0.2em] uppercase font-mono mb-5">Latest release</p>
 
-      <a
-        href={`/videos/${latestVideo.slug}`}
-        class="group grid grid-cols-1 sm:grid-cols-[minmax(0,1fr)_auto] gap-6 items-center bg-surface rounded-xl border border-surface-border p-5 sm:p-6 hover:border-gold/40 transition-all duration-300"
+      <div
+        class="group relative grid grid-cols-1 sm:grid-cols-[minmax(0,1fr)_auto] gap-6 items-center bg-surface rounded-xl border border-surface-border p-5 sm:p-6 hover:border-gold/40 transition-all duration-300"
       >
         <div class="space-y-2 min-w-0">
           <h2 class="font-display text-2xl sm:text-3xl font-semibold text-ivory group-hover:text-gold transition-colors leading-snug">
-            {latestVideo.title}
+            <!-- Stretched link: the whole card opens the video page -->
+            <a href={`/videos/${latestVideo.slug}`} class="after:absolute after:inset-0 after:rounded-xl focus-visible:outline-none focus-visible:after:ring-2 focus-visible:after:ring-gold">
+              {latestVideo.title}
+            </a>
           </h2>
           <p class="text-ivory-muted text-sm">{formatDate(latestVideo.publishedAt)}</p>
           <p class="text-ivory/60 text-sm line-clamp-2 max-w-xl leading-relaxed">
             {latestVideo.description.slice(0, 180)}…
           </p>
-          <span class="inline-block mt-1 text-gold text-sm font-medium group-hover:underline">
-            Watch &amp; read more →
-          </span>
+          <div class="flex flex-wrap items-center gap-x-5 gap-y-2 mt-1 text-sm font-medium">
+            <span class="text-gold group-hover:underline" aria-hidden="true">Watch &amp; read more →</span>
+            {latestPiece ? (
+              <a href={`/scores/${latestPiece.slug}`} class="relative z-10 text-gold hover:text-gold-light hover:underline">
+                Get the free sheet →
+              </a>
+            ) : (
+              <a href="/scores" class="relative z-10 text-ivory-muted hover:text-gold hover:underline">
+                Browse all free scores →
+              </a>
+            )}
+          </div>
         </div>
         {latestVideo.thumbnail && (
           <img
@@ -131,7 +144,7 @@ const latestVideo   = videos[0];  // already sorted newest-first by the Python s
             loading="eager"
           />
         )}
-      </a>
+      </div>
     </section>
   )}
 
