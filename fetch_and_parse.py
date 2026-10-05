@@ -46,20 +46,47 @@ SCORE_LINK_PATTERNS = [
 ]
 
 # Credit attribution lines
+#
+# Each pattern's first capture group is a *candidate* credit string. It is then
+# run through clean_credit_candidate() which trims connective words / trailing
+# prose, so the free-text "by" patterns below can stay fairly loose.
 CREDIT_PATTERNS = [
     # "Piano Sheet @AnimuzAnimePiano" or "Piano Sheets @name1 @name2 @name3"
-    r"piano\s+sheets?\s+((?:@[\w-]+\s*)+)",
+    r"piano\s+sheets?\s+((?:@[\w-]+\s*&?\s*)+)",
     # "Piano Sheet from @AnimuzAnimePiano"
-    r"piano\s+sheet\s+from\s+@?([\w-]+)",
-    # "(Credits to @StarryCosmoss-Piano)" or "(Credits: Animuz)"
-    r"\(credits?(?:\s+to)?\s+@?([\w][\w\s-]+?)(?:\s+for[^)]+)?\)",
-    # "obtained via @ChewieMelodies"
-    r"(?:obtained\s+)?via\s+@?([\w-]+)(?:'s)?",
-    # "Arranged by:", "Score by:", "Transcribed by:"
-    r"(?:arranged?|arr\.?)\s*(?:by)?[:\-\s]+([^\n\r]{2,60})",
-    r"(?:score|sheet music)\s+by[:\-\s]+([^\n\r]{2,60})",
-    r"transcri(?:bed?|ption)\s*(?:by)?[:\-\s]+([^\n\r]{2,60})",
+    r"piano\s+sheets?\s+from\s+@?([\w-]+)",
+    # "By @ChaconneScott" at the start of a line
+    r"(?:^|\n)\s*by\s+@([\w-]+)",
+    # "(Credits to @StarryCosmoss-Piano)" / "(Credits: Animuz)" / "(Credits to Samuel Henry)"
+    r"\(\s*credits?\s*(?:to|:)?\s*@?([\w][\w .'-]+?)\s*(?:\s+for\b[^)]*)?\)",
+    # "based on ChaconneScott's arrangement"
+    r"based\s+on\s+@?([\w-]+)'s\s+arrangement",
+    # "credits to ChaconneScott for sharing" (not always parenthesised)
+    r"credits?\s+to\s+@?([\w-]+)\s+for\s+sharing",
+    # "obtained via @ChewieMelodies" — require an @handle so the English word
+    # "via" in prose does not match.
+    r"(?:obtained\s+)?via\s+@([\w-]+)",
+    # "Arranged by: NAME", "arr. NAME", "Score by: NAME", "Transcribed by NAME"
+    r"(?:arranged|arr\.)\s+by[:\-\s]+([^\n\r]{2,60})",
+    r"(?:score|sheet\s*music)\s+by[:\-\s]+([^\n\r]{2,60})",
+    r"transcri(?:bed|ption)\s+(?:by\s+)?([^\n\r]{2,60})",
 ]
+
+# Connective / filler words that are never a credit on their own. Used to trim
+# free-text captures and to drop stray tokens.
+CREDIT_STOPWORDS = {
+    "a", "an", "and", "the", "to", "of", "in", "on", "for", "with", "by",
+    "from", "its", "it", "this", "that", "those", "these", "is", "was", "are",
+    "be", "as", "at", "or", "but", "not", "no", "my", "me", "i", "you", "your",
+    "his", "her", "their", "our", "credit", "credits", "sharing", "share",
+    "do", "check", "out", "please", "thanks", "thank", "here", "above", "below",
+    "some", "parts", "part", "cover", "sheet", "sheets", "arrangement",
+    "arranged", "based", "referenced", "reference", "original", "improvisation",
+    "improvisations", "transposed", "key", "focus", "more", "throughout",
+    "piece", "image", "swimming", "peacefully", "frogs", "hope", "enjoy",
+    "owners", "owner", "respective", "who", "created", "them", "channel",
+    "free", "everyone", "hey",
+}
 
 # ── Helpers ────────────────────────────────────────────────────────────────────
 
@@ -201,26 +228,75 @@ SELF_NAMES = {
 
 # Your own video that you arranged yourself
 SELF_ARRANGED_SLUGS = {
-    "genshin-ost-pensees-tranquilles-secret-summer-paradise-soothing-bgm-piano-cover-piano-sheet"
+    "genshin-ost-pensees-tranquilles-secret-summer-paradise-soothing-bgm-piano-cover",
+    "genshin-ost-pensees-tranquilles-secret-summer-paradise-soothing-bgm-piano-cover-piano-sheet",
 }
 
-# Map shorthand names to full correct credits
+# Map shorthand / variant names (lower-cased) to the canonical credit string.
 NAME_CORRECTIONS = {
     "animuz":               "AnimuzAnimePiano",
+    "animuzanimepiano":     "AnimuzAnimePiano",
     "chaconne":             "ChaconneScott",
     "chacon":               "ChaconneScott",
+    "chaconnescott":        "ChaconneScott",
     "chewie":               "ChewieMelodies",
+    "chewiemelodies":       "ChewieMelodies",
     "waragon":              "WaragonSom",
+    "waragonsom":           "WaragonSom",
     "starrycosmos":         "StarryCosmoss-Piano",
     "starrycosmos-piano":   "StarryCosmoss-Piano",
+    "starrycosmoss-piano":  "StarryCosmoss-Piano",
     "wangzichen962":        "wangzichen962",
     "haoyiwang":            "Haoyi Wang",
     "marupiano":            "MaruPiano",
+    "marupiano999":         "MaruPiano",
+    "animenz":              "Animenz",
+    "animenzzz":            "Animenz",
 }
+
+
+def clean_credit_candidate(raw: str) -> str:
+    """Trim a raw regex capture down to a plausible credit name.
+
+    - keeps an @handle verbatim (minus the @)
+    - otherwise keeps the leading run of Capitalised words (a person / channel
+      name like "Samuel Henry"), stopping at the first lower-case filler word,
+      punctuation, or the 3rd word
+    Returns "" when nothing name-like remains.
+    """
+    raw = raw.strip().strip("([{}])").strip()
+    if not raw:
+        return ""
+
+    # Split off anything after a comma / paren / colon — that's prose, not a name
+    raw = re.split(r"[,:()\[\]\n\r]", raw, 1)[0].strip()
+
+    m = re.match(r"@([\w-]+)", raw)
+    if m:
+        return m.group(1)
+
+    words = raw.split()
+    name_words: list[str] = []
+    for w in words[:4]:
+        stripped = w.strip(".,;&")
+        if not stripped:
+            break
+        if stripped.lower() in CREDIT_STOPWORDS:
+            break
+        # A name token starts with a letter/digit; stop at all-lower-case prose
+        # once we already have at least one name word.
+        if name_words and stripped[:1].islower():
+            break
+        name_words.append(stripped)
+        if len(name_words) == 3:
+            break
+
+    return " ".join(name_words)
 
 def get_credit_fallback(links: list[str]) -> str:
     """If no valid credit found, infer source from the download link."""
     for link in links:
+        if "bigpianosmallpiano.gumroad.com" in link: return "Big Piano Small Piano"
         if "musescore.com"    in link: return "MuseScore"
         if "drive.google.com" in link: return "Google Drive"
         if "gumroad.com"      in link: return "Gumroad"
@@ -238,28 +314,39 @@ def extract_credits(description: str, slug: str = "", links: list = []) -> list[
 
     found = []
     for pattern in CREDIT_PATTERNS:
-        matches = re.findall(pattern, description, re.IGNORECASE)
+        matches = re.findall(pattern, description, re.IGNORECASE | re.MULTILINE)
         for m in matches:
-            # Handle multiple @names captured in one group
-            raw_names = re.findall(r"@?([\w-]+)", m)
-            for raw in raw_names:
-                credit = raw.strip().rstrip(".,;")
-                if len(credit) < 2 or len(credit) > 100:
+            # A group like "@name1 @name2 & @name3" → each handle separately;
+            # anything else is a single free-text candidate.
+            if m.count("@") > 1:
+                candidates = [f"@{h}" for h in re.findall(r"@([\w-]+)", m)]
+            else:
+                candidates = [m]
+
+            for cand in candidates:
+                credit = clean_credit_candidate(cand)
+                if len(credit) < 2 or len(credit) > 60:
                     continue
-                # Skip if it's your own name
+                if credit.lower() in CREDIT_STOPWORDS:
+                    continue
                 if credit.lower() in SELF_NAMES:
                     continue
-                # Apply name corrections
+                # Apply name corrections (whole string, then bare token)
                 corrected = NAME_CORRECTIONS.get(
-                    credit,
-                    NAME_CORRECTIONS.get(credit.lower(), credit)
+                    credit.lower(),
+                    NAME_CORRECTIONS.get(credit, credit)
                 )
-                # Skip corrected result if still your own name
                 if corrected.lower() in SELF_NAMES:
                     continue
                 found.append(corrected)
 
-    result = list(dict.fromkeys(found))
+    # Case-insensitive dedupe, keep first-seen casing
+    result = []
+    seen = set()
+    for c in found:
+        if c.lower() not in seen:
+            seen.add(c.lower())
+            result.append(c)
 
     # If nothing found, fall back to link source label
     if not result and links:
@@ -274,7 +361,7 @@ def parse_scores(videos: list[dict]) -> list[dict]:
     scores = []
     for v in videos:
         links   = extract_score_links(v["description"])
-        credits = extract_credits(v["description"])
+        credits = extract_credits(v["description"], v["slug"], links)
         if links:
             scores.append({
                 "videoId":    v["videoId"],
