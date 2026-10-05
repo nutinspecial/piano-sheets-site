@@ -40,3 +40,9 @@ npm-debug.log*
 art-inbox/*
 !art-inbox/PROMPTS.txt
 .impeccable/mocks/proto/art/
+
+# Recording-name matching (local working files)
+.match-cache/
+match_results.json
+match-review/
+rename_plan.csv
