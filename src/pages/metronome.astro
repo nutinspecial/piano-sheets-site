@@ -6,8 +6,8 @@ import Layout from "../layouts/Layout.astro";
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "WebApplication",
-  "name": "Free Online Metronome — Big Piano Small Piano",
-  "description": "Free online metronome for piano practice. Bookmark with your exact BPM and time signature — auto-plays on open. Tap rhythm mode included.",
+  "name": "Free Online Metronome | Big Piano Small Piano",
+  "description": "Free online metronome for piano practice. Bookmark it with your exact BPM and time signature and it auto-plays on open. Tap rhythm mode included.",
   "url": "https://bigpianosmallpiano.com/metronome",
   "applicationCategory": "MusicApplication",
   "operatingSystem": "Any",
@@ -16,8 +16,8 @@ const jsonLd = {
 ---
 
 <Layout
-  title="Free Online Metronome — Big Piano Small Piano"
-  description="Free online metronome for piano. Bookmark with your BPM and time signature — auto-plays on open. Tap rhythm mode. No ads, no sign-up."
+  title="Free Online Metronome | Big Piano Small Piano"
+  description="Free online metronome for piano. Bookmark it with your BPM and time signature and it auto-plays on open. Tap rhythm mode. No ads, no sign-up."
 >
   <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
 
@@ -31,7 +31,7 @@ const jsonLd = {
         Free Online <span class="italic text-gold">Metronome</span>
       </h1>
       <p class="text-ivory-muted text-sm max-w-md leading-relaxed">
-        Set your tempo and bookmark the page — it remembers your settings and auto-plays next time.
+        Set your tempo and bookmark the page. It remembers your settings and auto-plays next time.
       </p>
     </div>
   </section>
@@ -112,7 +112,7 @@ const jsonLd = {
         <span class="text-gold text-base flex-shrink-0 mt-0.5">🔖</span>
         <p class="text-ivory-muted text-xs leading-relaxed">
           <strong class="text-ivory/70">Bookmark this page</strong> after setting your BPM and beats.
-          The URL saves your settings — next time you open the bookmark it auto-plays immediately.
+          The URL saves your settings, so the bookmark auto-plays as soon as you open it.
         </p>
       </div>
     </div>
@@ -169,7 +169,7 @@ const jsonLd = {
       <!-- Detected BPM -->
       <div id="tap-bpm-display" class="text-center hidden">
         <p class="text-ivory-muted text-xs uppercase tracking-widest font-mono mb-1">Detected tempo</p>
-        <p class="font-display text-5xl font-semibold text-gold" id="tap-bpm-num">—</p>
+        <p class="font-display text-5xl font-semibold text-gold" id="tap-bpm-num">–</p>
         <p class="text-ivory-muted text-xs font-mono">BPM</p>
       </div>
 
@@ -194,7 +194,7 @@ const jsonLd = {
   <div class="max-w-2xl mx-auto px-4 sm:px-6 pb-4">
   <CoffeeButton
     variant="inline"
-    message="This metronome is free — no sign-up, no ads. If it's useful for your practice, a coffee keeps it running."
+    message="This metronome is free, with no sign-up and no ads. If it's useful for your practice, a coffee keeps it running."
   />
 </div>
   <!-- SCRIPT -->

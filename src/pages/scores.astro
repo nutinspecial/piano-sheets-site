@@ -27,7 +27,7 @@ const scoreRows = scores.flatMap((s) =>
 const jsonLd = {
   "@context":   "https://schema.org",
   "@type":      "CollectionPage",
-  "name":       "Free Piano Sheet Music — Big Piano Small Piano",
+  "name":       "Free Piano Sheet Music | Big Piano Small Piano",
   "description": `Download ${totalScores} free piano scores and sheet music arrangements from Big Piano Small Piano's YouTube channel.`,
   "url":        "https://bigpianosmallpiano.com/scores",
   "author": {
@@ -44,7 +44,7 @@ const jsonLd = {
 
 <Layout
   floatingCoffee={false}
-  title="Free Piano Sheet Music & Scores — Big Piano Small Piano"
+  title="Free Piano Sheet Music & Scores | Big Piano Small Piano"
   description={`Download ${totalScores} free piano scores and sheet music from Big Piano Small Piano. Piano arrangements, transcriptions, and PDF downloads for every video.`}
 >
   <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
@@ -60,7 +60,7 @@ const jsonLd = {
         Free Piano <span class="italic text-gold">Sheet Music</span>
       </h1>
       <p class="text-ivory/60 max-w-xl text-sm sm:text-base leading-relaxed">
-        Every piano score and arrangement from the Big Piano Small Piano YouTube channel —
+        Every piano score and arrangement from the Big Piano Small Piano YouTube channel,
         free to download. Filter by song title to find what you're looking for.
       </p>
 
@@ -140,7 +140,7 @@ const jsonLd = {
               </td>
               <!-- Credit -->
               <td class="px-5 py-3.5 text-ivory-muted whitespace-nowrap">
-                {row.credits && row.credits[0] ? row.credits[0] : "—"}
+                {row.credits && row.credits[0] ? row.credits[0] : "–"}
               </td>
               <!-- Source label -->
               <td class="px-5 py-3.5">

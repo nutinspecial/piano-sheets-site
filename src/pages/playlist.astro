@@ -13,7 +13,7 @@ const nodKraiCount = tracks.filter((t) => t.category === "Nod Krai").length;
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "MusicPlaylist",
-  "name": "Big Piano Small Piano — Ambient Piano Playlist",
+  "name": "Big Piano Small Piano: Ambient Piano Playlist",
   "description": "Free ambient piano music to study, sleep or relax to. Original piano covers, streamed continuously.",
   "url": "https://bigpianosmallpiano.com/playlist",
   "numTracks": tracks.length,
@@ -22,8 +22,8 @@ const jsonLd = {
 
 <Layout
   floatingCoffee={false}
-  title="Piano Music for Studying &amp; Sleeping — Free Playlist"
-  description="Free ambient piano playlist — hundreds of original piano covers to study, sleep or relax to. Search, filter by mood, and stream continuously. No ads, no sign-up."
+  title="Piano Music for Studying &amp; Sleeping: Free Playlist"
+  description="Free ambient piano playlist with hundreds of original piano covers to study, sleep or relax to. Search, filter by mood, and stream continuously. No ads, no sign-up."
 >
   <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
 
@@ -54,7 +54,7 @@ const jsonLd = {
     <div slot="footer">
       <CoffeeButton
         variant="inline"
-        message="This whole playlist is free to stream — if it's keeping you company while you study or wind down, a coffee helps keep it going."
+        message="This whole playlist is free to stream. If it's keeping you company while you study or wind down, a coffee helps keep it going."
       />
     </div>
   </PlaylistPlayer>

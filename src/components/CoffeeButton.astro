@@ -21,7 +21,7 @@ const URL = "https://www.buymeacoffee.com/bigpianosmc";
 // Context-aware default messages
 const defaultMessages: Record<string, string> = {
   inline:   "Enjoying the music? You can support the channel for the price of a coffee ☕",
-  section:  "All scores, tools and videos are completely free — and always will be. If they've been useful to you, a small coffee goes a long way towards keeping this site running and new pieces coming.",
+  section:  "All scores, tools and videos are completely free and always will be. If they've been useful to you, a small coffee goes a long way towards keeping this site running and new pieces coming.",
   floating: "Support the channel",
   footer:   "Keep the music free",
 };
@@ -63,7 +63,7 @@ const msg = message ?? defaultMessages[variant];
       <span class="text-lg leading-none">☕</span>
       Buy me a coffee
     </a>
-    <p class="text-ivory-muted text-xs">No pressure — every coffee is genuinely appreciated 🎹</p>
+    <p class="text-ivory-muted text-xs">No pressure. Every coffee is genuinely appreciated 🎹</p>
   </section>
 )}
 

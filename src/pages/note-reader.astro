@@ -5,7 +5,7 @@ import CoffeeButton from "../components/CoffeeButton.astro";
 ---
 
 <Layout
-  title="Learn to Read Piano Notes — Interactive Staff | Big Piano Small Piano"
+  title="Learn to Read Piano Notes: Interactive Staff | Big Piano Small Piano"
   description="Play piano keys and watch notes appear on a musical staff in real time. Learn treble and bass clef notation interactively. Free tool for piano beginners."
 >
 
@@ -134,7 +134,7 @@ import CoffeeButton from "../components/CoffeeButton.astro";
   <div class="max-w-4xl mx-auto px-4 sm:px-6 pt-4">
     <div class="bg-surface border border-surface-border rounded-xl overflow-hidden">
       <div class="flex items-center justify-between px-4 pt-3 pb-1">
-        <p class="text-ivory-muted text-xs font-mono">Play keys below — notes appear here</p>
+        <p class="text-ivory-muted text-xs font-mono">Play the keys below to see the notes here</p>
         <div class="flex items-center gap-3">
           <p class="text-ivory-muted text-xs font-mono" id="note-count">0 notes</p>
           <div id="playing-indicator" class="w-2 h-2 rounded-full bg-surface-border transition-colors duration-100"></div>
@@ -205,7 +205,7 @@ import CoffeeButton from "../components/CoffeeButton.astro";
           { icon:"📏", title:"Lines vs spaces",       tip:"Notes sit ON a line (the line goes through the notehead) or IN a space (between two lines)." },
           { icon:"🔑", title:"The clef is your key",  tip:"Treble clef curls around the G line. Bass clef's dots surround the F line. These anchor notes define everything else." },
           { icon:"🔢", title:"Count by steps",        tip:"Notes move alphabetically A–G then repeat. Each step up on the staff = one letter up." },
-          { icon:"🪄", title:"Ledger lines",          tip:"Middle C sits on a short ledger line below treble clef or above bass clef — the bridge between both." },
+          { icon:"🪄", title:"Ledger lines",          tip:"Middle C sits on a short ledger line below treble clef or above bass clef. It is the bridge between the two." },
           { icon:"🔄", title:"Practice daily",        tip:"5 minutes a day identifying notes builds muscle memory faster than an hour once a week." },
         ].map(item => (
           <div class="flex gap-3">
@@ -618,7 +618,7 @@ import CoffeeButton from "../components/CoffeeButton.astro";
       } else if (isNatural(noteName)) {
         quizWrong++;
         document.getElementById("quiz-wrong").textContent = quizWrong;
-        quizStatus.innerHTML = `<p class="font-display text-lg text-red-400">Not quite — look at the staff!</p>`;
+        quizStatus.innerHTML = `<p class="font-display text-lg text-red-400">Not quite. Look at the staff again!</p>`;
       }
     }
 
