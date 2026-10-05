@@ -35,3 +35,8 @@ Thumbs.db
 # Logs
 *.log
 npm-debug.log*
+
+# Region art drop folder (source images, processed copies ship from public/)
+art-inbox/*
+!art-inbox/PROMPTS.txt
+.impeccable/mocks/proto/art/

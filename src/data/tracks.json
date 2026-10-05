@@ -1710,5 +1710,50 @@
     "filename": "yung-kai-do.mp3",
     "duration": 35,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/yung-kai-do.mp3"
+  },
+  {
+    "id": "o-strings-my-strings-snezhnaya",
+    "title": "O Strings, My Strings",
+    "category": "Snezhnaya",
+    "filename": "o-strings-my-strings-snezhnaya.mp3",
+    "duration": 155,
+    "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/o-strings-my-strings-snezhnaya.mp3",
+    "preview": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/o-strings-my-strings-snezhnaya-preview.mp3"
+  },
+  {
+    "id": "i-loved-you-snezhnaya",
+    "title": "I Loved You",
+    "category": "Snezhnaya",
+    "filename": "i-loved-you-snezhnaya.mp3",
+    "duration": 75,
+    "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/i-loved-you-snezhnaya.mp3",
+    "preview": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/i-loved-you-snezhnaya-preview.mp3"
+  },
+  {
+    "id": "falling-leaves-and-even-stars-snezhnaya",
+    "title": "Falling Leaves and Even-Stars",
+    "category": "Snezhnaya",
+    "filename": "falling-leaves-and-even-stars-snezhnaya.mp3",
+    "duration": 65,
+    "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/falling-leaves-and-even-stars-snezhnaya.mp3",
+    "preview": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/falling-leaves-and-even-stars-snezhnaya-preview.mp3"
+  },
+  {
+    "id": "skazka-skazok-snezhnaya",
+    "title": "Skazka Skazok",
+    "category": "Snezhnaya",
+    "filename": "skazka-skazok-snezhnaya.mp3",
+    "duration": 174,
+    "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/skazka-skazok-snezhnaya.mp3",
+    "preview": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/skazka-skazok-snezhnaya-preview.mp3"
+  },
+  {
+    "id": "whispers-to-the-midnight-frost-snezhnaya",
+    "title": "Whispers to the Midnight Frost",
+    "category": "Snezhnaya",
+    "filename": "whispers-to-the-midnight-frost-snezhnaya.mp3",
+    "duration": 143,
+    "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/whispers-to-the-midnight-frost-snezhnaya.mp3",
+    "preview": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/whispers-to-the-midnight-frost-snezhnaya-preview.mp3"
   }
 ]
