@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>/*TITLE*/</title>
+<style>
+  :root { --ebony:#14110f; --panel:#1f1a17; --line:#3a322c; --ivory:#f3ece0; --muted:#a89c8c; --gold:#d4a74a; --flag:#e07a5f; }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--ebony); color:var(--ivory); font:15px/1.45 system-ui, sans-serif; }
+  header { position:sticky; top:0; z-index:2; background:var(--ebony); border-bottom:1px solid var(--line); padding:14px 16px; display:flex; gap:16px; align-items:center; flex-wrap:wrap; }
+  h1 { font-size:18px; margin:0; color:var(--gold); }
+  .count { color:var(--muted); }
+  button { background:var(--gold); color:var(--ebony); border:0; border-radius:6px; padding:8px 14px; font-weight:600; cursor:pointer; }
+  main { padding:12px 16px 60px; max-width:1100px; margin:0 auto; }
+  .help { color:var(--muted); margin:4px 0 16px; }
+  .row { background:var(--panel); border:1px solid var(--line); border-radius:8px; padding:12px; margin-bottom:10px; display:grid; grid-template-columns: 1fr 1fr; gap:8px 16px; }
+  .row.skip { opacity:.45; }
+  .row.moved { border-left:4px solid var(--flag); }
+  .label { color:var(--muted); font-size:12px; text-transform:uppercase; letter-spacing:.05em; }
+  .old { text-decoration:line-through; color:var(--muted); }
+  input[type=text], select { width:100%; background:var(--ebony); color:var(--ivory); border:1px solid var(--line); border-radius:6px; padding:6px 8px; font:inherit; }
+  select.changed { border-color:var(--flag); }
+  audio { width:100%; height:34px; }
+  a { color:var(--gold); }
+  .meta { grid-column:1/-1; display:flex; gap:16px; flex-wrap:wrap; align-items:center; color:var(--muted); font-size:13px; }
+  @media (max-width:700px) { .row { grid-template-columns:1fr; } }
+</style>
+</head>
+<body>
+<header>
+  <h1>/*TITLE*/</h1>
+  <span class="count" id="count"></span>
+  <button id="export">Export decisions</button>
+</header>
+<main>
+  <p class="help">Play the live track, check it against the YouTube upload, then fix the title or region if needed. Rows with a red edge change region. Tick "Skip" to leave a track as it is. Pick "+ New region" to add one, or "Remove from playlist" to drop a track. Export saves <b>/*OUT*/</b> to Downloads.</p>
+  <div id="list"></div>
+</main>
+<script>
+const DATA = /*DATA*/;
+const list = document.getElementById('list');
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const opts = sel => DATA.cats.map(c => `<option${c === sel ? ' selected' : ''}>${esc(c)}</option>`).join('')
+  + `<option value="__new">+ New region…</option><option value="__remove"${sel === '__remove' ? ' selected' : ''}>Remove from playlist</option>`;
+
+DATA.rows.forEach((r, i) => {
+  const el = document.createElement('div');
+  el.className = 'row';
+  el.innerHTML = `
+    <div><div class="label">Now on site</div><div class="old">${esc(r.cur_title)} · ${esc(r.cur_region)}</div>
+      <audio controls preload="none" src="${esc(r.url)}"></audio></div>
+    <div><div class="label">Proposed title</div><input type="text" data-k="title" value="${esc(r.new_title)}">
+      <div class="label" style="margin-top:6px">Region</div><select data-k="region">${opts(r.region)}</select></div>
+    <div class="meta">
+      ${r.yt ? `<a href="https://www.youtube.com/watch?v=${esc(r.yt)}" target="_blank" rel="noopener">${esc(r.video)}</a>` : 'no upload link'}
+      ${r.score != null ? `<span>match ${r.score.toFixed(2)}</span>` : ''}
+      <span>${esc(r.file)}</span>
+      <label><input type="checkbox" data-k="skip"> Skip</label>
+    </div>`;
+  const sel = el.querySelector('select'), skip = el.querySelector('[data-k=skip]');
+  const paint = () => {
+    const moved = sel.value !== r.cur_region && sel.value !== '__remove';
+    el.classList.toggle('moved', moved); sel.classList.toggle('changed', moved);
+    el.classList.toggle('skip', skip.checked || sel.value === '__remove');
+  };
+  sel.onchange = () => {
+    if (sel.value === '__new') {
+      const name = (prompt('New region name') || '').trim();
+      if (name) {
+        if (!DATA.cats.includes(name)) {
+          DATA.cats.push(name); DATA.cats.sort();
+          document.querySelectorAll('select[data-k=region]').forEach(s => {
+            const o = document.createElement('option'); o.textContent = name;
+            s.insertBefore(o, s.querySelector('option[value=__new]'));
+          });
+        }
+        sel.value = name;
+      } else sel.value = r.region;
+    }
+    paint();
+  }; skip.onchange = paint; paint();
+  el.dataset.i = i;
+  list.appendChild(el);
+});
+
+const moved = DATA.rows.filter(r => r.region !== r.cur_region).length;
+document.getElementById('count').textContent = `${DATA.rows.length} tracks · ${moved} region guesses`;
+
+document.getElementById('export').onclick = () => {
+  const out = [...list.children].map(el => {
+    const r = DATA.rows[el.dataset.i];
+    return { id: r.id, title: el.querySelector('[data-k=title]').value.trim(),
+             region: el.querySelector('[data-k=region]').value === '__remove' ? null : el.querySelector('[data-k=region]').value,
+             remove: el.querySelector('[data-k=region]').value === '__remove',
+             skip: el.querySelector('[data-k=skip]').checked };
+  });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([JSON.stringify(out, null, 2)], {type: 'application/json'}));
+  a.download = DATA.out;
+  a.click();
+};
+</script>
+</body>
+</html>

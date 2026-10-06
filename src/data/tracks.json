@@ -209,7 +209,7 @@
   },
   {
     "id": "a-night-of-their-own-edied",
-    "title": "A Night of Their Own",
+    "title": "A Night of their Own",
     "category": "Natlan",
     "filename": "a-night-of-their-own-natlan.mp3",
     "duration": 98,
@@ -217,19 +217,11 @@
   },
   {
     "id": "adeptus-piano",
-    "title": "Adeptus Piano",
-    "category": "Uncategorized",
+    "title": "Adeptus' Solace",
+    "category": "Liyue",
     "filename": "adeptus-piano.mp3",
     "duration": 119,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/adeptus-piano.mp3"
-  },
-  {
-    "id": "after-so-many-words",
-    "title": "After So Many Words",
-    "category": "Natlan",
-    "filename": "after-so-many-words-natlan.mp3",
-    "duration": 100,
-    "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/after-so-many-words-natlan.mp3"
   },
   {
     "id": "after-tea-party",
@@ -257,7 +249,7 @@
   },
   {
     "id": "aisa-bathhouse-2-edited2",
-    "title": "Aisa Bathhouse OST 2",
+    "title": "Entwined in Thought",
     "category": "Inazuma",
     "filename": "aisa-bathhouse-ost-2-inazuma.mp3",
     "duration": 96,
@@ -273,7 +265,7 @@
   },
   {
     "id": "all-passed-with-the-rain",
-    "title": "All Passed With the Rain",
+    "title": "Pluie sur la ville / All Passed With the Rain",
     "category": "Fontaine",
     "filename": "all-passed-with-the-rain-fontaine.mp3",
     "duration": 170,
@@ -296,25 +288,17 @@
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/astrum-unicum-stars-rebirth-and-you-wutheringwaves.mp3"
   },
   {
-    "id": "barrons",
-    "title": "Barrons",
-    "category": "Uncategorized",
-    "filename": "barrons.mp3",
-    "duration": 92,
-    "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/barrons.mp3"
-  },
-  {
     "id": "basins-natlan",
-    "title": "Basins Natlan",
-    "category": "Uncategorized",
+    "title": "After So Many Words",
+    "category": "Natlan",
     "filename": "basins-natlan.mp3",
     "duration": 99,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/basins-natlan.mp3"
   },
   {
     "id": "bennett",
-    "title": "Bennett",
-    "category": "Uncategorized",
+    "title": "The Luckiest Child",
+    "category": "Mondstadt",
     "filename": "bennett.mp3",
     "duration": 88,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/bennett.mp3"
@@ -329,32 +313,32 @@
   },
   {
     "id": "bewitched",
-    "title": "Bewitched",
-    "category": "Uncategorized",
+    "title": "Laufey - Bewitched",
+    "category": "Pop Covers",
     "filename": "bewitched.mp3",
     "duration": 128,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/bewitched.mp3"
   },
   {
     "id": "blue-danube",
-    "title": "Blue Danube",
-    "category": "Uncategorized",
+    "title": "The Blue Danube",
+    "category": "Classical",
     "filename": "blue-danube.mp3",
     "duration": 44,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/blue-danube.mp3"
   },
   {
     "id": "blue-yung-kai",
-    "title": "Blue Yung Kai",
-    "category": "Uncategorized",
+    "title": "yung kai - blue",
+    "category": "Pop Covers",
     "filename": "blue-yung-kai.mp3",
     "duration": 227,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/blue-yung-kai.mp3"
   },
   {
     "id": "bored",
-    "title": "Bored",
-    "category": "Uncategorized",
+    "title": "Laufey - Bored",
+    "category": "Pop Covers",
     "filename": "bored.mp3",
     "duration": 171,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/bored.mp3"
@@ -401,7 +385,7 @@
   },
   {
     "id": "columbina-theme-edited2",
-    "title": "Columbina Theme (To Where She Flies - Slow Ver.)",
+    "title": "Enigma in the Lunar Cradle",
     "category": "Nod Krai",
     "filename": "columbina-theme-to-where-she-flies-slow-ver-nodkrai.wav",
     "duration": 136,
@@ -409,8 +393,8 @@
   },
   {
     "id": "courtnight",
-    "title": "Courtnight",
-    "category": "Uncategorized",
+    "title": "Luminescence of Eventide",
+    "category": "Fontaine",
     "filename": "courtnight.mp3",
     "duration": 100,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/courtnight.mp3"
@@ -433,8 +417,8 @@
   },
   {
     "id": "creeks-of-nostalgia",
-    "title": "Creeks Of Nostalgia",
-    "category": "Uncategorized",
+    "title": "Creeks of Nostalgia",
+    "category": "Liyue",
     "filename": "creeks-of-nostalgia.mp3",
     "duration": 120,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/creeks-of-nostalgia.mp3"
@@ -449,7 +433,7 @@
   },
   {
     "id": "curhs-love-you-with",
-    "title": "Love You With All My Heart",
+    "title": "Crush - Love You With All My Heart",
     "category": "K-Drama",
     "filename": "love-you-with-all-my-heart-kdrama.mp3",
     "duration": 240,
@@ -465,8 +449,8 @@
   },
   {
     "id": "desert",
-    "title": "Desert",
-    "category": "Uncategorized",
+    "title": "Her Wishes",
+    "category": "Sumeru",
     "filename": "desert.mp3",
     "duration": 138,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/desert.mp3"
@@ -481,8 +465,8 @@
   },
   {
     "id": "dont-know-why",
-    "title": "Dont Know Why",
-    "category": "Uncategorized",
+    "title": "Norah Jones - Don't Know Why",
+    "category": "Pop Covers",
     "filename": "dont-know-why.mp3",
     "duration": 243,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/dont-know-why.mp3"
@@ -497,8 +481,8 @@
   },
   {
     "id": "emberedited",
-    "title": "Emberedited",
-    "category": "Uncategorized",
+    "title": "Ember Kalimba",
+    "category": "Fontaine",
     "filename": "emberedited.mp3",
     "duration": 62,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/emberedited.mp3"
@@ -513,8 +497,8 @@
   },
   {
     "id": "emilie-2",
-    "title": "Emilie",
-    "category": "Uncategorized",
+    "title": "Le Souffle du Parfum",
+    "category": "Fontaine",
     "filename": "emilie-2.mp3",
     "duration": 36,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/emilie-2.mp3"
@@ -538,15 +522,15 @@
   {
     "id": "fading-stories-2",
     "title": "Fading Stories",
-    "category": "Uncategorized",
+    "category": "Liyue",
     "filename": "fading-stories-2.mp3",
     "duration": 327,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/fading-stories-2.mp3"
   },
   {
     "id": "falling-behind",
-    "title": "Falling Behind",
-    "category": "Uncategorized",
+    "title": "Laufey - Falling Behind",
+    "category": "Pop Covers",
     "filename": "falling-behind.mp3",
     "duration": 76,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/falling-behind.mp3"
@@ -554,14 +538,14 @@
   {
     "id": "falling-maples-sad",
     "title": "Falling Maples Sad",
-    "category": "Uncategorized",
+    "category": "Inazuma",
     "filename": "falling-maples-sad.mp3",
     "duration": 82,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/falling-maples-sad.mp3"
   },
   {
     "id": "falling-maples-sad-edited2",
-    "title": "Dream of Scattered Petals (Sad Version)",
+    "title": "Dream of Scattered Petals",
     "category": "Inazuma",
     "filename": "dream-of-scattered-petals-sad-version-inazuma.mp3",
     "duration": 78,
@@ -602,23 +586,23 @@
   {
     "id": "fly-me-to-the-moon",
     "title": "Fly Me To The Moon",
-    "category": "Uncategorized",
+    "category": "Pop Covers",
     "filename": "fly-me-to-the-moon.mp3",
     "duration": 40,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/fly-me-to-the-moon.mp3"
   },
   {
     "id": "focalors-farewell",
-    "title": "Focalors Farewell",
-    "category": "Uncategorized",
+    "title": "Comme il vous plaira",
+    "category": "Fontaine",
     "filename": "focalors-farewell.mp3",
     "duration": 96,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/focalors-farewell.mp3"
   },
   {
     "id": "forest-of-blessings",
-    "title": "Forest Of Blessings",
-    "category": "Uncategorized",
+    "title": "Morning Song in the Forest",
+    "category": "Simulanka",
     "filename": "forest-of-blessings.mp3",
     "duration": 91,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/forest-of-blessings.mp3"
@@ -633,7 +617,7 @@
   },
   {
     "id": "gentle-winds",
-    "title": "Gentle Breeze Through the Pines (but frogs start swimming)",
+    "title": "Gentle Breeze Through the Pines",
     "category": "Simulanka",
     "filename": "gentle-breeze-through-the-pines-but-frogs-start-swimming-simulanka.mp3",
     "duration": 75,
@@ -641,40 +625,32 @@
   },
   {
     "id": "goddes",
-    "title": "Goddes",
-    "category": "Uncategorized",
+    "title": "Laufey - Goddess",
+    "category": "Pop Covers",
     "filename": "goddes.mp3",
     "duration": 165,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/goddes.mp3"
   },
   {
     "id": "hadi-not-seen-the-sun",
-    "title": "Had I Not Seen The Sun",
+    "title": "Had I Not Seen the Sun",
     "category": "Honkai Starrail",
     "filename": "had-i-not-seen-the-sun-honkaistarrail.mp3",
     "duration": 152,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/had-i-not-seen-the-sun-honkaistarrail.mp3"
   },
   {
-    "id": "hadi-not-seen-the-sun-2",
-    "title": "Hadi Not Seen The Sun",
-    "category": "Uncategorized",
-    "filename": "hadi-not-seen-the-sun-2.mp3",
-    "duration": 286,
-    "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/hadi-not-seen-the-sun-2.mp3"
-  },
-  {
     "id": "happy-variations",
-    "title": "Happy Variations",
-    "category": "Uncategorized",
+    "title": "Snuggy Breeze",
+    "category": "Simulanka",
     "filename": "happy-variations.mp3",
     "duration": 132,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/happy-variations.mp3"
   },
   {
     "id": "haru-haru",
-    "title": "Haru Haru",
-    "category": "Uncategorized",
+    "title": "BIGBANG - Haru Haru 빅뱅 - 하루하루",
+    "category": "Pop Covers",
     "filename": "haru-haru.mp3",
     "duration": 136,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/haru-haru.mp3"
@@ -697,16 +673,16 @@
   },
   {
     "id": "hikaru-naru",
-    "title": "Hikaru Naru",
-    "category": "Uncategorized",
+    "title": "Hikaru Nara - Your Lie in April OP 1",
+    "category": "Anime",
     "filename": "hikaru-naru.mp3",
     "duration": 233,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/hikaru-naru.mp3"
   },
   {
     "id": "hinoki-wood",
-    "title": "Hinoki Wood",
-    "category": "Uncategorized",
+    "title": "Gia Margaret - Hinoki Wood",
+    "category": "Pop Covers",
     "filename": "hinoki-wood.mp3",
     "duration": 86,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/hinoki-wood.mp3"
@@ -722,7 +698,7 @@
   {
     "id": "hisui-morning-2",
     "title": "Hisui Morning",
-    "category": "Uncategorized",
+    "category": "Nod Krai",
     "filename": "hisui-morning-2.wav",
     "duration": 129,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/hisui-morning-2.wav"
@@ -737,8 +713,8 @@
   },
   {
     "id": "introduction-to-a-friend",
-    "title": "Introduction To A Friend",
-    "category": "Uncategorized",
+    "title": "Introduction to a Little Friend",
+    "category": "Natlan",
     "filename": "introduction-to-a-friend.mp3",
     "duration": 58,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/introduction-to-a-friend.mp3"
@@ -761,32 +737,24 @@
   },
   {
     "id": "la-vagulette",
-    "title": "La Vagulette",
-    "category": "Uncategorized",
+    "title": "La vaguelette",
+    "category": "Fontaine",
     "filename": "la-vagulette.mp3",
     "duration": 158,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/la-vagulette.mp3"
   },
   {
     "id": "legnedary",
-    "title": "Legnedary",
-    "category": "Uncategorized",
+    "title": "Legendary Tonatiuh",
+    "category": "Natlan",
     "filename": "legnedary.mp3",
     "duration": 86,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/legnedary.mp3"
   },
   {
-    "id": "lempo-island",
-    "title": "Lempo Island",
-    "category": "Nod Krai",
-    "filename": "lempo-island-nodkrai.mp3",
-    "duration": 171,
-    "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/lempo-island-nodkrai.mp3"
-  },
-  {
     "id": "les-murmus",
-    "title": "Les Murmus",
-    "category": "Uncategorized",
+    "title": "Les murmures des flots",
+    "category": "Fontaine",
     "filename": "les-murmus.wav",
     "duration": 107,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/les-murmus.wav"
@@ -800,14 +768,6 @@
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/les-murmures-des-flots-fontaine.mp3"
   },
   {
-    "id": "les-tendres-souhaits-2",
-    "title": "Les Tendres Souhaits",
-    "category": "Uncategorized",
-    "filename": "les-tendres-souhaits-2.mp3",
-    "duration": 101,
-    "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/les-tendres-souhaits-2.mp3"
-  },
-  {
     "id": "let-u-break-heart-again",
     "title": "Let You Break My Heart Again",
     "category": "Pop Covers",
@@ -817,8 +777,8 @@
   },
   {
     "id": "like-the-movies",
-    "title": "Like The Movies",
-    "category": "Uncategorized",
+    "title": "Laufey - Like The Movies",
+    "category": "Pop Covers",
     "filename": "like-the-movies.mp3",
     "duration": 167,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/like-the-movies.mp3"
@@ -833,15 +793,15 @@
   },
   {
     "id": "love-all-mine",
-    "title": "Love All Mine",
-    "category": "Uncategorized",
+    "title": "Mitski - My Love Mine All Mine",
+    "category": "Pop Covers",
     "filename": "love-all-mine.mp3",
     "duration": 87,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/love-all-mine.mp3"
   },
   {
     "id": "love-full",
-    "title": "Love",
+    "title": "IU - Love Wins All",
     "category": "Pop Covers",
     "filename": "love-popcovers.mp3",
     "duration": 280,
@@ -849,43 +809,19 @@
   },
   {
     "id": "lullaby",
-    "title": "Lullaby",
-    "category": "Uncategorized",
+    "title": "Thelxie's Lullaby",
+    "category": "Fontaine",
     "filename": "lullaby.mp3",
     "duration": 82,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/lullaby.mp3"
   },
   {
-    "id": "lullaby-editing",
-    "title": "Lullaby Editing",
-    "category": "Uncategorized",
-    "filename": "lullaby-editing.mp3",
-    "duration": 82,
-    "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/lullaby-editing.mp3"
-  },
-  {
-    "id": "lullaby-shorten",
-    "title": "Lullaby Shorten",
-    "category": "Uncategorized",
-    "filename": "lullaby-shorten.mp3",
-    "duration": 78,
-    "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/lullaby-shorten.mp3"
-  },
-  {
     "id": "lustrous",
-    "title": "Lustrous",
-    "category": "Uncategorized",
+    "title": "Lustrous Stars (Re-recorded)",
+    "category": "Fontaine",
     "filename": "lustrous.mp3",
     "duration": 125,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/lustrous.mp3"
-  },
-  {
-    "id": "lyn-demo",
-    "title": "Lyn Demo",
-    "category": "Uncategorized",
-    "filename": "lyn-demo.wav",
-    "duration": 150,
-    "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/lyn-demo.wav"
   },
   {
     "id": "maiden-s-longing",
@@ -894,14 +830,6 @@
     "filename": "maidens-longing-liyue.mp3",
     "duration": 84,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/maidens-longing-liyue.mp3"
-  },
-  {
-    "id": "maiden-s-longing-2",
-    "title": "Maiden's Longing",
-    "category": "Uncategorized",
-    "filename": "maiden-s-longing-2.wav",
-    "duration": 84,
-    "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/maiden-s-longing-2.wav"
   },
   {
     "id": "masquerade",
@@ -929,8 +857,8 @@
   },
   {
     "id": "meeting-and-passing",
-    "title": "Meeting And Passing",
-    "category": "Uncategorized",
+    "title": "Meeting and Passing",
+    "category": "Genshin Archon Quests",
     "filename": "meeting-and-passing.mp3",
     "duration": 133,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/meeting-and-passing.mp3"
@@ -945,8 +873,8 @@
   },
   {
     "id": "melodious-chant",
-    "title": "Melodious Chant",
-    "category": "Uncategorized",
+    "title": "As the Feather Falls",
+    "category": "Natlan",
     "filename": "melodious-chant.mp3",
     "duration": 79,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/melodious-chant.mp3"
@@ -977,16 +905,16 @@
   },
   {
     "id": "mingle",
-    "title": "Mingle",
-    "category": "Uncategorized",
+    "title": "Round and Round",
+    "category": "K-Drama",
     "filename": "mingle.mp3",
     "duration": 41,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/mingle.mp3"
   },
   {
     "id": "mondstad-midnight",
-    "title": "Mondstad Midnight",
-    "category": "Uncategorized",
+    "title": "Midnight in Mondstadt",
+    "category": "Mondstadt",
     "filename": "mondstad-midnight.mp3",
     "duration": 52,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/mondstad-midnight.mp3"
@@ -1001,24 +929,24 @@
   },
   {
     "id": "moonlit-wildeness",
-    "title": "Moonlit Wildeness",
-    "category": "Uncategorized",
+    "title": "Moonlit Wilderness",
+    "category": "Mondstadt",
     "filename": "moonlit-wildeness.wav",
     "duration": 84,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/moonlit-wildeness.wav"
   },
   {
     "id": "nandemoniya",
-    "title": "Nandemoniya",
-    "category": "Uncategorized",
+    "title": "Nandemonaiya",
+    "category": "Film",
     "filename": "nandemoniya.mp3",
     "duration": 429,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/nandemoniya.mp3"
   },
   {
     "id": "naruto-sadness-and-sorrow",
-    "title": "Naruto Sadness And Sorrow",
-    "category": "Uncategorized",
+    "title": "Naruto: Sadness and Sorrow",
+    "category": "Anime",
     "filename": "naruto-sadness-and-sorrow.mp3",
     "duration": 216,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/naruto-sadness-and-sorrow.mp3"
@@ -1041,15 +969,15 @@
   },
   {
     "id": "natlan-ode",
-    "title": "Natlan Ode",
-    "category": "Uncategorized",
+    "title": "The Ode of Resurrection",
+    "category": "Natlan",
     "filename": "natlan-ode.mp3",
     "duration": 116,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/natlan-ode.mp3"
   },
   {
     "id": "neuvillete-edited2",
-    "title": "Neuvillette",
+    "title": "Pluie sur la ville / All Passed With the Rain (Re-recorded)",
     "category": "Fontaine",
     "filename": "neuvillette-fontaine.mp3",
     "duration": 183,
@@ -1073,7 +1001,7 @@
   },
   {
     "id": "nod-khrai",
-    "title": "Nod-Krai (Version 6.0 OST)",
+    "title": "Nod-Krai",
     "category": "Nod Krai",
     "filename": "nod-krai-version-6-0-ost-nodkrai.mp3",
     "duration": 120,
@@ -1086,14 +1014,6 @@
     "filename": "to-the-glowing-night-nodkrai.wav",
     "duration": 130,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/to-the-glowing-night-nodkrai.wav"
-  },
-  {
-    "id": "opera-eclipse",
-    "title": "OPERA Eclipse",
-    "category": "Uncategorized",
-    "filename": "opera-eclipse.mp3",
-    "duration": 119,
-    "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/opera-eclipse.mp3"
   },
   {
     "id": "opera-eclipse-2",
@@ -1114,23 +1034,15 @@
   {
     "id": "passing-memories",
     "title": "Passing Memories",
-    "category": "Uncategorized",
+    "category": "Genshin Archon Quests",
     "filename": "passing-memories.mp3",
     "duration": 145,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/passing-memories.mp3"
   },
   {
-    "id": "peaceful-wishes-2",
-    "title": "Peaceful Wishes",
-    "category": "Uncategorized",
-    "filename": "peaceful-wishes-2.mp3",
-    "duration": 119,
-    "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/peaceful-wishes-2.mp3"
-  },
-  {
     "id": "porco-rosso",
-    "title": "Porco Rosso",
-    "category": "Uncategorized",
+    "title": "Porco Rosso - Bygone Days",
+    "category": "Film",
     "filename": "porco-rosso.mp3",
     "duration": 204,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/porco-rosso.mp3"
@@ -1146,15 +1058,15 @@
   {
     "id": "pure-imagination",
     "title": "Pure Imagination",
-    "category": "Uncategorized",
+    "category": "Film",
     "filename": "pure-imagination.mp3",
     "duration": 119,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/pure-imagination.mp3"
   },
   {
     "id": "que-le",
-    "title": "Que Le",
-    "category": "Uncategorized",
+    "title": "A Happy Furina: Que le vent soit doux (Kalimba)",
+    "category": "Fontaine",
     "filename": "que-le.mp3",
     "duration": 102,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/que-le.mp3"
@@ -1162,7 +1074,7 @@
   {
     "id": "que-piano",
     "title": "Que Piano",
-    "category": "Uncategorized",
+    "category": "Fontaine",
     "filename": "que-piano.mp3",
     "duration": 74,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/que-piano.mp3"
@@ -1185,16 +1097,16 @@
   },
   {
     "id": "ritoue-night",
-    "title": "Ritoue Night",
-    "category": "Uncategorized",
+    "title": "Interwoven Nostalgia",
+    "category": "Inazuma",
     "filename": "ritoue-night.mp3",
     "duration": 68,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/ritoue-night.mp3"
   },
   {
     "id": "road-no-t-taken",
-    "title": "Road No T Taken",
-    "category": "Uncategorized",
+    "title": "The Road Not Taken",
+    "category": "Genshin Archon Quests",
     "filename": "road-no-t-taken.mp3",
     "duration": 200,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/road-no-t-taken.mp3"
@@ -1266,15 +1178,15 @@
   {
     "id": "marionate",
     "title": "La mare de larmes",
-    "category": "Uncategorized",
+    "category": "Nod Krai",
     "filename": "marionate.wav",
     "duration": 93,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/marionate.wav"
   },
   {
     "id": "romaintime",
-    "title": "Fields After Dusk",
-    "category": "Nod Krai",
+    "title": "Pilot's Rest / Romaritime Recollection - Fontaine Happy Day Theme",
+    "category": "Fontaine",
     "filename": "fields-after-dusk-nodkrai.mp3",
     "duration": 109,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/fields-after-dusk-nodkrai.mp3"
@@ -1282,7 +1194,7 @@
   {
     "id": "sailor-song",
     "title": "Sailor Song",
-    "category": "Uncategorized",
+    "category": "Pop Covers",
     "filename": "sailor-song.mp3",
     "duration": 78,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/sailor-song.mp3"
@@ -1312,17 +1224,9 @@
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/haunting-sandrone-theme-a-sitting-on-a-gate-nodkrai.mp3"
   },
   {
-    "id": "sangonomiya-shrine",
-    "title": "Sangonomiya Shrine",
-    "category": "Uncategorized",
-    "filename": "sangonomiya-shrine.wav",
-    "duration": 88,
-    "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/sangonomiya-shrine.wav"
-  },
-  {
     "id": "sangonomiya-shrine-2",
     "title": "Sangonomiya Shrine",
-    "category": "Uncategorized",
+    "category": "Inazuma",
     "filename": "sangonomiya-shrine-2.mp3",
     "duration": 88,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/sangonomiya-shrine-2.mp3"
@@ -1337,8 +1241,8 @@
   },
   {
     "id": "seasons",
-    "title": "Seasons",
-    "category": "Uncategorized",
+    "title": "wave to earth - Seasons",
+    "category": "Pop Covers",
     "filename": "seasons.mp3",
     "duration": 114,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/seasons.mp3"
@@ -1346,22 +1250,14 @@
   {
     "id": "signal-flags",
     "title": "Signal Flags",
-    "category": "Uncategorized",
+    "category": "Film",
     "filename": "signal-flags.mp3",
     "duration": 161,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/signal-flags.mp3"
   },
   {
-    "id": "signal-flags-2",
-    "title": "Signal Flags",
-    "category": "Uncategorized",
-    "filename": "signal-flags-2.mp3",
-    "duration": 180,
-    "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/signal-flags-2.mp3"
-  },
-  {
     "id": "simu",
-    "title": "The Parade of Flying Squirrels Variations",
+    "title": "The Parade of Flying Squirrels",
     "category": "Simulanka",
     "filename": "the-parade-of-flying-squirrels-variations-simulanka.mp3",
     "duration": 89,
@@ -1370,7 +1266,7 @@
   {
     "id": "simu-calm-sea",
     "title": "Simu Calm Sea",
-    "category": "Uncategorized",
+    "category": "Simulanka",
     "filename": "simu-calm-sea.mp3",
     "duration": 120,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/simu-calm-sea.mp3"
@@ -1393,7 +1289,7 @@
   },
   {
     "id": "sound-of-rain",
-    "title": "Sound Of Rain",
+    "title": "The Sound of Rain",
     "category": "Uncategorized",
     "filename": "sound-of-rain.mp3",
     "duration": 240,
@@ -1402,15 +1298,15 @@
   {
     "id": "squid-game-opening",
     "title": "Squid Game Opening",
-    "category": "Uncategorized",
+    "category": "K-Drama",
     "filename": "squid-game-opening.mp3",
     "duration": 43,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/squid-game-opening.mp3"
   },
   {
     "id": "stars-and-beyond",
-    "title": "Stars And Beyond",
-    "category": "Uncategorized",
+    "title": "A Space and Time for You",
+    "category": "Genshin Archon Quests",
     "filename": "stars-and-beyond.mp3",
     "duration": 105,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/stars-and-beyond.mp3"
@@ -1425,7 +1321,7 @@
   },
   {
     "id": "sudden-shower",
-    "title": "Sudden Shower",
+    "title": "Sudden Shower 소나기",
     "category": "K-Drama",
     "filename": "sudden-shower-kdrama.mp3",
     "duration": 236,
@@ -1433,24 +1329,16 @@
   },
   {
     "id": "sunday",
-    "title": "Sunday",
-    "category": "Uncategorized",
+    "title": "FKJ - Sundays",
+    "category": "Pop Covers",
     "filename": "sunday.mp3",
     "duration": 237,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/sunday.mp3"
   },
   {
-    "id": "swan",
-    "title": "Swan",
-    "category": "Uncategorized",
-    "filename": "swan.wav",
-    "duration": 165,
-    "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/swan.wav"
-  },
-  {
     "id": "swan-2",
-    "title": "Swan",
-    "category": "Uncategorized",
+    "title": "The Swan",
+    "category": "Classical",
     "filename": "swan-2.wav",
     "duration": 165,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/swan-2.wav"
@@ -1466,18 +1354,10 @@
   {
     "id": "teleoco-bay",
     "title": "Teleoco Bay",
-    "category": "Uncategorized",
+    "category": "Natlan",
     "filename": "teleoco-bay.mp3",
     "duration": 128,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/teleoco-bay.mp3"
-  },
-  {
-    "id": "tender-strength",
-    "title": "Tender Strength",
-    "category": "Uncategorized",
-    "filename": "tender-strength.mp3",
-    "duration": 102,
-    "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/tender-strength.mp3"
   },
   {
     "id": "tender-strength-2",
@@ -1488,14 +1368,6 @@
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/tender-strength-mondstadt.mp3"
   },
   {
-    "id": "test",
-    "title": "Test",
-    "category": "Uncategorized",
-    "filename": "test.mp3",
-    "duration": 91,
-    "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/test.mp3"
-  },
-  {
     "id": "the-nights-wish",
     "title": "The Nights' Wish",
     "category": "Natlan",
@@ -1504,36 +1376,12 @@
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/the-nights-wish-natlan.mp3"
   },
   {
-    "id": "the-swan",
-    "title": "The Swan",
-    "category": "Uncategorized",
-    "filename": "the-swan.mp3",
-    "duration": 165,
-    "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/the-swan.mp3"
-  },
-  {
     "id": "theatre-troupe",
     "title": "Theatre Troupe",
-    "category": "Uncategorized",
+    "category": "Fontaine",
     "filename": "theatre-troupe.mp3",
     "duration": 105,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/theatre-troupe.mp3"
-  },
-  {
-    "id": "theatre-troupe-louder",
-    "title": "Theatre Troupe Louder",
-    "category": "Uncategorized",
-    "filename": "theatre-troupe-louder.mp3",
-    "duration": 105,
-    "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/theatre-troupe-louder.mp3"
-  },
-  {
-    "id": "thinker-theatre-night",
-    "title": "Thinker Theatre Night",
-    "category": "Uncategorized",
-    "filename": "thinker-theatre-night.mp3",
-    "duration": 97,
-    "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/thinker-theatre-night.mp3"
   },
   {
     "id": "thinker-theatre-night-w-start",
@@ -1545,19 +1393,11 @@
   },
   {
     "id": "trace-of-grace",
-    "title": "Trace Of Grace",
-    "category": "Uncategorized",
+    "title": "Trace of Grace",
+    "category": "Liyue",
     "filename": "trace-of-grace.mp3",
     "duration": 158,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/trace-of-grace.mp3"
-  },
-  {
-    "id": "trace-of-grace-2",
-    "title": "Trace of Grace",
-    "category": "Liyue",
-    "filename": "trace-of-grace-liyue.wav",
-    "duration": 121,
-    "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/trace-of-grace-liyue.wav"
   },
   {
     "id": "treasured-beyond",
@@ -1576,56 +1416,48 @@
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/twinkle.wav"
   },
   {
-    "id": "untitled",
-    "title": "Untitled",
-    "category": "Uncategorized",
-    "filename": "untitled.mp3",
-    "duration": 10,
-    "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/untitled.mp3"
-  },
-  {
     "id": "valentine",
-    "title": "Valentine",
-    "category": "Uncategorized",
+    "title": "Laufey - Valentine",
+    "category": "Pop Covers",
     "filename": "valentine.mp3",
     "duration": 126,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/valentine.mp3"
   },
   {
     "id": "vaundy-odoriko",
-    "title": "Vaundy Odoriko",
-    "category": "Uncategorized",
+    "title": "Vaundy - Odoriko",
+    "category": "Pop Covers",
     "filename": "vaundy-odoriko.mp3",
     "duration": 79,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/vaundy-odoriko.mp3"
   },
   {
     "id": "village-green-night",
-    "title": "Village Green Night",
-    "category": "Uncategorized",
+    "title": "Village Surrounded by Green",
+    "category": "Sumeru",
     "filename": "village-green-night.mp3",
     "duration": 94,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/village-green-night.mp3"
   },
   {
     "id": "watashi-no-uso",
-    "title": "Watashi No Uso",
-    "category": "Uncategorized",
+    "title": "Watashi no Uso (Your Lie in April)",
+    "category": "Anime",
     "filename": "watashi-no-uso.wav",
     "duration": 243,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/watashi-no-uso.wav"
   },
   {
     "id": "wavesss",
-    "title": "Wavesss",
-    "category": "Uncategorized",
+    "title": "Rippling Reveries",
+    "category": "Natlan",
     "filename": "wavesss.mp3",
     "duration": 152,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/wavesss.mp3"
   },
   {
     "id": "when-all-becomes-a-monument",
-    "title": "When All Becomes a Monument",
+    "title": "His Rest Was in the Night",
     "category": "Natlan",
     "filename": "when-all-becomes-a-monument-natlan.mp3",
     "duration": 103,
@@ -1649,8 +1481,8 @@
   },
   {
     "id": "whirl",
-    "title": "Whirl",
-    "category": "Uncategorized",
+    "title": "Whirl of Chalchiuhtlicue",
+    "category": "Natlan",
     "filename": "whirl.mp3",
     "duration": 127,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/whirl.mp3"
@@ -1673,16 +1505,16 @@
   },
   {
     "id": "winds",
-    "title": "Winds",
-    "category": "Uncategorized",
+    "title": "Fluttering Upon the Wind",
+    "category": "Natlan",
     "filename": "winds.mp3",
     "duration": 112,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/winds.mp3"
   },
   {
     "id": "wish-u-love-slow",
-    "title": "Wish U Love Slow",
-    "category": "Uncategorized",
+    "title": "Laufey - I Wish You Love",
+    "category": "Pop Covers",
     "filename": "wish-u-love-slow.mp3",
     "duration": 72,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/wish-u-love-slow.mp3"
@@ -1698,15 +1530,15 @@
   {
     "id": "xu-shui-chang-liu",
     "title": "Xu Shui Chang Liu",
-    "category": "Uncategorized",
+    "category": "Chinese",
     "filename": "xu-shui-chang-liu.mp3",
     "duration": 123,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/xu-shui-chang-liu.mp3"
   },
   {
     "id": "yung-kai-do",
-    "title": "Yung Kai Do",
-    "category": "Uncategorized",
+    "title": "yung kai - do you think you could love me",
+    "category": "Pop Covers",
     "filename": "yung-kai-do.mp3",
     "duration": 35,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/yung-kai-do.mp3"
