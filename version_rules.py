@@ -51,8 +51,10 @@ def mp3_twins(folder: Path) -> list[Path]:
 
 
 def to_recycle_bin(path: Path) -> None:
-    import subprocess
+    import os, subprocess
+    # -Command does not fill $args, so the path travels in an env var
+    # (also avoids quoting trouble with apostrophes in file names).
     subprocess.run(["powershell", "-NoProfile", "-Command",
                     "Add-Type -AssemblyName Microsoft.VisualBasic; "
-                    "[Microsoft.VisualBasic.FileIO.FileSystem]::DeleteFile($args[0], 'OnlyErrorDialogs', 'SendToRecycleBin')",
-                    str(path)], check=True)
+                    "[Microsoft.VisualBasic.FileIO.FileSystem]::DeleteFile($env:RECYCLE_PATH, 'OnlyErrorDialogs', 'SendToRecycleBin')"],
+                   env={**os.environ, "RECYCLE_PATH": str(path)}, check=True)

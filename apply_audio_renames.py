@@ -32,6 +32,7 @@ TRACKS_PATH = ROOT / "src" / "data" / "tracks.json"
 
 
 def main() -> None:
+    sys.stdout.reconfigure(encoding="utf-8")  # titles include Korean/Japanese
     ap = argparse.ArgumentParser()
     ap.add_argument("--apply", action="store_true")
     ap.add_argument("--fix-playlist", action="store_true")
@@ -124,13 +125,14 @@ def main() -> None:
         if src.exists() and not dst.exists():
             src.rename(dst)
             done.append(p)
+    if done:
+        with open(log, "w", newline="", encoding="utf-8") as f:
+            w = csv.DictWriter(f, fieldnames=["old", "new", "title"]); w.writeheader(); w.writerows(done)
+        print(f"renamed {len(done)}; undo: python apply_audio_renames.py --undo \"{log}\"")
     for t in twins:
         if t.exists():
             to_recycle_bin(t)
     print(f"sent {len(twins)} MP3 copies to the Recycle Bin")
-    with open(log, "w", newline="", encoding="utf-8") as f:
-        w = csv.DictWriter(f, fieldnames=["old", "new", "title"]); w.writeheader(); w.writerows(done)
-    print(f"renamed {len(done)}; undo: python apply_audio_renames.py --undo \"{log}\"")
 
     if a.fix_playlist and fixes:
         for t, new in fixes:
