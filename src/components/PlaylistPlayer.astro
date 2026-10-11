@@ -16,9 +16,11 @@ export interface Props {
   showCategories?: boolean;
   /** Title shown in the browser tab while a track is playing. */
   siteName?: string;
+  /** Start with shuffle on. Off for pages with a curated listening order. */
+  shuffle?: boolean;
 }
 
-const { tracks, showCategories = true, siteName = "Big Piano Small Piano" } = Astro.props;
+const { tracks, showCategories = true, siteName = "Big Piano Small Piano", shuffle = true } = Astro.props;
 
 function formatDuration(sec: number): string {
   if (!sec) return "--:--";
@@ -69,7 +71,15 @@ const categories = showCategories
   <!-- Controls row -->
   <div class="flex items-center justify-between gap-3 pt-1">
     <p id="track-count" class="text-ivory-muted text-xs font-mono" aria-live="polite">{tracks.length} tracks</p>
-    <button id="shuffle-toggle" type="button" aria-pressed="true" class="flex items-center gap-1.5 text-xs font-medium px-3.5 py-2 rounded-lg border border-gold/40 bg-gold/10 text-gold transition-all">
+    <button
+      id="shuffle-toggle"
+      type="button"
+      aria-pressed={String(shuffle)}
+      class:list={[
+        "flex items-center gap-1.5 text-xs font-medium px-3.5 py-2 rounded-lg border transition-all",
+        shuffle ? "border-gold/40 bg-gold/10 text-gold" : "border-surface-border text-ivory-muted",
+      ]}
+    >
       <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" d="M16 3h5v5M4 20 20.5 3.5M21 16v5h-5M15 15l5.5 5.5M4 4l5 5"/>
       </svg>
@@ -163,7 +173,7 @@ const categories = showCategories
     const chips = document.querySelectorAll(".chip-btn");
     const rows = Array.from(trackList.querySelectorAll(".track-row"));
 
-    let shuffleOn = true;
+    let shuffleOn = shuffleToggle.getAttribute("aria-pressed") === "true";
     let currentIndex = -1;
     let queue = [];
     let activeCategory = "All";
