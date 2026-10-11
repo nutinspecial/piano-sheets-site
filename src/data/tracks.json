@@ -688,14 +688,6 @@
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/half-finished-heaven-nodkrai.wav"
   },
   {
-    "id": "hisui-morning-2",
-    "title": "Half-Finished Heaven",
-    "category": "Nod Krai",
-    "filename": "half-finished-heaven-nodkrai.wav",
-    "duration": 129,
-    "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/half-finished-heaven-nodkrai.wav"
-  },
-  {
     "id": "holy-grail",
     "title": "Saber Theme",
     "category": "Honkai Starrail",
@@ -1152,22 +1144,6 @@
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/disorder-and-early-sorrow-nodkrai.wav"
   },
   {
-    "id": "snezhnograd-night",
-    "title": "Snezhnograd (Night)",
-    "category": "Nod Krai",
-    "filename": "snezhnograd-night-nodkrai.wav",
-    "duration": 159,
-    "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/snezhnograd-night-nodkrai.wav"
-  },
-  {
-    "id": "marionate",
-    "title": "La mare de larmes",
-    "category": "Nod Krai",
-    "filename": "la-mare-de-larmes-nodkrai.wav",
-    "duration": 93,
-    "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/la-mare-de-larmes-nodkrai.wav"
-  },
-  {
     "id": "romaintime",
     "title": "Pilot's Rest / Romaritime Recollection",
     "category": "Fontaine",
@@ -1201,11 +1177,11 @@
   },
   {
     "id": "sandrome-theme",
-    "title": "Haunting Sandrone Theme – 'A Sitting on a Gate'",
+    "title": "A Sitting on a Gate",
     "category": "Nod Krai",
-    "filename": "haunting-sandrone-theme-a-sitting-on-a-gate-nodkrai.mp3",
+    "filename": "a-sitting-on-a-gate-nodkrai.mp3",
     "duration": 79,
-    "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/haunting-sandrone-theme-a-sitting-on-a-gate-nodkrai.mp3"
+    "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/a-sitting-on-a-gate-nodkrai.mp3"
   },
   {
     "id": "sangonomiya-shrine-2",
@@ -1580,5 +1556,23 @@
     "duration": 107,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/fields-after-dusk-nodkrai.mp3",
     "preview": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/fields-after-dusk-nodkrai-preview.mp3"
+  },
+  {
+    "id": "la-mare-de-larmes-nodkrai",
+    "title": "La mare de larmes",
+    "category": "Nod Krai",
+    "filename": "la-mare-de-larmes-nodkrai.mp3",
+    "duration": 102,
+    "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/la-mare-de-larmes-nodkrai.mp3",
+    "preview": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/la-mare-de-larmes-nodkrai-preview.mp3"
+  },
+  {
+    "id": "vestige-of-hurtling-foam-nodkrai",
+    "title": "Vestige of Hurtling Foam",
+    "category": "Nod Krai",
+    "filename": "vestige-of-hurtling-foam-nodkrai.mp3",
+    "duration": 125,
+    "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/vestige-of-hurtling-foam-nodkrai.mp3",
+    "preview": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/vestige-of-hurtling-foam-nodkrai-preview.mp3"
   }
 ]
