@@ -31,7 +31,7 @@ const art = PAINTED.includes(key) ? key : null;
 
   <div class="scene-body max-w-4xl mx-auto px-4 sm:px-6">
     <slot name="top" />
-    {eyebrow && <p class="text-gold-light text-xs tracking-[0.25em] uppercase font-mono mb-3 drop-shadow">{eyebrow}</p>}
+    {eyebrow && <p class="scene-eyebrow text-gold-light text-xs tracking-[0.25em] uppercase font-mono mb-3">{eyebrow}</p>}
     <h1 class="font-display text-4xl sm:text-5xl lg:text-6xl font-semibold text-ivory leading-[1.05] drop-shadow-lg">{title}</h1>
     <slot />
   </div>
@@ -47,6 +47,8 @@ const art = PAINTED.includes(key) ? key : null;
   .scene-fade { position: absolute; inset: 0; z-index: -2; pointer-events: none;
                 background: linear-gradient(to bottom, rgb(13 13 13 / .35) 0%, rgb(13 13 13 / .15) 35%, rgb(13 13 13 / .75) 75%, theme('colors.ebony') 100%); }
   .scene-body { position: relative; width: 100%; }
+  /* Small gold caps need a real halo to read over bright skies (Liyue) */
+  .scene-eyebrow { text-shadow: 0 0 2px rgb(13 13 13 / .9), 0 1px 8px rgb(13 13 13 / .85), 0 0 18px rgb(13 13 13 / .6); }
 
   /* Pond ripples: only while something plays */
   /* Upper right, clear of the title block at the foot of the header */
