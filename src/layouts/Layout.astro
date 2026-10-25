@@ -39,11 +39,46 @@ const SOCIALS = {
 <head>
   <!-- Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-TFZRBF4T9L"></script>
-  <script>
+  <!-- is:inline keeps gtag global; Astro would otherwise bundle it into a module -->
+  <script is:inline>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
   gtag('config', 'G-TFZRBF4T9L');
+  </script>
+  <!-- Listening + subscribe events, site-wide so any <audio> player is tracked -->
+  <script is:inline>
+  (function () {
+    var played = {}, listened = {};
+    function trackOf(el) {
+      var meta = navigator.mediaSession && navigator.mediaSession.metadata;
+      var src = el.currentSrc || el.src || "";
+      var title = (meta && meta.title) || el.dataset.title ||
+        decodeURIComponent(src.split("/").pop().split("?")[0]);
+      return { key: src, title: title };
+    }
+    // Media events don't bubble, so listen in the capture phase
+    document.addEventListener("play", function (e) {
+      if (!(e.target instanceof HTMLMediaElement)) return;
+      var t = trackOf(e.target);
+      if (!t.key || played[t.key]) return;
+      played[t.key] = true;
+      gtag("event", "track_play", { track_title: t.title });
+    }, true);
+    document.addEventListener("timeupdate", function (e) {
+      var el = e.target;
+      if (!(el instanceof HTMLMediaElement) || el.currentTime < 30) return;
+      var t = trackOf(el);
+      if (!t.key || listened[t.key]) return;
+      listened[t.key] = true;
+      gtag("event", "listen_30s", { track_title: t.title });
+    }, true);
+    document.addEventListener("click", function (e) {
+      var a = e.target.closest && e.target.closest("a[href]");
+      if (!a || !/youtube\.com\/(channel\/UCsKtOGplqKz3uGt9XD8VexQ|@)/.test(a.href)) return;
+      gtag("event", "subscribe_click", { link_url: a.href, page_path: location.pathname });
+    }, true);
+  })();
   </script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
