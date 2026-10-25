@@ -380,5 +380,10 @@ const categories = showCategories
         applyFilters();
       });
     });
+
+    // /playlist?region=Fontaine opens with that chip picked (score pages link here)
+    const startRegion = new URLSearchParams(location.search).get("region");
+    const startChip = startRegion && Array.from(chips).find((c) => c.dataset.category === startRegion);
+    if (startChip) startChip.click();
   })();
 </script>

@@ -1,0 +1,102 @@
+---
+// src/components/ListenPlayer.astro
+// ── "Listen to this piece" on a score page ─────────────────────────────────
+// Plays the cover straight from R2 (lighter than the YouTube embed), then
+// points to the region playlist. The subscribe line only appears once the
+// visitor has listened for 30 s. Plays are tracked by the site-wide script
+// in Layout.astro, which reads data-title off the <audio>.
+import { playlistFor, type Track } from "../lib/listen";
+
+interface Props { track: Track; channelUrl: string; }
+const { track, channelUrl } = Astro.props;
+const next = playlistFor(track);
+---
+
+<section class="listen mb-10 bg-surface rounded-xl border border-surface-border p-5 sm:p-6" aria-labelledby="listen-here">
+  <h2 id="listen-here" class="font-display text-xl font-semibold text-ivory mb-4">Listen to this piece</h2>
+
+  <div class="flex items-center gap-4">
+    <button
+      type="button"
+      class="listen-toggle w-12 h-12 rounded-full bg-gold hover:bg-gold-light text-ebony flex items-center justify-center flex-shrink-0 transition-colors"
+      aria-label={`Play ${track.title}`}
+    >
+      <svg class="icon-play w-5 h-5 ml-0.5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+      <svg class="icon-pause w-5 h-5 hidden" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 5h4v14H6zm8 0h4v14h-4z"/></svg>
+    </button>
+
+    <div class="flex-1 min-w-0">
+      <p class="text-sm text-ivory truncate">{track.title}</p>
+      <div class="listen-bar mt-2 h-1.5 rounded-full bg-surface-border cursor-pointer" role="slider" aria-label="Seek" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" tabindex="0">
+        <div class="listen-fill h-full w-0 rounded-full bg-gold"></div>
+      </div>
+      <p class="listen-time mt-1.5 text-xs text-ivory-muted font-mono">0:00</p>
+    </div>
+  </div>
+
+  <audio class="listen-audio" preload="none" src={track.url} data-title={track.title}></audio>
+
+  <p class="mt-5 text-sm">
+    <a href={next.href} class="text-gold hover:text-gold-light transition-colors">Keep listening: {next.label} →</a>
+  </p>
+  <p class="listen-sub hidden mt-2 text-sm text-ivory-muted">
+    Enjoying it?
+    <a href={`${channelUrl}?sub_confirmation=1`} target="_blank" rel="noopener noreferrer" class="text-gold hover:text-gold-light transition-colors">Subscribe on YouTube ↗</a>
+  </p>
+</section>
+
+<script>
+  const box = document.querySelector<HTMLElement>(".listen");
+  if (box) {
+    const audio  = box.querySelector<HTMLAudioElement>(".listen-audio")!;
+    const toggle = box.querySelector<HTMLButtonElement>(".listen-toggle")!;
+    const bar    = box.querySelector<HTMLElement>(".listen-bar")!;
+    const fill   = box.querySelector<HTMLElement>(".listen-fill")!;
+    const time   = box.querySelector<HTMLElement>(".listen-time")!;
+    const sub    = box.querySelector<HTMLElement>(".listen-sub")!;
+    const fmt = (s: number) => `${Math.floor(s / 60)}:${String(Math.floor(s % 60)).padStart(2, "0")}`;
+
+    // The YouTube embed below gets a pause command when this starts playing
+    const pauseVideo = () => document.querySelectorAll<HTMLIFrameElement>("iframe[src*='youtube.com/embed']").forEach((f) =>
+      f.contentWindow?.postMessage(JSON.stringify({ event: "command", func: "pauseVideo", args: [] }), "*"));
+
+    toggle.addEventListener("click", () => {
+      if (audio.paused) audio.play().catch(() => {}); else audio.pause();
+    });
+    audio.addEventListener("play", () => {
+      pauseVideo();
+      toggle.querySelector(".icon-play")!.classList.add("hidden");
+      toggle.querySelector(".icon-pause")!.classList.remove("hidden");
+      toggle.setAttribute("aria-label", "Pause");
+    });
+    audio.addEventListener("pause", () => {
+      toggle.querySelector(".icon-play")!.classList.remove("hidden");
+      toggle.querySelector(".icon-pause")!.classList.add("hidden");
+      toggle.setAttribute("aria-label", "Play");
+    });
+    audio.addEventListener("timeupdate", () => {
+      if (!audio.duration) return;
+      const pct = (audio.currentTime / audio.duration) * 100;
+      fill.style.width = `${pct}%`;
+      bar.setAttribute("aria-valuenow", String(Math.round(pct)));
+      time.textContent = `${fmt(audio.currentTime)} / ${fmt(audio.duration)}`;
+      if (audio.currentTime >= 30) sub.classList.remove("hidden");
+    });
+
+    const seekTo = (pct: number) => { if (audio.duration) audio.currentTime = Math.min(Math.max(pct, 0), 1) * audio.duration; };
+    bar.addEventListener("click", (e) => {
+      const r = bar.getBoundingClientRect();
+      seekTo((e.clientX - r.left) / r.width);
+    });
+    bar.addEventListener("keydown", (e) => {
+      if (!audio.duration) return;
+      if (e.key === "ArrowRight") seekTo((audio.currentTime + 5) / audio.duration);
+      if (e.key === "ArrowLeft")  seekTo((audio.currentTime - 5) / audio.duration);
+    });
+
+    // Clicking into the YouTube embed focuses the iframe and blurs the page
+    window.addEventListener("blur", () => {
+      if (document.activeElement instanceof HTMLIFrameElement && !audio.paused) audio.pause();
+    });
+  }
+</script>
