@@ -3,6 +3,7 @@
 // ── "Free Piano Scores" SEO landing page ─────────────────────────────────
 // Targets: "free piano sheet music", "[song] piano score PDF", etc.
 import CoffeeButton from "../components/CoffeeButton.astro";
+import SceneHeader from "../components/SceneHeader.astro";
 import Layout from "../layouts/Layout.astro";
 import scores from "../data/scores.json";
 import { pieceByVideoId, linkLabel } from "../lib/scores";
@@ -50,22 +51,14 @@ const jsonLd = {
   <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
 
   <!-- ══════════════════════════ HERO ════════════════════════════════════════ -->
-  <section class="relative overflow-hidden border-b border-surface-border">
-    <div class="absolute inset-0 bg-keys-pattern opacity-50 pointer-events-none"></div>
-    <div class="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gold to-transparent"></div>
-
-    <div class="relative max-w-6xl mx-auto px-4 sm:px-6 py-14 sm:py-20 text-center flex flex-col items-center gap-5">
-      <p class="text-gold text-xs tracking-[0.25em] uppercase font-mono">Sheet music archive</p>
-      <h1 class="font-display text-4xl sm:text-5xl font-semibold text-ivory leading-tight">
-        Free Piano <span class="italic text-gold">Sheet Music</span>
-      </h1>
-      <p class="text-ivory/60 max-w-xl text-sm sm:text-base leading-relaxed">
+  <SceneHeader region="Liyue" eyebrow="Sheet music archive" title="Free Piano Sheet Music">
+      <p class="mt-3 text-ivory/80 max-w-xl text-sm sm:text-base leading-relaxed drop-shadow">
         Every piano score and arrangement from the Big Piano Small Piano YouTube channel,
         free to download. Filter by song title to find what you're looking for.
       </p>
 
       <!-- Stats -->
-      <div class="flex items-center gap-8 pt-4 border-t border-surface-border/60">
+      <div class="flex items-center gap-8 mt-5 pt-4 border-t border-ivory/20">
         <div class="text-center">
           <p class="font-display text-2xl font-semibold text-gold">{totalScores}</p>
           <p class="text-ivory-muted text-xs uppercase tracking-widest mt-0.5">Scores</p>
@@ -81,8 +74,7 @@ const jsonLd = {
           <p class="text-ivory-muted text-xs uppercase tracking-widest mt-0.5">Always</p>
         </div>
       </div>
-    </div>
-  </section>
+  </SceneHeader>
 
   <!-- ══════════════════════ SCORES TABLE ════════════════════════════════════ -->
   <section class="max-w-6xl mx-auto px-4 sm:px-6 py-12">

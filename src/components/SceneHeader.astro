@@ -1,0 +1,77 @@
+---
+// src/components/SceneHeader.astro
+// ── Region painting header (the Overture look, light edition) ─────────────
+// The painting sits behind the title and fades into the page. Regions with no
+// painting get a dark header with a soft gold glow. While any track on the
+// page plays, ripples spread across the foot of the painting (still image
+// for reduced motion). No WebGL here: score pages must stay fast.
+interface Props {
+  region?:  string | null;  // "Fontaine", "Nod-Krai", "Nod Krai" ...
+  eyebrow?: string;
+  title:    string;
+  /** Lets a page swap the painting later (the playlist chips do). */
+  id?:      string;
+}
+const { region = null, eyebrow, title, id = "scene" } = Astro.props;
+
+const PAINTED = ["fontaine", "inazuma", "liyue", "mondstadt", "natlan", "nod-krai", "snezhnaya", "sumeru"];
+const key = region?.toLowerCase().replace(/[^a-z]+/g, "-") ?? "";
+const art = PAINTED.includes(key) ? key : null;
+---
+
+<header id={id} class:list={["scene", { "scene--plain": !art }]} data-art={art ?? ""}>
+  {art && (
+    <picture class="scene-art" aria-hidden="true">
+      <source media="(max-width: 640px)" srcset={`/art/${art}-m.webp`} />
+      <img src={`/art/${art}.webp`} alt="" width="1600" height="907" fetchpriority="high" decoding="async" />
+    </picture>
+  )}
+  <div class="scene-ripples" aria-hidden="true"><i></i><i></i><i></i></div>
+  <div class="scene-fade" aria-hidden="true"></div>
+
+  <div class="scene-body max-w-4xl mx-auto px-4 sm:px-6">
+    <slot name="top" />
+    {eyebrow && <p class="text-gold-light text-xs tracking-[0.25em] uppercase font-mono mb-3 drop-shadow">{eyebrow}</p>}
+    <h1 class="font-display text-4xl sm:text-5xl lg:text-6xl font-semibold text-ivory leading-[1.05] drop-shadow-lg">{title}</h1>
+    <slot />
+  </div>
+</header>
+
+<style is:global>
+  .scene { position: relative; isolation: isolate; overflow: hidden; display: flex; align-items: flex-end;
+           min-height: clamp(300px, 52vh, 520px); padding: 6rem 0 2.5rem; }
+  .scene--plain { min-height: 0; padding-top: 3.5rem;
+                  background: radial-gradient(70% 120% at 50% 0%, theme('colors.gold.DEFAULT / 14%'), transparent 70%); }
+  .scene-art, .scene-art img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -3; }
+  .scene-art img { transition: opacity .6s ease; }
+  .scene-fade { position: absolute; inset: 0; z-index: -2; pointer-events: none;
+                background: linear-gradient(to bottom, rgb(13 13 13 / .35) 0%, rgb(13 13 13 / .15) 35%, rgb(13 13 13 / .75) 75%, theme('colors.ebony') 100%); }
+  .scene-body { position: relative; width: 100%; }
+
+  /* Pond ripples: only while something plays */
+  /* Upper right, clear of the title block at the foot of the header */
+  .scene-ripples { position: absolute; left: 72%; top: 16%; width: min(48vw, 420px); aspect-ratio: 4 / 1;
+                   transform: translateX(-50%); z-index: -1; pointer-events: none; opacity: 0; transition: opacity 1.2s ease; }
+  .scene--plain .scene-ripples { display: none; }
+  .scene-ripples i { position: absolute; inset: 0; border-radius: 50%; border: 1.5px solid rgb(244 241 234 / .55);
+                     box-shadow: 0 0 12px rgb(244 241 234 / .12);
+                     transform: scale(.1); opacity: 0; }
+  html.is-playing .scene-ripples { opacity: 1; }
+  html.is-playing .scene-ripples i { animation: scene-ripple 6s cubic-bezier(.2,.6,.3,1) infinite; }
+  html.is-playing .scene-ripples i:nth-child(2) { animation-delay: 2s; }
+  html.is-playing .scene-ripples i:nth-child(3) { animation-delay: 4s; }
+  @keyframes scene-ripple { 0% { transform: scale(.1); opacity: 0; } 15% { opacity: .9; } 100% { transform: scale(1); opacity: 0; } }
+  @media (prefers-reduced-motion: reduce) { .scene-ripples { display: none; } }
+</style>
+
+<script is:inline>
+  // One flag on <html> for "a track is playing", whichever player started it
+  (function () {
+    if (window.__sceneFlag) return; window.__sceneFlag = true;
+    var sync = function () {
+      var on = Array.prototype.some.call(document.querySelectorAll("audio"), function (a) { return !a.paused; });
+      document.documentElement.classList.toggle("is-playing", on);
+    };
+    ["play", "pause", "ended"].forEach(function (t) { document.addEventListener(t, sync, true); });
+  })();
+</script>

@@ -6,6 +6,7 @@
 // this page leads with the download.
 import CoffeeButton from "../../components/CoffeeButton.astro";
 import ListenPlayer from "../../components/ListenPlayer.astro";
+import SceneHeader from "../../components/SceneHeader.astro";
 import { trackForPiece } from "../../lib/listen";
 import Layout from "../../layouts/Layout.astro";
 import { pieces, relatedPieces, arranger, linkLabel, type Piece } from "../../lib/scores";
@@ -73,27 +74,19 @@ const jsonLd = [
 >
   <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
 
-  <!-- ── Breadcrumb ──────────────────────────────────────────────────────── -->
-  <div class="max-w-4xl mx-auto px-4 sm:px-6 pt-6">
-    <nav class="text-xs text-ivory-muted flex items-center gap-1.5" aria-label="Breadcrumb">
+  <!-- ── Title over the region painting ─────────────────────────────────── -->
+  <SceneHeader region={piece.region} eyebrow="Free piano sheet music" title={piece.name}>
+    <nav slot="top" class="text-xs text-ivory/70 flex items-center gap-1.5 mb-6 drop-shadow whitespace-nowrap" aria-label="Breadcrumb">
       <a href="/" class="hover:text-gold transition-colors">Home</a>
       <span>/</span>
       <a href="/scores" class="hover:text-gold transition-colors">Free Scores</a>
-      <span>/</span>
-      <span class="text-ivory/60 truncate max-w-xs">{piece.name}</span>
+      <span class="hidden sm:inline">/</span>
+      <span class="hidden sm:inline text-ivory/60 truncate max-w-xs">{piece.name}</span>
     </nav>
-  </div>
+    {context && <p class="mt-3 text-sm text-ivory/75 drop-shadow">{context}</p>}
+  </SceneHeader>
 
-  <article class="max-w-4xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
-
-    <!-- Title block -->
-    <header class="mb-8">
-      <p class="text-gold text-xs tracking-[0.25em] uppercase font-mono mb-3">Free piano sheet music</p>
-      <h1 class="font-display text-3xl sm:text-4xl lg:text-5xl font-semibold text-ivory leading-tight mb-3">
-        {piece.name}
-      </h1>
-      {context && <p class="text-sm text-ivory-muted">{context}</p>}
-    </header>
+  <article class="max-w-4xl mx-auto px-4 sm:px-6 pb-8 sm:pb-12">
 
     <!-- ── Downloads (the reason people land here) ───────────────────────── -->
     <section class="mb-10 bg-surface rounded-xl border border-gold/20 p-5 sm:p-6" aria-labelledby="downloads">

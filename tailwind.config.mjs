@@ -24,7 +24,7 @@ export default {
         },
       },
       fontFamily: {
-        display: ["'Playfair Display'", "Georgia", "serif"],   // headings
+        display: ["'Bodoni Moda'", "Didot", "Georgia", "serif"], // headings
         body:    ["'DM Sans'", "system-ui", "sans-serif"],     // body text
         mono:    ["'DM Mono'", "monospace"],
       },

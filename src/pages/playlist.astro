@@ -3,6 +3,7 @@
 // ── Ambient piano playlist: browse/search + continuous shuffle player ─────
 import CoffeeButton from "../components/CoffeeButton.astro";
 import PlaylistPlayer from "../components/PlaylistPlayer.astro";
+import SceneHeader from "../components/SceneHeader.astro";
 import Layout from "../layouts/Layout.astro";
 import tracks from "../data/tracks.json";
 
@@ -28,27 +29,41 @@ const jsonLd = {
   <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
 
   <!-- HERO -->
-  <section class="relative overflow-hidden border-b border-surface-border">
-    <div class="absolute inset-0 bg-keys-pattern opacity-50 pointer-events-none"></div>
-    <div class="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gold to-transparent"></div>
-    <div class="relative max-w-3xl mx-auto px-4 sm:px-6 py-8 sm:py-12 text-center flex flex-col items-center gap-2">
-      <p class="text-gold text-xs tracking-[0.25em] uppercase font-mono">Ambient piano</p>
-      <h1 class="font-display text-4xl sm:text-5xl font-semibold text-ivory leading-tight">
-        Piano <span class="italic text-gold">Playlist</span>
-      </h1>
-      <p class="text-ivory-muted text-sm max-w-md leading-relaxed">
-        {tracks.length} original piano covers &middot; ~{totalMinutes} minutes &middot; free to stream, no ads.
-      </p>
-      {nodKraiCount > 0 && (
-        <a
-          href="/playlist/nod-krai"
-          class="mt-2 inline-flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-full border border-gold/40 bg-gold/10 text-gold hover:bg-gold/20 transition-colors"
-        >
-          ❄ Nod Krai region playlist ({nodKraiCount}) &rarr;
-        </a>
-      )}
-    </div>
-  </section>
+  <SceneHeader region="Fontaine" eyebrow="Ambient piano" title="Piano Playlist">
+    <p class="mt-3 text-ivory/80 text-sm max-w-md leading-relaxed drop-shadow">
+      {tracks.length} original piano covers &middot; ~{totalMinutes} minutes &middot; free to stream, no ads.
+    </p>
+    {nodKraiCount > 0 && (
+      <a
+        href="/playlist/nod-krai"
+        class="mt-4 inline-flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-full border border-gold/40 bg-ebony/60 backdrop-blur-sm text-gold hover:bg-gold/20 transition-colors"
+      >
+        ❄ Nod Krai region playlist ({nodKraiCount}) &rarr;
+      </a>
+    )}
+  </SceneHeader>
+
+  <!-- The header painting follows the region chip. Inline + delegated so it
+       also catches the chip that ?region= presses on load. -->
+  <script is:inline>
+    document.addEventListener("click", function (e) {
+      var chip = e.target.closest && e.target.closest(".chip-btn");
+      var scene = document.getElementById("scene");
+      if (!chip || !scene) return;
+      var painted = ["fontaine", "inazuma", "liyue", "mondstadt", "natlan", "nod-krai", "snezhnaya", "sumeru"];
+      var key = (chip.dataset.category || "").toLowerCase().replace(/[^a-z]+/g, "-");
+      if (painted.indexOf(key) === -1) key = "fontaine";
+      if (scene.dataset.art === key) return;
+      scene.dataset.art = key;
+      var img = scene.querySelector(".scene-art img"), src = scene.querySelector(".scene-art source");
+      img.style.opacity = "0";
+      setTimeout(function () {
+        img.onload = function () { img.style.opacity = "1"; };
+        src.srcset = "/art/" + key + "-m.webp";
+        img.src = "/art/" + key + ".webp";
+      }, 300);
+    }, true);
+  </script>
 
   <PlaylistPlayer tracks={tracks}>
     <div slot="footer">
