@@ -4,6 +4,7 @@
 // (a re-recording, an extended cut), so entries are grouped by a slug made
 // from the cleaned piece name. Each group becomes /scores/<slug>.
 import scores from "../data/scores.json";
+import { trackForPiece } from "./listen";
 
 export type ScoreEntry = (typeof scores)[number];
 
@@ -118,7 +119,38 @@ function buildPieces(): Piece[] {
       });
     }
   }
-  return [...bySlug.values()];
+  const all = [...bySlug.values()];
+  for (const piece of all) fromTrack(piece);
+  return all;
+}
+
+// The playlist categories were sorted by hand, so a matching track's category
+// beats the keyword guess above. [game, region] per category.
+const TRACK_CATEGORY: Record<string, [string, string | null]> = {
+  "Mondstadt":                ["Genshin Impact", "Mondstadt"],
+  "Liyue":                    ["Genshin Impact", "Liyue"],
+  "Inazuma":                  ["Genshin Impact", "Inazuma"],
+  "Sumeru":                   ["Genshin Impact", "Sumeru"],
+  "Fontaine":                 ["Genshin Impact", "Fontaine"],
+  "Natlan":                   ["Genshin Impact", "Natlan"],
+  "Snezhnaya":                ["Genshin Impact", "Snezhnaya"],
+  "Nod Krai":                 ["Genshin Impact", "Nod-Krai"],
+  "Simulanka":                ["Genshin Impact", "Simulanka"],
+  "Veluriyam Mirage":         ["Genshin Impact", "Veluriyam Mirage"],
+  "Golden Apple Archipelago": ["Genshin Impact", "Golden Apple Archipelago"],
+  "Genshin Archon Quests":    ["Genshin Impact", null],
+  "Honkai Starrail":          ["Honkai: Star Rail", null],
+  "Honkai Impact":            ["Honkai Impact 3rd", null],
+  "Wuthering Waves":          ["Wuthering Waves", null],
+  "ZZZ":                      ["Zenless Zone Zero", null],
+};
+
+function fromTrack(piece: Piece) {
+  const track = trackForPiece(piece);
+  const known = track && TRACK_CATEGORY[track.category];
+  if (!known) return;
+  piece.game = known[0];
+  if (known[1]) piece.region = known[1];
 }
 
 export const pieces: Piece[] = buildPieces();
