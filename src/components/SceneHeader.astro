@@ -268,99 +268,205 @@ const art = PAINTED.includes(key) ? key : null;
       }
     };
 
-    // Wind streaks and dandelion seeds sweeping across
+    // Mondstadt breeze: the wind is seen through what it carries. Dandelion
+    // seeds drift across (drawn once into a 4-cell strip of hair-fine
+    // filaments, so they read as real fluff), small green leaves tumble past
+    // on gusts, and faint tapered air ribbons slide by. A loud note is a gust
+    // that speeds everything up.
     FX.breeze = {
-      glow: "200,240,205", rate: 4, cap: [40, 22],
-      one: function () {
-        add({ fx: "breeze", seed: true, x: -10, y: h * (0.1 + R() * 0.7), vx: 50 + R() * 50, vy: -(4 + R() * 10),
-              size: 2 + R() * 2, life: 18 });
+      glow: "200,240,205", rate: 3, cap: [40, 22],
+      seeds: null,
+      makeSeeds: function () {
+        var c = document.createElement("canvas"); c.width = 256; c.height = 64;
+        var g = c.getContext("2d");
+        for (var k = 0; k < 4; k++) {
+          var cx = k * 64 + 32, cy = 24, open = 0.75 + k * 0.08;
+          // Silky filaments fanning up and out from the top of the stalk
+          for (var i = 0; i < 42; i++) {
+            var an = -Math.PI / 2 + (i / 41 - 0.5) * Math.PI * 1.7 * open + (Math.random() - 0.5) * 0.06;
+            var len = 15 + Math.random() * 5, ex = cx + Math.cos(an) * len, ey = cy + Math.sin(an) * len * 0.8;
+            g.beginPath(); g.moveTo(cx, cy);
+            g.quadraticCurveTo(cx + Math.cos(an) * len * 0.5, cy + Math.sin(an) * len * 0.5 - 2, ex, ey);
+            g.lineWidth = 0.55; g.strokeStyle = "rgba(255,255,250," + (0.35 + Math.random() * 0.3) + ")"; g.stroke();
+            g.beginPath(); g.arc(ex, ey, 0.9, 0, TAU); g.fillStyle = "rgba(255,255,255,0.35)"; g.fill();
+          }
+          var halo = g.createRadialGradient(cx, cy - 6, 0, cx, cy - 6, 20);
+          halo.addColorStop(0, "rgba(255,255,245,0.18)"); halo.addColorStop(1, "rgba(255,255,245,0)");
+          g.fillStyle = halo; g.fillRect(cx - 22, cy - 28, 44, 40);
+          // Thin beak down to the seed
+          g.beginPath(); g.moveTo(cx, cy); g.lineTo(cx + 0.6, cy + 22);
+          g.lineWidth = 0.8; g.strokeStyle = "rgba(235,232,215,0.75)"; g.stroke();
+          g.beginPath(); g.ellipse(cx + 0.7, cy + 26, 1.3, 4, 0, 0, TAU);
+          g.fillStyle = "rgba(150,105,60,0.95)"; g.fill();
+        }
+        return c;
+      },
+      one: function (s, fresh) {
+        var z = 0.3 + R() * 0.7;
+        add({ fx: "breeze", kind: "seed", x: fresh ? -20 : w * R(), y: h * (0.05 + R() * 0.8), z: z, cell: Math.floor(R() * 4),
+              vx: (18 + R() * 26) * z, vy: -(2 + R() * 6) * z, size: (22 + 30 * z), tilt: (R() - 0.5) * 0.6, life: 26 });
       },
       burst: function (s) {
-        for (var i = s > 0.7 ? 2 : 1; i > 0; i--)
-          add({ fx: "breeze", x: -0.2 * w * R(), y: h * (0.12 + R() * 0.6), vx: (220 + R() * 160) * (0.6 + s),
-                len: (140 + R() * 180) * (0.6 + s), amp: 6 + R() * 14, s: s, life: 6 });
-        for (var j = Math.round(4 * s); j > 0; j--) this.one();
+        wind += 90 * s;
+        if (s > 0.35) {
+          var y = h * (0.1 + R() * 0.7), len = w * (0.25 + 0.3 * s);
+          add({ fx: "breeze", kind: "air", x: -len, y: y, len: len, thick: 5 + 9 * s, s: s, vx: 220 + 260 * s,
+                amp: 8 + R() * 16, life: (w + len * 2) / (220 + 260 * s) });
+        }
+        if (s > 0.5) for (var i = Math.round(s * 3); i > 0; i--) {
+          var z = 0.4 + R() * 0.6;
+          add({ fx: "breeze", kind: "leaf", x: -20, y: h * (0.15 + R() * 0.6), z: z, cell: [0, 1, 2, 7][Math.floor(R() * 4)],
+                vx: (120 + R() * 120) * z, vy: (R() - 0.5) * 30, size: 9 + 9 * z, rot: R() * TAU, vr: 3 + R() * 4, life: 12 });
+        }
+        for (var j = Math.round(2 * s); j > 0; j--) this.one(s, true);
       },
       step: function (p, dt) {
-        p.x += p.vx * dt * (p.seed ? 1 + level : 1);
-        if (p.seed) p.y += (p.vy + Math.sin(p.age * 2 + p.ph) * 10) * dt;
-        if (p.x - (p.len || 0) > w + 20) p.age = p.life;
+        if (p.kind === "air") { p.x += p.vx * dt; return; }
+        var push = wind * (p.kind === "leaf" ? 1.2 : 0.8) * p.z;
+        p.x += (p.vx + push) * dt;
+        p.y += (p.vy + Math.sin(p.age * (p.kind === "leaf" ? 2.5 : 0.9) + p.ph) * (p.kind === "leaf" ? 30 : 9)) * dt;
+        if (p.rot != null) p.rot += p.vr * dt;
+        if (p.x > w + 40) p.age = p.life;
       },
       draw: function (p, t) {
-        if (p.seed) {
-          var sa = 0.85 * edge(p, t);
-          dot(p.x, p.y, p.size * 0.5, rgba("255,255,240", sa));
-          ctx.strokeStyle = rgba("255,255,240", sa * 0.6); ctx.lineWidth = 0.7;
-          for (var k = 0; k < 6; k++) {
-            var an = k / 6 * TAU + p.age; ctx.beginPath(); ctx.moveTo(p.x, p.y);
-            ctx.lineTo(p.x + Math.cos(an) * p.size * 2, p.y + Math.sin(an) * p.size * 2); ctx.stroke();
+        var a = edge(p, t);
+        if (p.kind === "air") {
+          // A soft, tapered ribbon: thick and brightest in the middle, nothing at the ends
+          var n = 24, g = ctx.createLinearGradient(p.x, 0, p.x + p.len, 0), al = 0.05 + 0.07 * p.s;
+          g.addColorStop(0, rgba("240,255,240", 0)); g.addColorStop(0.5, rgba("240,255,240", al)); g.addColorStop(1, rgba("240,255,240", 0));
+          ctx.beginPath();
+          for (var i = 0; i <= n; i++) {
+            var f = i / n, x = p.x + p.len * f, y = p.y + Math.sin(x / 160 + p.ph) * p.amp - Math.sin(f * Math.PI) * p.thick;
+            if (i) ctx.lineTo(x, y); else ctx.moveTo(x, y);
           }
+          for (var j = n; j >= 0; j--) {
+            var f2 = j / n, x2 = p.x + p.len * f2, y2 = p.y + Math.sin(x2 / 160 + p.ph) * p.amp + Math.sin(f2 * Math.PI) * p.thick;
+            ctx.lineTo(x2, y2);
+          }
+          ctx.closePath(); ctx.fillStyle = g; ctx.fill();
           return;
         }
-        ctx.beginPath();
-        for (var x = 0; x <= p.len; x += 8) {
-          var xx = p.x - x, yy = p.y + Math.sin(xx / 70 + p.ph) * p.amp;
-          if (x) ctx.lineTo(xx, yy); else ctx.moveTo(xx, yy);
+        if (p.kind === "leaf") {
+          var img = sprite("/art/leaves.webp"); if (!img) return;
+          ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.rot);
+          ctx.scale(0.4 + 0.6 * Math.abs(Math.sin(p.age * 3 + p.ph)), 1);
+          ctx.globalAlpha = a * (0.6 + 0.4 * p.z);
+          ctx.drawImage(img, p.cell * 96, 0, 96, 96, -p.size / 2, -p.size / 2, p.size, p.size);
+          ctx.restore();
+          return;
         }
-        ctx.lineCap = "round"; ctx.lineWidth = 1.2 + 1.4 * p.s;
-        var g = ctx.createLinearGradient(p.x, 0, p.x - p.len, 0);
-        g.addColorStop(0, rgba("245,255,240", 0.75 * (0.4 + 0.6 * p.s))); g.addColorStop(1, rgba("245,255,240", 0));
-        ctx.strokeStyle = g; ctx.stroke();
+        if (!this.seeds) this.seeds = this.makeSeeds();
+        ctx.save(); ctx.translate(p.x, p.y);
+        // Seeds hang under their fluff and lean into the wind
+        ctx.rotate(p.tilt + Math.sin(p.age * 0.8 + p.ph) * 0.15 - Math.min(0.5, wind * 0.004));
+        ctx.globalAlpha = a * (0.45 + 0.55 * p.z);
+        ctx.drawImage(this.seeds, p.cell * 64, 0, 64, 64, -p.size / 2, -p.size * 0.38, p.size, p.size);
+        ctx.restore();
       }
     };
 
-    // Embers floating up from the bottom, flickering
+    // Natlan embers: sparks carried up on hot, turbulent air. Each one is a
+    // short streak along its path (motion blur), cools from yellow-white to
+    // orange to deep red as it climbs, and flickers out; a few grey ash flakes
+    // tumble among them. Drawn additively so overlapping sparks glow hotter.
     FX.cinders = {
-      glow: "255,110,40", rate: 14, cap: [80, 40],
+      glow: "255,110,40", rate: 16, cap: [80, 40],
+      heat: [[255, 245, 210], [255, 190, 90], [255, 120, 40], [200, 50, 20]],
       one: function (s) {
-        add({ fx: "cinders", x: w * R(), y: h + 6, vx: (R() - 0.5) * 20, vy: -(30 + R() * 50) * (0.7 + 0.6 * s),
-              size: 0.9 + R() * 1.8 * (0.6 + s), life: 2.5 + R() * 3 });
+        var z = 0.35 + R() * 0.65;
+        if (R() < 0.12) {
+          add({ fx: "cinders", ash: true, x: w * R(), y: h + 6, z: z, vx: (R() - 0.5) * 16, vy: -(14 + R() * 22) * z,
+                size: 1.5 + R() * 2.5 * z, rot: R() * TAU, vr: (R() - 0.5) * 4, life: 6 + R() * 4 });
+          return;
+        }
+        // Some rise from the painted crater (wide crop only), the rest from below
+        var crater = FX.moonlight.at([0.747, 0.5], [0.3, 0.3]), vent = !crater[3] && R() < 0.35;
+        add({ fx: "cinders", x: vent ? crater[0] + (R() - 0.5) * 40 : w * (0.05 + R() * 0.9), y: vent ? crater[1] : h + 6,
+              z: z, vx: (R() - 0.5) * (vent ? 60 : 30), vy: -(70 + R() * 90) * (0.6 + 0.6 * s) * z,
+              size: (1.1 + 2 * z) * (0.8 + 0.5 * s), life: (vent ? 2.5 : 4) + R() * 4 });
       },
-      burst: function (s) { for (var i = Math.round(6 + 22 * s); i > 0; i--) this.one(s); },
-      step: function (p, dt) { p.x += (p.vx + Math.sin(p.age * 3 + p.ph) * 14) * dt; p.y += p.vy * dt; },
+      burst: function (s) { for (var i = Math.round(4 + 16 * s); i > 0; i--) this.one(s); },
+      step: function (p, dt) {
+        // Turbulence: two slow swirls plus a quick jitter
+        p.vx += (Math.sin(p.age * 1.7 + p.ph) * 40 + Math.sin(p.age * 6.1 + p.ph * 2) * 25) * dt * p.z;
+        p.vx *= Math.pow(0.6, dt); p.vy *= Math.pow(0.97, dt);
+        p.x += p.vx * dt; p.y += p.vy * dt;
+        if (p.rot != null) p.rot += p.vr * dt;
+      },
       draw: function (p, t) {
-        var a = (1 - t) * (0.6 + 0.4 * Math.sin(p.age * 22 + p.ph));
-        dot(p.x, p.y, p.size * 3, rgba("255,90,20", a * 0.18));
-        dot(p.x, p.y, p.size, rgba(t < 0.4 ? "255,230,150" : "255,150,60", a));
+        if (p.ash) {
+          ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.rot); ctx.scale(1, 0.4 + 0.6 * Math.abs(Math.sin(p.age * 2 + p.ph)));
+          ctx.fillStyle = rgba("70,62,58", 0.55 * edge(p, t)); ctx.fillRect(-p.size, -p.size * 0.6, p.size * 2, p.size * 1.2);
+          ctx.restore();
+          return;
+        }
+        // Colour cools along the life; brightness flickers and dies at the end
+        var k = Math.min(2.999, t * 3), i = Math.floor(k), f = k - i, c0 = this.heat[i], c1 = this.heat[i + 1];
+        var col = Math.round(c0[0] + (c1[0] - c0[0]) * f) + "," + Math.round(c0[1] + (c1[1] - c0[1]) * f) + "," + Math.round(c0[2] + (c1[2] - c0[2]) * f);
+        var a = Math.min(1, p.age * 4) * Math.pow(1 - t, 0.7) * (0.65 + 0.35 * Math.sin(p.age * 25 + p.ph) * Math.sin(p.age * 9.3));
+        var tx = p.x - p.vx * 0.05, ty = p.y - p.vy * 0.05;
+        ctx.globalCompositeOperation = "lighter"; ctx.lineCap = "round";
+        ctx.beginPath(); ctx.moveTo(tx, ty); ctx.lineTo(p.x, p.y);
+        ctx.lineWidth = p.size * 3.5; ctx.strokeStyle = rgba(col, a * 0.12); ctx.stroke();
+        ctx.lineWidth = p.size; ctx.strokeStyle = rgba(col, a * 0.9); ctx.stroke();
+        ctx.globalCompositeOperation = "source-over";
       }
     };
 
-    // Moonbeams from the top corner that brighten with the music, a halo on
-    // loud notes, and silver glints drifting down
+    // Nod Krai moonlight, kept soft: a bloom around the painted moon that
+    // breathes with the music and swells on loud notes, glints twinkling on
+    // the moon's path across the lake, and mist drifting over the water.
     FX.moonlight = {
-      glow: "175,195,255", rate: 3, cap: [30, 16],
-      // Where the painted moon sits in each crop, mapped through object-fit: cover
-      moon: function () {
+      glow: "175,195,255", rate: 10, cap: [60, 32],
+      // Painting coordinates [desktop crop, phone crop] mapped through
+      // object-fit: cover onto the screen
+      at: function (fx, fy) {
         var img = scene.querySelector(".scene-art img"), nw = img.naturalWidth || 1600, nh = img.naturalHeight || 907;
-        var crop = /-m\.webp/.test(img.currentSrc), sc = Math.max(w / nw, h / nh);
-        return [(w - nw * sc) / 2 + (crop ? 0.275 : 0.328) * nw * sc, (h - nh * sc) / 2 + (crop ? 0.219 : 0.241) * nh * sc];
+        var c = /-m\.webp/.test(img.currentSrc) ? 1 : 0, sc = Math.max(w / nw, h / nh);
+        return [(w - nw * sc) / 2 + fx[c] * nw * sc, (h - nh * sc) / 2 + fy[c] * nh * sc, nw * sc, c];
       },
+      moon: function () { var m = this.at([0.328, 0.275], [0.241, 0.219]); m[2] *= m[3] ? 0.2 : 0.064; return m; },
       back: function () {
-        var m = this.moon(), len = Math.hypot(w, h) * 1.1, a = 0.035 + 0.16 * glow;
-        for (var i = 0; i < 6; i++) {
-          var an = Math.PI * (0.16 + i * 0.075) + Math.sin(clock * 0.3 + i * 1.7) * 0.03, wd = 0.02 + 0.012 * (i % 3);
-          var g = ctx.createLinearGradient(m[0], m[1], m[0] + Math.cos(an) * len, m[1] + Math.sin(an) * len);
-          g.addColorStop(0, rgba("210,225,255", a * (0.7 + 0.3 * Math.sin(clock * 0.8 + i)))); g.addColorStop(1, rgba("210,225,255", 0));
-          ctx.beginPath(); ctx.moveTo(m[0], m[1]);
-          ctx.lineTo(m[0] + Math.cos(an - wd) * len, m[1] + Math.sin(an - wd) * len);
-          ctx.lineTo(m[0] + Math.cos(an + wd) * len, m[1] + Math.sin(an + wd) * len);
-          ctx.closePath(); ctx.fillStyle = g; ctx.fill();
+        var m = this.moon(), r = m[2], breathe = 1 + 0.04 * Math.sin(clock * 0.7);
+        var g = ctx.createRadialGradient(m[0], m[1], r * 0.9, m[0], m[1], r * (2.6 + 0.8 * glow) * breathe);
+        g.addColorStop(0, rgba("220,230,255", 0.1 + 0.3 * glow)); g.addColorStop(1, rgba("200,215,255", 0));
+        ctx.fillStyle = g; ctx.fillRect(m[0] - r * 4, m[1] - r * 4, r * 8, r * 8);
+        // Mist: three wide soft wisps sliding slowly over the water
+        var lake = this.at([0.4, 0.5], [0.69, 0.72]);
+        for (var i = 0; i < 3; i++) {
+          var span = w * 1.8, x = ((clock * (8 + i * 4) + i * span / 3) % span) - w * 0.4, y = lake[1] + (i - 1) * h * 0.035;
+          ctx.save(); ctx.translate(x, y); ctx.scale(1, 0.16);
+          var mg = ctx.createRadialGradient(0, 0, 0, 0, 0, w * 0.32);
+          mg.addColorStop(0, rgba("210,220,255", 0.05 + 0.07 * glow)); mg.addColorStop(1, rgba("210,220,255", 0));
+          ctx.fillStyle = mg; ctx.fillRect(-w * 0.32, -w * 0.32, w * 0.64, w * 0.64); ctx.restore();
         }
       },
-      one: function () {
-        add({ fx: "moonlight", glint: true, x: w * (0.2 + R() * 0.8), y: -6, vx: -4 - R() * 6, vy: 10 + R() * 16,
-              size: 0.8 + R() * 1.3, life: 9 + R() * 5 });
+      // A glint on the moon's reflection: the path widens toward the viewer
+      one: function (s) {
+        var d = R(), top = this.at([0.33, 0.28], [0.735, 0.74]), bot = this.at([0.33, 0.28], [0.98, 0.97]);
+        var y = top[1] + (bot[1] - top[1]) * d, spread = (0.015 + 0.05 * d) * w;
+        add({ fx: "moonlight", kind: "glint", x: top[0] + (R() - 0.5) * 2 * spread, y: y,
+              len: 4 + 14 * d * (0.6 + s), life: 0.6 + R() * 1.2 });
       },
       burst: function (s) {
-        var m = this.moon();
-        add({ fx: "moonlight", x: m[0], y: m[1], r: Math.min(w, 700) * (0.12 + 0.3 * s), s: s, life: 2.6 });
-        for (var i = Math.round(5 * s); i > 0; i--) this.one();
+        if (s > 0.3) add({ fx: "moonlight", kind: "swell", s: s, life: 2.4 });
+        for (var i = Math.round(4 * s); i > 0; i--) this.one(s);
       },
-      step: function (p, dt) { if (p.glint) { p.x += p.vx * dt; p.y += p.vy * dt; } },
+      step: function () {},
       draw: function (p, t) {
-        if (p.glint) { dot(p.x, p.y, p.size, rgba("225,235,255", 0.9 * edge(p, t) * (0.5 + 0.5 * Math.sin(p.age * 6 + p.ph)))); return; }
-        ctx.beginPath(); ctx.arc(p.x, p.y, p.r * (1 - Math.pow(1 - t, 3)), 0, TAU);
-        ctx.lineWidth = 1.5 + 2 * p.s * (1 - t); ctx.strokeStyle = rgba("220,230,255", Math.pow(1 - t, 1.5) * (0.3 + 0.5 * p.s)); ctx.stroke();
+        if (p.kind === "swell") {
+          var m = this.moon(), r = m[2] * (1.2 + 2.2 * p.s * (1 - Math.pow(1 - t, 2)));
+          var g = ctx.createRadialGradient(m[0], m[1], m[2] * 0.9, m[0], m[1], r);
+          g.addColorStop(0, rgba("230,238,255", 0.22 * p.s * Math.pow(1 - t, 1.5))); g.addColorStop(1, rgba("230,238,255", 0));
+          ctx.fillStyle = g; ctx.fillRect(m[0] - r, m[1] - r, r * 2, r * 2);
+          return;
+        }
+        // Twinkle up and fade, as light catches a ripple
+        var a = Math.sin(t * Math.PI) * (0.5 + 0.5 * level);
+        ctx.save(); ctx.translate(p.x, p.y); ctx.scale(1, 0.18);
+        var gg = ctx.createRadialGradient(0, 0, 0, 0, 0, p.len);
+        gg.addColorStop(0, rgba("240,245,255", 0.9 * a)); gg.addColorStop(1, rgba("220,230,255", 0));
+        ctx.fillStyle = gg; ctx.fillRect(-p.len, -p.len, p.len * 2, p.len * 2); ctx.restore();
       }
     };
 
