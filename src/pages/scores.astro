@@ -6,20 +6,20 @@ import CoffeeButton from "../components/CoffeeButton.astro";
 import SceneHeader from "../components/SceneHeader.astro";
 import Layout from "../layouts/Layout.astro";
 import scores from "../data/scores.json";
-import { pieceByVideoId, linkLabel } from "../lib/scores";
+import { pieceByVideoId, linkArranger, orderedLinks, linkLabel } from "../lib/scores";
 
 const totalScores  = scores.reduce((n, s) => n + s.scoreLinks.length, 0);
 const totalSongs   = scores.length;
 
 // Build flat rows for the table (one row per link)
 const scoreRows = scores.flatMap((s) =>
-  s.scoreLinks.map((link: string, i: number) => ({
+  orderedLinks(s).map((link: string, i: number) => ({
     videoId:     s.videoId,
     title:       s.title,
     pageSlug:    pieceByVideoId.get(s.videoId)!.slug,
     thumbnail:   s.thumbnail,
     link,
-    credits:     s.credits,
+    credit:      linkArranger(s, link),
     publishedAt: s.publishedAt,
   }))
 );
@@ -132,7 +132,7 @@ const jsonLd = {
               </td>
               <!-- Credit -->
               <td class="px-5 py-3.5 text-ivory-muted whitespace-nowrap">
-                {row.credits && row.credits[0] ? row.credits[0] : "–"}
+                {row.credit ?? "–"}
               </td>
               <!-- Source label -->
               <td class="px-5 py-3.5">
@@ -170,8 +170,8 @@ const jsonLd = {
           <a href={`/scores/${row.pageSlug}`} class="font-display text-ivory/90 hover:text-gold transition-colors leading-snug block">
             {row.title}
           </a>
-          {row.credits && row.credits[0] && (
-            <p class="text-ivory-muted text-xs">Arranged by {row.credits[0]}</p>
+          {row.credit && (
+            <p class="text-ivory-muted text-xs">Arranged by {row.credit}</p>
           )}
           <div class="flex items-center justify-between pt-1">
             <span class="inline-block bg-gold-subtle border border-gold/20 text-gold text-xs px-2 py-0.5 rounded font-mono">

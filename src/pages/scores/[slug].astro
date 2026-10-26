@@ -9,7 +9,7 @@ import ListenPlayer from "../../components/ListenPlayer.astro";
 import SceneHeader from "../../components/SceneHeader.astro";
 import { trackForPiece } from "../../lib/listen";
 import Layout from "../../layouts/Layout.astro";
-import { pieces, relatedPieces, arranger, linkLabel, type Piece } from "../../lib/scores";
+import { pieces, relatedPieces, linkArranger, orderedLinks, linkLabel, type Piece } from "../../lib/scores";
 
 export async function getStaticPaths() {
   return pieces.map((piece) => ({
@@ -20,7 +20,9 @@ export async function getStaticPaths() {
 
 const { piece } = Astro.props as { piece: Piece };
 const latest   = piece.versions[0];
-const credit   = piece.versions.map(arranger).find(Boolean) ?? null;
+// Every arranger across all links, so a two-part score credits both
+const credits  = [...new Set(piece.versions.flatMap((v) => orderedLinks(v).map((l) => linkArranger(v, l))).filter(Boolean))] as string[];
+const credit   = credits.length ? credits.slice(0, -1).join(", ") + (credits.length > 1 ? " and " : "") + credits[credits.length - 1] : null;
 const context  = [piece.game, piece.region].filter(Boolean).join(" · ");
 const related  = relatedPieces(piece);
 // "More from Inazuma" only when every card really is from Inazuma; small
@@ -47,7 +49,7 @@ const jsonLd = [
     "@type":    "MusicComposition",
     "name":     piece.name,
     "url":      pageUrl,
-    ...(credit && { "musicArrangement": { "@type": "MusicComposition", "name": `${piece.name} (piano)`, "composer": { "@type": "Person", "name": credit } } }),
+    ...(credits.length && { "musicArrangement": { "@type": "MusicComposition", "name": `${piece.name} (piano)`, "composer": credits.map((name) => ({ "@type": "Person", "name": name })) } }),
     "subjectOf": piece.versions.map((v) => ({
       "@type":        "VideoObject",
       "name":         v.title,
@@ -96,7 +98,7 @@ const jsonLd = [
       <h2 id="downloads" class="font-display text-xl font-semibold text-ivory mb-4">Download the score</h2>
       <ul class="space-y-3">
         {piece.versions.flatMap((v) =>
-          v.scoreLinks.map((link: string, i: number) => (
+          orderedLinks(v).map((link: string, i: number) => (
             <li class="flex flex-col sm:flex-row sm:items-center gap-3 border-b border-surface-border pb-3 last:border-0 last:pb-0">
               <a
                 href={link}
@@ -107,7 +109,7 @@ const jsonLd = [
                 Download from {linkLabel(link)} ↗
               </a>
               <div class="text-sm text-ivory-muted sm:ml-auto sm:text-right">
-                {arranger(v) && <p>Arranged by {arranger(v)}</p>}
+                {linkArranger(v, link) && <p>Arranged by {linkArranger(v, link)}</p>}
                 {(piece.versions.length > 1 || v.scoreLinks.length > 1) && (
                   <p class="text-xs">
                     {v.scoreLinks.length > 1 ? `Part ${i + 1} · ` : ""}from the {new Date(v.publishedAt).getFullYear()} cover
@@ -120,7 +122,7 @@ const jsonLd = [
       </ul>
       <p class="mt-4 text-xs text-ivory-muted">
         Free to download. {credit && credit !== "Big Piano Small Piano"
-          ? `The arrangement belongs to ${credit}, so please credit them if you share or perform it.`
+          ? `The ${credits.length > 1 ? "arrangements belong" : "arrangement belongs"} to ${credit}, so please credit them if you share or perform it.`
           : "Please credit Big Piano Small Piano if you share it."}
       </p>
     </section>

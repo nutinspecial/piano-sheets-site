@@ -5,7 +5,7 @@ import CoffeeButton from "../../components/CoffeeButton.astro";
 import Layout from "../../layouts/Layout.astro";
 import videos from "../../data/videos.json";
 import scores from "../../data/scores.json";
-import { pieceByVideoId } from "../../lib/scores";
+import { pieceByVideoId, linkArranger, orderedLinks } from "../../lib/scores";
 
 export async function getStaticPaths() {
   return videos.map((video) => ({
@@ -140,7 +140,7 @@ const jsonLd = {
         </div>
         <ul class="space-y-3">
           {videoScores.flatMap((s) =>
-            s.scoreLinks.map((link: string, i: number) => (
+            orderedLinks(s).map((link: string, i: number) => (
               <li class="flex flex-col sm:flex-row sm:items-center gap-2 text-sm border-b border-surface-border pb-3 last:border-0 last:pb-0">
                 <a
                   href={link}
@@ -149,9 +149,9 @@ const jsonLd = {
                 >
                   Download score {s.scoreLinks.length > 1 ? i + 1 : ""} ↗
                 </a>
-                {s.credits && s.credits.length > 0 && (
+                {linkArranger(s, link) && (
                   <span class="text-ivory-muted sm:ml-auto flex-shrink-0">
-                    Arranged by {s.credits[0]}
+                    Arranged by {linkArranger(s, link)}
                   </span>
                 )}
               </li>

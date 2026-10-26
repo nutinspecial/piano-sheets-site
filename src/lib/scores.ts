@@ -4,6 +4,7 @@
 // (a re-recording, an extended cut), so entries are grouped by a slug made
 // from the cleaned piece name. Each group becomes /scores/<slug>.
 import scores from "../data/scores.json";
+import videos from "../data/videos.json";
 import { trackForPiece } from "./listen";
 
 export type ScoreEntry = (typeof scores)[number];
@@ -26,6 +27,41 @@ const HOST_LABELS = new Set([
 export function arranger(entry: ScoreEntry): string | null {
   const c = entry.credits?.[0];
   return c && !HOST_LABELS.has(c.toLowerCase()) ? c : null;
+}
+
+// ── Who arranged which link ───────────────────────────────────────────────
+// scores.json keeps credits and links as two separate lists, and their order
+// does not always match (La vaguelette: MaruPiano did the beginning on
+// MuseScore, Animuz the latter half on Drive). The video description says
+// which is which, so each link takes the arranger named on its own line, or
+// failing that on the nearest line above it (up to 3 lines, stopping at
+// another link). Names match on their first 6 letters, so "Animuz" finds
+// "AnimuzAnimePiano".
+const descriptions = new Map(videos.map((v) => [v.videoId, v.description ?? ""]));
+const needle = (name: string) => name.toLowerCase().replace(/[^a-z0-9]/g, "").slice(0, 6);
+const flat   = (line: string) => line.toLowerCase().replace(/[^a-z0-9]/g, "");
+
+/** The entry's links in the order the description lists them. */
+export function orderedLinks(entry: ScoreEntry): string[] {
+  const d = descriptions.get(entry.videoId) ?? "";
+  const at = (l: string) => { const i = d.indexOf(l); return i === -1 ? Infinity : i; };
+  return [...entry.scoreLinks].sort((a, b) => at(a) - at(b));
+}
+
+/** The arranger of one link, or null when the parser only knows the host. */
+export function linkArranger(entry: ScoreEntry, link: string): string | null {
+  const names = (entry.credits ?? []).filter((c) => !HOST_LABELS.has(c.toLowerCase()));
+  if (names.length < 2 || entry.scoreLinks.length < 2) return arranger(entry);
+  const lines = (descriptions.get(entry.videoId) ?? "").split("\n");
+  const row = lines.findIndex((l) => l.includes(link));
+  if (row === -1) return arranger(entry);
+  for (let i = row; i >= Math.max(0, row - 3); i--) {
+    if (i < row && /https?:\/\//.test(lines[i])) break;
+    const hits = names.filter((n) => flat(lines[i]).includes(needle(n)));
+    if (hits.length === 1) return hits[0];
+    if (hits.length > 1) break;          // a heading listing everyone: no answer here
+  }
+  return arranger(entry);
 }
 
 export function linkLabel(url: string): string {
