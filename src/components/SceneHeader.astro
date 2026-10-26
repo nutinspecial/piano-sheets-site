@@ -52,11 +52,12 @@ const art = PAINTED.includes(key) ? key : null;
 
   /* Pond ripples: only while something plays */
   /* Upper right, clear of the title block at the foot of the header */
-  .scene-ripples { position: absolute; left: 72%; top: 16%; width: min(48vw, 420px); aspect-ratio: 4 / 1;
+  /* Bright enough to read over busy art (blossom, clouds): solid ivory ring plus a gold glow */
+  .scene-ripples { position: absolute; left: 70%; top: 18%; width: min(62vw, 580px); aspect-ratio: 3 / 1;
                    transform: translateX(-50%); z-index: -1; pointer-events: none; opacity: 0; transition: opacity 1.2s ease; }
   .scene--plain .scene-ripples { display: none; }
-  .scene-ripples i { position: absolute; inset: 0; border-radius: 50%; border: 1.5px solid rgb(244 241 234 / .55);
-                     box-shadow: 0 0 12px rgb(244 241 234 / .12);
+  .scene-ripples i { position: absolute; inset: 0; border-radius: 50%; border: 2.5px solid rgb(244 241 234 / .9);
+                     box-shadow: 0 0 14px 2px rgb(212 175 55 / .45), inset 0 0 14px 2px rgb(212 175 55 / .3);
                      transform: scale(.1); opacity: 0; }
   html.is-playing .scene-ripples { opacity: 1; }
   html.is-playing .scene-ripples i { animation: scene-ripple 6s cubic-bezier(.2,.6,.3,1) infinite; }
