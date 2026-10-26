@@ -64,3 +64,18 @@
   quarantined. Natlan had Whirl of Chalchiuhtlicue twice (WAV + MP3), MP3 quarantined.
 - Caught by user: "Dragon Spine" placeholder is Fragile Fantasy (renamed, new R2 key, old key deleted).
 - Next: Liyue, Inazuma, Sumeru, Snezhnaya region pages; Search Console review of all region pages.
+
+## Phase 4b: Liyue + Inazuma pages, score sheet gaps (2026-10-26, live 9097296, ad67aef)
+
+- Shipped: /playlist/liyue (12) and /playlist/inazuma (8). Published Another Hopeful Tomorrow; replaced the
+  wrong Fading Stories with the user's new export (3:54).
+- Real titles from the user: Aisa Bathhouse OST 1 = Misty Redolence; "Inazuma City" = Dream of Scattered
+  Petals (full Animuz take), the shorter take is "(Short Ver.)".
+- Caught by fingerprint: copies Falling Maples Sad, Sangonomiya Shrine, Theatre Troupe; Creeks of Nostalgia
+  older take (kept the one matching YouTube). All in tracks-quarantine.json.
+- Score sheets: 15 ChewieMelodies videos name the Patreon with no URL, so they never got score pages.
+  fetch_and_parse.py now links the Patreon for that wording (16 new pages incl. one mymusicsheet score);
+  --offline re-parses videos.json. Second takes share their piece's sheet link (scoresByTrack).
+- Lesson: check every region's tracks for twins and placeholder names before building its page; the
+  fingerprint pass took minutes and found 7 bad entries across 4 regions.
+- Next: Sumeru and Snezhnaya (6 tracks each) once more covers exist; Search Console review of region pages.
