@@ -1,0 +1,117 @@
+---
+// src/pages/playlist/fontaine.astro
+// ── Fontaine region piano playlist: SEO landing page ─────────────────────
+import CoffeeButton from "../../components/CoffeeButton.astro";
+import PlaylistPlayer from "../../components/PlaylistPlayer.astro";
+import SceneHeader from "../../components/SceneHeader.astro";
+import Layout from "../../layouts/Layout.astro";
+import allTracks from "../../data/tracks.json";
+
+// Listening order: a bright day in the city, then the wistful afternoon and
+// rain, then Furina's story, ending on the night pieces and the lullaby.
+// Second takes and the two kalimba covers sit at the end. Tracks not listed
+// here go last, A to Z. A first pass: reorder freely.
+const ORDER = [
+  "Coruscating Street",
+  "Across the Meadows",
+  "Sunny Summer Fontinalia",
+  "Comme il vous plaira",
+  "Theatre Troupe",
+  "Le Souffle du Parfum",
+  "Ann's Quiescent Residence",
+  "Pilot's Rest / Romaritime Recollection",
+  "Naiva",
+  "Onduations",
+  "Treasured Above All",
+  "Que Piano",
+  "Lustrous Stars",
+  "Clio's Memoirs",
+  "Luminescence of Eventide",
+  "Ed e subito sera",
+  "Pluie sur la ville / All Passed With the Rain",
+  "Vespers of Pluviose",
+  "Surging Reminiscence",
+  "Les murmures des flots",
+  "La vaguelette",
+  "Focalors",
+  "The Last Rose of the Sinner",
+  "The Song Burning in the Embers",
+  "Sleepless Night",
+  "Clair de lune",
+  "Thelxie's Lullaby",
+  "Lustrous Stars (Re-recorded)",
+  "Pluie sur la ville / All Passed With the Rain (Re-recorded)",
+  "A Happy Furina: Que le vent soit doux (Kalimba)",
+  "Ember Kalimba",
+];
+const rank = (title: string) => {
+  const i = ORDER.indexOf(title);
+  return i === -1 ? ORDER.length : i;
+};
+
+const tracks = allTracks
+  .filter((t) => t.category === "Fontaine")
+  .sort((a, b) => rank(a.title) - rank(b.title) || a.title.localeCompare(b.title));
+
+const totalMinutes = Math.round(tracks.reduce((sum, t) => sum + t.duration, 0) / 60);
+
+const siteUrl = "https://bigpianosmallpiano.com";
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "MusicPlaylist",
+  "name": "Fontaine Piano Music | Big Piano Small Piano",
+  "description":
+    "Fontaine OST piano covers from Genshin Impact, streamed continuously. Calming piano music to study, sleep or relax to, with free sheet music.",
+  "url": `${siteUrl}/playlist/fontaine`,
+  "numTracks": tracks.length,
+  "track": tracks.map((t) => ({
+    "@type": "MusicRecording",
+    "name": t.title,
+    "duration": `PT${Math.floor(t.duration / 60)}M${t.duration % 60}S`,
+    "associatedMedia": { "@type": "MediaObject", "contentUrl": t.url },
+  })),
+};
+---
+
+<Layout
+  floatingCoffee={false}
+  title="Fontaine Piano Music to Study &amp; Sleep to: Free Genshin Playlist"
+  description={`${tracks.length} Fontaine OST piano covers from Genshin Impact, about ${totalMinutes} minutes of calming music to study, sleep or relax to. Free sheet music for most tracks. No ads, no sign-up.`}
+>
+  <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+
+  <!-- HERO -->
+  <SceneHeader region="Fontaine" eyebrow="Genshin Impact · Region" title="Fontaine Piano">
+    <p class="mt-3 text-ivory/80 text-sm max-w-md leading-relaxed drop-shadow">
+      {tracks.length} original piano covers &middot; ~{totalMinutes} minutes &middot; free to stream, no ads.
+    </p>
+    <a
+      href="/playlist"
+      class="mt-4 inline-flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-full border border-ivory/25 bg-ebony/60 backdrop-blur-sm text-ivory/80 hover:border-gold/40 hover:text-gold transition-colors"
+    >
+      &larr; All regions playlist
+    </a>
+  </SceneHeader>
+
+  <!-- INTRO -->
+  <section class="max-w-3xl mx-auto px-4 sm:px-6 pt-8">
+    <p class="text-ivory/60 text-sm leading-relaxed">
+      Fontaine is the nation of water and justice, added in Genshin Impact version 4.0: the Court of
+      Fontaine, Romaritime Harbor, the Erinnyes Forest and the old cities under the sea. Its music is
+      elegant and a little theatrical, with waltzes, rain and long quiet moments by the water. These
+      are my piano covers of {tracks.length} Fontaine themes, in order from a bright day in the city to
+      Furina's story and a late-night lullaby, for studying, reading or drifting off. Most have free
+      sheet music: tap Sheet music on any track.
+    </p>
+  </section>
+
+  <PlaylistPlayer tracks={tracks} showCategories={false} shuffle={false}>
+    <div slot="footer">
+      <CoffeeButton
+        variant="inline"
+        message="Every Fontaine cover here is free to stream. If it's keeping you company while you study or wind down, a coffee helps keep it going."
+      />
+    </div>
+  </PlaylistPlayer>
+</Layout>

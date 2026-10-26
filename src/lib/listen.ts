@@ -52,6 +52,7 @@ export function trackForPiece(piece: Piece): Track | null {
 /** Where "Keep listening" goes: the region's own page, else the filtered playlist. */
 export function playlistFor(track: Track): { href: string; label: string } {
   if (track.category === "Nod Krai") return { href: "/playlist/nod-krai", label: "the Nod Krai playlist" };
+  if (track.category === "Fontaine") return { href: "/playlist/fontaine", label: "the Fontaine playlist" };
   if (track.category === "Uncategorized") return { href: "/playlist", label: "the full playlist" };
   return {
     href:  `/playlist?region=${encodeURIComponent(track.category)}`,

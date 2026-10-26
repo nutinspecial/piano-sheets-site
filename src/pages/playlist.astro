@@ -11,7 +11,6 @@ import { trackForPiece } from "../lib/listen";
 
 const totalMinutes = Math.round(tracks.reduce((sum, t) => sum + t.duration, 0) / 60);
 
-const nodKraiCount = tracks.filter((t) => t.category === "Nod Krai").length;
 
 const siteUrl = "https://bigpianosmallpiano.com";
 const scorePage = new Map<string, string>();
@@ -21,7 +20,10 @@ for (const piece of pieces) {
 }
 
 // Region chips that have their own page offer a link to it
-const regionPages = { "Nod Krai": "/playlist/nod-krai" };
+const regionPages = { "Fontaine": "/playlist/fontaine", "Nod Krai": "/playlist/nod-krai" };
+const regionPills = Object.entries(regionPages)
+  .map(([name, href]) => ({ name, href, count: tracks.filter((t) => t.category === name).length }))
+  .filter((r) => r.count > 0);
 
 const jsonLd = {
   "@context": "https://schema.org",
@@ -55,14 +57,17 @@ const jsonLd = {
     <p class="mt-1.5 text-ivory/70 text-xs sm:text-sm drop-shadow">
       {tracks.length} covers &middot; ~{totalMinutes} minutes &middot; free to stream, no ads
     </p>
-    {nodKraiCount > 0 && (
-      <a
-        href="/playlist/nod-krai"
-        class="mt-4 inline-flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-full border border-gold/40 bg-ebony/60 backdrop-blur-sm text-gold hover:bg-gold/20 transition-colors"
-      >
-        ❄ Nod Krai playlist, {nodKraiCount} tracks &rarr;
-      </a>
-    )}
+    <!-- One pill per region that has its own page -->
+    <div class="mt-4 flex flex-wrap gap-2">
+      {regionPills.map((r) => (
+        <a
+          href={r.href}
+          class="inline-flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-full border border-gold/40 bg-ebony/60 backdrop-blur-sm text-gold hover:bg-gold/20 transition-colors"
+        >
+          {r.name} playlist, {r.count} tracks &rarr;
+        </a>
+      ))}
+    </div>
   </SceneHeader>
 
   <!-- The header painting follows the region chip. Inline + delegated so it
