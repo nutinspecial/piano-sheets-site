@@ -73,11 +73,11 @@
   },
   {
     "id": "inazuma-city",
-    "title": "Inazuma City",
+    "title": "Dream of Scattered Petals",
     "category": "Inazuma",
-    "filename": "inazuma-city-inazuma.mp3",
+    "filename": "dream-of-scattered-petals-inazuma.mp3",
     "duration": 139,
-    "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/inazuma-city-inazuma.mp3"
+    "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/dream-of-scattered-petals-inazuma.mp3"
   },
   {
     "id": "peaceful-wishes",
@@ -233,11 +233,11 @@
   },
   {
     "id": "aisa-bathhouse-1",
-    "title": "Aisa Bathhouse OST 1",
+    "title": "Misty Redolence",
     "category": "Inazuma",
-    "filename": "aisa-bathhouse-ost-1-inazuma.mp3",
+    "filename": "misty-redolence-inazuma.mp3",
     "duration": 88,
-    "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/aisa-bathhouse-ost-1-inazuma.mp3"
+    "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/misty-redolence-inazuma.mp3"
   },
   {
     "id": "aisa-bathhouse-2-edited2",
@@ -497,11 +497,11 @@
   },
   {
     "id": "falling-maples-sad-edited2",
-    "title": "Dream of Scattered Petals",
+    "title": "Dream of Scattered Petals (Short Ver.)",
     "category": "Inazuma",
-    "filename": "dream-of-scattered-petals-inazuma.mp3",
+    "filename": "dream-of-scattered-petals-short-ver-inazuma.mp3",
     "duration": 78,
-    "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/dream-of-scattered-petals-inazuma.mp3"
+    "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/dream-of-scattered-petals-short-ver-inazuma.mp3"
   },
   {
     "id": "field-of-flowers-bgm",
@@ -1262,14 +1262,6 @@
     "filename": "the-nights-wish-natlan.mp3",
     "duration": 122,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/the-nights-wish-natlan.mp3"
-  },
-  {
-    "id": "theatre-troupe",
-    "title": "Theatre Troupe",
-    "category": "Fontaine",
-    "filename": "theatre-troupe-fontaine.mp3",
-    "duration": 105,
-    "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/theatre-troupe-fontaine.mp3"
   },
   {
     "id": "thinker-theatre-night-w-start",

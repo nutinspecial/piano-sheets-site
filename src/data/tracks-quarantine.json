@@ -421,5 +421,14 @@
     "duration": 88,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/sangonomiya-shrine-inazuma.mp3",
     "quarantineReason": "same recording as Illuminated Coral Palace WAV, fingerprint 1.0 (2026-10-26)"
+  },
+  {
+    "id": "theatre-troupe",
+    "title": "Theatre Troupe",
+    "category": "Fontaine",
+    "filename": "theatre-troupe-fontaine.mp3",
+    "duration": 105,
+    "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/theatre-troupe-fontaine.mp3",
+    "quarantineReason": "same recording as Clio's Memoirs, fingerprint 0.996 (2026-10-26)"
   }
 ]

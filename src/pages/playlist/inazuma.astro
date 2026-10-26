@@ -7,18 +7,18 @@ import SceneHeader from "../../components/SceneHeader.astro";
 import Layout from "../../layouts/Layout.astro";
 import allTracks from "../../data/tracks.json";
 
-// Listening order: a busy day in the city, then the shrine and the warm
-// bath house, then falling petals and the islands at night.
+// Listening order: a calm day under the cherry blossoms, the shrine and the
+// warm bath house, then Inazuma City at night. The short take sits last.
 // Tracks not listed here go last, A to Z. A first pass: reorder freely.
 const ORDER = [
-  "Inazuma City",
   "Peaceful Wishes",
   "Sakura Scented Kiseru",
-  "Aisa Bathhouse OST 1",
+  "Misty Redolence",
   "Entwined in Thought",
   "Illuminated Coral Palace",
   "Dream of Scattered Petals",
   "Interwoven Nostalgia",
+  "Dream of Scattered Petals (Short Ver.)",
 ];
 const rank = (title: string) => {
   const i = ORDER.indexOf(title);
@@ -76,8 +76,8 @@ const jsonLd = {
       Inazuma is the nation of thunder and eternity, the third nation in Genshin Impact: Inazuma City under
       the cherry blossoms, the Grand Narukami Shrine, Sangonomiya on Watatsumi Island and the Aisa Bathhouse.
       Its music uses Japanese instruments and gentle, falling melodies, often a little sad. These are my piano
-      covers of {tracks.length} Inazuma themes, in order from a busy day in the city to the shrine, falling
-      petals and the islands at night, for studying, reading or drifting off. Most have free sheet music:
+      covers of {tracks.length} Inazuma themes, in order from a calm day under the cherry blossoms to the shrine,
+      the bath house and Inazuma City at night, for studying, reading or drifting off. Most have free sheet music:
       tap Sheet music on any track.
     </p>
   </section>
