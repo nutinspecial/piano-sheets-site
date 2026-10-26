@@ -488,14 +488,6 @@
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/shimmering-water-like-flickering-souls-nodkrai.mp3"
   },
   {
-    "id": "fading-stories-2",
-    "title": "Fading Stories",
-    "category": "Liyue",
-    "filename": "fading-stories-liyue.mp3",
-    "duration": 327,
-    "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/fading-stories-liyue.mp3"
-  },
-  {
     "id": "falling-behind",
     "title": "Laufey - Falling Behind",
     "category": "Pop Covers",
@@ -1536,5 +1528,14 @@
     "duration": 96,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/another-hopeful-tomorrow-liyue.mp3",
     "preview": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/another-hopeful-tomorrow-liyue-preview.mp3"
+  },
+  {
+    "id": "fading-stories-liyue",
+    "title": "Fading Stories",
+    "category": "Liyue",
+    "filename": "fading-stories-liyue.mp3",
+    "duration": 234,
+    "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/fading-stories-liyue.mp3",
+    "preview": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/fading-stories-liyue-preview.mp3"
   }
 ]
