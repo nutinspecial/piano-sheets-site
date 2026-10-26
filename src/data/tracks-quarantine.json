@@ -403,5 +403,23 @@
     "duration": 120,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/creeks-of-nostalgia-liyue.mp3",
     "quarantineReason": "older take; creeks-of-nostalgia-2 WAV matches the YouTube upload (0.989 vs 0.891) (2026-10-26)"
+  },
+  {
+    "id": "falling-maples-sad",
+    "title": "Falling Maples Sad",
+    "category": "Inazuma",
+    "filename": "falling-maples-sad-inazuma.mp3",
+    "duration": 82,
+    "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/falling-maples-sad-inazuma.mp3",
+    "quarantineReason": "same recording as Dream of Scattered Petals, fingerprint 1.0 (2026-10-26)"
+  },
+  {
+    "id": "sangonomiya-shrine-2",
+    "title": "Sangonomiya Shrine",
+    "category": "Inazuma",
+    "filename": "sangonomiya-shrine-inazuma.mp3",
+    "duration": 88,
+    "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/sangonomiya-shrine-inazuma.mp3",
+    "quarantineReason": "same recording as Illuminated Coral Palace WAV, fingerprint 1.0 (2026-10-26)"
   }
 ]

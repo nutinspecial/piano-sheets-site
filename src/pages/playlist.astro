@@ -20,7 +20,7 @@ for (const piece of pieces) {
 }
 
 // Region chips that have their own page offer a link to it
-const regionPages = { "Mondstadt": "/playlist/mondstadt", "Liyue": "/playlist/liyue", "Fontaine": "/playlist/fontaine", "Natlan": "/playlist/natlan", "Nod Krai": "/playlist/nod-krai" };
+const regionPages = { "Mondstadt": "/playlist/mondstadt", "Liyue": "/playlist/liyue", "Inazuma": "/playlist/inazuma", "Fontaine": "/playlist/fontaine", "Natlan": "/playlist/natlan", "Nod Krai": "/playlist/nod-krai" };
 const regionPills = Object.entries(regionPages)
   .map(([name, href]) => ({ name, href, count: tracks.filter((t) => t.category === name).length }))
   .filter((r) => r.count > 0);
