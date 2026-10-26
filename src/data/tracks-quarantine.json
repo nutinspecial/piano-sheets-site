@@ -430,5 +430,14 @@
     "duration": 105,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/theatre-troupe-fontaine.mp3",
     "quarantineReason": "same recording as Clio's Memoirs, fingerprint 0.996 (2026-10-26)"
+  },
+  {
+    "id": "strtwavesss",
+    "title": "Strtwavesss",
+    "category": "Uncategorized",
+    "filename": "strtwavesss.mp3",
+    "duration": 55,
+    "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/strtwavesss.mp3",
+    "quarantineReason": "55 s start clip of Rippling Reveries (0.982), footage working file (2026-10-26)"
   }
 ]
