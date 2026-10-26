@@ -41,3 +41,15 @@
   request. Fine procedural drawing (hair-thin strokes, pre-rendered once to a strip) worked as well.
 - Lesson: simple code shapes read as cartoonish; painted cut-outs (chroma key or black + luminance
   alpha) or many hair-fine strokes read as natural. Ask for a still frame after ~30 s to catch build-up.
+
+## Phase 3: Fontaine region page (2026-10-26, live adf74ac)
+
+- Shipped: /playlist/fontaine, 29 tracks in a listening order (bright day, afternoon and rain,
+  Furina's story, night, re-recorded takes last). Underwater painting with light shafts and bubbles,
+  intro in the user's voice, MusicPlaylist JSON-LD. Linked from Fontaine score pages (Keep listening),
+  the phone menu and the /playlist Fontaine chip.
+- Caught by user: both kalimba covers removed (playlist is piano-only, kept in tracks-quarantine.json);
+  "Onduations" typo, now "Ondulations du rythme"; "Que Piano" is really "Que le vent soit doux".
+- Near miss: Clair de lune was briefly moved to Classical. It is the Genshin Opera Epiclese night
+  theme, not Debussy (the video description says so). Check the video description before recategorising.
+- Next: Search Console check on /playlist/fontaine in 1-2 weeks; phase 4 Natlan then Mondstadt.
