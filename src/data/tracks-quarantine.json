@@ -358,5 +358,23 @@
     "filename": "slow-2.mp3",
     "duration": 193,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/slow-2.mp3"
+  },
+  {
+    "id": "emberedited",
+    "title": "Ember Kalimba",
+    "category": "Fontaine",
+    "filename": "ember-kalimba-fontaine.mp3",
+    "duration": 62,
+    "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/ember-kalimba-fontaine.mp3",
+    "quarantineReason": "kalimba, playlist is piano-only (2026-10-26)"
+  },
+  {
+    "id": "que-le",
+    "title": "A Happy Furina: Que le vent soit doux (Kalimba)",
+    "category": "Fontaine",
+    "filename": "a-happy-furina-que-le-vent-soit-doux-kalimba-fontaine.mp3",
+    "duration": 102,
+    "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/a-happy-furina-que-le-vent-soit-doux-kalimba-fontaine.mp3",
+    "quarantineReason": "kalimba, playlist is piano-only (2026-10-26)"
   }
 ]
