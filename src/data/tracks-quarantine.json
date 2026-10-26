@@ -376,5 +376,14 @@
     "duration": 102,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/a-happy-furina-que-le-vent-soit-doux-kalimba-fontaine.mp3",
     "quarantineReason": "kalimba, playlist is piano-only (2026-10-26)"
+  },
+  {
+    "id": "whirl",
+    "title": "Whirl of Chalchiuhtlicue",
+    "category": "Natlan",
+    "filename": "whirl-of-chalchiuhtlicue-natlan.mp3",
+    "duration": 127,
+    "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/whirl-of-chalchiuhtlicue-natlan.mp3",
+    "quarantineReason": "MP3 twin of whirl-of-chalchiuhtlicue WAV, same take (2026-10-26)"
   }
 ]
