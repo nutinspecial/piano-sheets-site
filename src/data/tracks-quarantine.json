@@ -385,5 +385,14 @@
     "duration": 127,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/whirl-of-chalchiuhtlicue-natlan.mp3",
     "quarantineReason": "MP3 twin of whirl-of-chalchiuhtlicue WAV, same take (2026-10-26)"
+  },
+  {
+    "id": "waves",
+    "title": "Waves",
+    "category": "Mondstadt",
+    "filename": "waves-mondstadt.mp3",
+    "duration": 180,
+    "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/waves-mondstadt.mp3",
+    "quarantineReason": "same recording as mesmerizing-waves (Golden Apple), fingerprint 1.0 (2026-10-26)"
   }
 ]
