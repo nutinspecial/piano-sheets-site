@@ -470,12 +470,12 @@ const art = PAINTED.includes(key) ? key : null;
       }
     };
 
-    // Snezhnaya snow: mostly real crystal shapes. Six designs (branching
-    // arms, a hexagon centre, a soft icy glow) are drawn once into a strip and
-    // reused at every size; only the farthest specks are plain soft dots.
+    // Snezhnaya snow: mostly soft round flakes, sized by depth, with about one
+    // in four a small crystal. Six crystal designs (branching arms, a hexagon
+    // centre, a soft icy glow) are drawn once into a strip and reused.
     // Flakes turn slowly and tilt as they fall; a loud note brings a flurry.
     FX.snow = {
-      glow: "200,225,255", rate: 12, cap: [90, 45],
+      glow: "200,225,255", rate: 16, cap: [110, 55],
       flakes: null,
       makeFlakes: function () {
         var S = 64, c = document.createElement("canvas"); c.width = S * 6; c.height = S;
@@ -511,10 +511,10 @@ const art = PAINTED.includes(key) ? key : null;
         return c;
       },
       one: function (s, fresh) {
-        var z = 0.2 + R() * 0.8, speck = z < 0.32;
+        var z = 0.2 + R() * 0.8, speck = R() < 0.75;
         add({ fx: "snow", x: w * R() * 1.1 - w * 0.05, y: fresh ? -14 : R() * h * 0.5, z: z, speck: speck,
               cell: Math.floor(R() * 6), vx: (-6 + R() * 12) * z, vy: (14 + R() * 18) * (0.4 + z),
-              size: speck ? 1 + R() * 1.2 : (8 + 22 * z) * (0.85 + 0.35 * s), rot: R() * TAU, vr: (R() - 0.5) * 0.8, life: 24 });
+              size: speck ? 0.8 + 2.6 * z : (5 + 9 * z) * (0.9 + 0.25 * s), rot: R() * TAU, vr: (R() - 0.5) * 0.8, life: 24 });
       },
       burst: function (s) { for (var i = Math.round(2 + 8 * s); i > 0; i--) this.one(s, R() < 0.5); },
       step: function (p, dt) {
@@ -523,7 +523,13 @@ const art = PAINTED.includes(key) ? key : null;
       },
       draw: function (p, t) {
         var a = edge(p, t);
-        if (p.speck) { dot(p.x, p.y, p.size, rgba("240,247,255", 0.7 * a)); return; }
+        if (p.speck) {
+          // Soft edged, like a flake slightly out of focus
+          var g = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.size * 1.6);
+          g.addColorStop(0, rgba("248,251,255", a * (0.55 + 0.4 * p.z))); g.addColorStop(0.55, rgba("240,247,255", a * (0.4 + 0.3 * p.z)));
+          g.addColorStop(1, rgba("230,240,255", 0));
+          dot(p.x, p.y, p.size * 1.6, g); return;
+        }
         if (!this.flakes) this.flakes = this.makeFlakes();
         ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.rot);
         ctx.scale(0.55 + 0.45 * Math.abs(Math.cos(p.age * 0.6 + p.ph)), 1);   // tilting as it falls
