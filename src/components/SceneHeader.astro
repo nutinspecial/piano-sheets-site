@@ -470,32 +470,65 @@ const art = PAINTED.includes(key) ? key : null;
       }
     };
 
-    // Snow: small flakes always, six-armed stars on loud notes
+    // Snezhnaya snow: mostly real crystal shapes. Six designs (branching
+    // arms, a hexagon centre, a soft icy glow) are drawn once into a strip and
+    // reused at every size; only the farthest specks are plain soft dots.
+    // Flakes turn slowly and tilt as they fall; a loud note brings a flurry.
     FX.snow = {
-      glow: "200,225,255", rate: 16, cap: [110, 55],
-      one: function (s, fresh, star) {
-        add({ fx: "snow", x: w * R() * 1.1 - w * 0.05, y: fresh ? -8 : R() * h * 0.4, vx: -6 + R() * 12,
-              vy: star ? 18 + R() * 14 : 16 + R() * 30, star: star, rot: R() * TAU,
-              size: star ? (5 + R() * 5) * (0.7 + 0.5 * s) : 1 + R() * 2.2, life: 16 });
+      glow: "200,225,255", rate: 12, cap: [90, 45],
+      flakes: null,
+      makeFlakes: function () {
+        var S = 64, c = document.createElement("canvas"); c.width = S * 6; c.height = S;
+        var g = c.getContext("2d"); g.lineCap = "round";
+        var arm = function (len, kind) {
+          // One arm pointing up; side branches differ per design
+          g.beginPath(); g.moveTo(0, 0); g.lineTo(0, -len);
+          var n = [2, 3, 3, 4, 2, 3][kind], spread = [0.9, 0.7, 1.0, 0.6, 1.2, 0.8][kind];
+          for (var i = 1; i <= n; i++) {
+            var at = -len * (0.25 + 0.6 * i / (n + 1)), bl = len * (0.42 - 0.08 * i) * (kind === 4 ? 1.3 : 1);
+            g.moveTo(0, at); g.lineTo(Math.sin(spread) * bl, at - Math.cos(spread) * bl);
+            g.moveTo(0, at); g.lineTo(-Math.sin(spread) * bl, at - Math.cos(spread) * bl);
+          }
+          if (kind === 2 || kind === 5) {           // a small plate at the tip
+            g.moveTo(-len * 0.08, -len * 0.92); g.lineTo(0, -len); g.lineTo(len * 0.08, -len * 0.92);
+          }
+        };
+        for (var k = 0; k < 6; k++) {
+          var cx = k * S + S / 2, cy = S / 2, len = S * 0.42;
+          for (var pass = 0; pass < 2; pass++) {
+            g.save(); g.translate(cx, cy);
+            g.lineWidth = pass ? (k % 2 ? 1.3 : 1.7) : 5;
+            g.strokeStyle = pass ? "rgba(248,252,255,0.95)" : "rgba(170,205,255,0.22)";
+            for (var j = 0; j < 6; j++) { g.rotate(Math.PI / 3); arm(len, k); g.stroke(); }
+            g.restore();
+          }
+          // Hexagonal centre plate
+          g.save(); g.translate(cx, cy); g.beginPath();
+          for (var q = 0; q < 6; q++) { var an = q * Math.PI / 3; g.lineTo(Math.cos(an) * len * 0.16, Math.sin(an) * len * 0.16); }
+          g.closePath(); g.fillStyle = "rgba(235,245,255,0.55)"; g.fill();
+          g.strokeStyle = "rgba(255,255,255,0.9)"; g.lineWidth = 1; g.stroke(); g.restore();
+        }
+        return c;
       },
-      burst: function (s) {
-        for (var i = Math.round(4 + 12 * s); i > 0; i--) this.one(s, R() < 0.5, false);
-        if (s > 0.5) for (var j = s > 0.8 ? 2 : 1; j > 0; j--) this.one(s, R() < 0.5, true);
+      one: function (s, fresh) {
+        var z = 0.2 + R() * 0.8, speck = z < 0.32;
+        add({ fx: "snow", x: w * R() * 1.1 - w * 0.05, y: fresh ? -14 : R() * h * 0.5, z: z, speck: speck,
+              cell: Math.floor(R() * 6), vx: (-6 + R() * 12) * z, vy: (14 + R() * 18) * (0.4 + z),
+              size: speck ? 1 + R() * 1.2 : (8 + 22 * z) * (0.85 + 0.35 * s), rot: R() * TAU, vr: (R() - 0.5) * 0.8, life: 24 });
       },
+      burst: function (s) { for (var i = Math.round(2 + 8 * s); i > 0; i--) this.one(s, R() < 0.5); },
       step: function (p, dt) {
-        p.x += (p.vx + Math.sin(p.age * 1.3 + p.ph) * 9) * dt; p.y += p.vy * dt; p.rot += 0.4 * dt;
-        if (p.y > h + 12) p.age = p.life;
+        p.x += (p.vx + Math.sin(p.age * 1.1 + p.ph) * 10 * p.z) * dt; p.y += p.vy * dt; p.rot += p.vr * dt;
+        if (p.y > h + 20) p.age = p.life;
       },
       draw: function (p, t) {
-        var a = 0.9 * edge(p, t);
-        if (!p.star) { dot(p.x, p.y, p.size, rgba("245,250,255", a)); return; }
+        var a = edge(p, t);
+        if (p.speck) { dot(p.x, p.y, p.size, rgba("240,247,255", 0.7 * a)); return; }
+        if (!this.flakes) this.flakes = this.makeFlakes();
         ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.rot);
-        ctx.strokeStyle = rgba("240,248,255", a); ctx.lineWidth = 1.1; ctx.lineCap = "round";
-        for (var k = 0; k < 6; k++) {
-          ctx.rotate(TAU / 6); ctx.beginPath(); ctx.moveTo(0, 0); ctx.lineTo(0, -p.size);
-          ctx.moveTo(0, -p.size * 0.55); ctx.lineTo(p.size * 0.25, -p.size * 0.78);
-          ctx.moveTo(0, -p.size * 0.55); ctx.lineTo(-p.size * 0.25, -p.size * 0.78); ctx.stroke();
-        }
+        ctx.scale(0.55 + 0.45 * Math.abs(Math.cos(p.age * 0.6 + p.ph)), 1);   // tilting as it falls
+        ctx.globalAlpha = a * (0.45 + 0.55 * p.z);
+        ctx.drawImage(this.flakes, p.cell * 64, 0, 64, 64, -p.size / 2, -p.size / 2, p.size, p.size);
         ctx.restore();
       }
     };
