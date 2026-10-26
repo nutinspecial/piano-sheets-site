@@ -1,7 +1,8 @@
 ---
 // src/components/SceneHeader.astro
 // ── Region painting header (the Overture look, light edition) ─────────────
-// The painting sits behind the title and fades into the page. Regions with no
+// The painting fills the window behind the whole page (fixed, so it stays put
+// as you scroll) and cards over it turn to frosted glass. Regions with no
 // painting get a dark header with a soft gold glow. While any track on the
 // page plays, the painting comes alive in that region's own way, in time
 // with the music: Inazuma petals, Fontaine ripples, Sumeru leaves, Liyue
@@ -45,22 +46,33 @@ const art = PAINTED.includes(key) ? key : null;
 </header>
 
 <style is:global>
-  .scene { position: relative; isolation: isolate; overflow: hidden; display: flex; align-items: flex-end;
+  /* The painting, its fade and the effects canvas are fixed to the viewport and
+     sit behind the whole page (negative z in the root stacking context, so the
+     header must not isolate), so the effects carry on as you scroll. */
+  .scene { position: relative; display: flex; align-items: flex-end;
            min-height: clamp(300px, 52vh, 520px); padding: 6rem 0 2.5rem; }
   .scene--plain { min-height: 0; padding-top: 3.5rem;
                   background: radial-gradient(70% 120% at 50% 0%, theme('colors.gold.DEFAULT / 14%'), transparent 70%); }
-  .scene-art, .scene-art img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -3; }
+  .scene-art, .scene-art img { position: fixed; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -3; }
   .scene-art img { transition: opacity .6s ease; }
-  .scene-fade { position: absolute; inset: 0; z-index: -2; pointer-events: none;
-                background: linear-gradient(to bottom, rgb(13 13 13 / .35) 0%, rgb(13 13 13 / .15) 35%, rgb(13 13 13 / .75) 75%, theme('colors.ebony') 100%); }
+  .scene-fade { position: fixed; inset: 0; z-index: -2; pointer-events: none;
+                background: linear-gradient(to bottom, rgb(13 13 13 / .35) 0%, rgb(13 13 13 / .2) 30%, rgb(13 13 13 / .55) 65%, rgb(13 13 13 / .72) 100%); }
   .scene-body { position: relative; width: 100%; }
   /* Small gold caps need a real halo to read over bright skies (Liyue) */
   .scene-eyebrow { text-shadow: 0 0 2px rgb(13 13 13 / .9), 0 1px 8px rgb(13 13 13 / .85), 0 0 18px rgb(13 13 13 / .6); }
 
   /* Music ripples: drawn on a canvas over the painting, under the fade */
-  .scene-ripples { position: absolute; inset: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none;
+  .scene-ripples { position: fixed; inset: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none;
                    mix-blend-mode: screen; }
   .scene--plain .scene-ripples { display: none; }
+
+  /* The page's own dark fill would cover the scene (html keeps the dark colour) */
+  body:has(.scene:not(.scene--plain)) { background-color: transparent; }
+  /* Over a painted page, cards turn to frosted glass so the scene shows through */
+  body:has(.scene:not(.scene--plain)) :is(main .bg-surface, #track-list, #scores-table) {
+    background-color: rgb(20 20 20 / .7); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); }
+  /* Many small cards: tint only, no blur, to keep scrolling smooth */
+  body:has(.scene:not(.scene--plain)) :is(.score-card, .chip-btn:not([aria-pressed="true"])) { background-color: rgb(20 20 20 / .78); }
   @media (prefers-reduced-motion: reduce) { .scene-ripples { display: none; } }
 </style>
 
