@@ -283,8 +283,8 @@ const offClass  = "border-surface-border text-ivory-muted hover:border-gold/40 h
       rows.forEach((r) => {
         const isActive = Number(r.dataset.index) === index;
         r.classList.toggle("bg-gold/5", isActive);
-        r.querySelector(".icon-play").classList.toggle("hidden", isActive);
-        r.querySelector(".icon-playing").classList.toggle("hidden", !isActive);
+        r.querySelector(".icon-play").classList.toggle("hidden", isActive && !audio.paused);
+        r.querySelector(".icon-playing").classList.toggle("hidden", !isActive || audio.paused);
         r.querySelector(".track-play-indicator").classList.toggle("text-gold", isActive);
         r.querySelector(".track-play-indicator").classList.toggle("border-gold/50", isActive);
         r.querySelector(".track-title-text").classList.toggle("text-gold", isActive);
@@ -336,9 +336,14 @@ const offClass  = "border-surface-border text-ivory-muted hover:border-gold/40 h
       playIndex(prevIndex);
     }
 
-    // Row click → play
+    // Row click → play; the row already playing pauses / resumes instead
     rows.forEach((row) => {
-      row.addEventListener("click", () => playFromRow(Number(row.dataset.index)));
+      row.addEventListener("click", () => {
+        const index = Number(row.dataset.index);
+        if (index !== currentIndex) return playFromRow(index);
+        if (audio.paused) audio.play().catch(() => {});
+        else audio.pause();
+      });
     });
 
     // Transport controls
@@ -368,12 +373,14 @@ const offClass  = "border-surface-border text-ivory-muted hover:border-gold/40 h
       pauseIcon.classList.remove("hidden");
       playPauseBtn.setAttribute("aria-label", "Pause");
       if (media) media.playbackState = "playing";
+      highlightRow(currentIndex);
     });
     audio.addEventListener("pause", () => {
       playIcon.classList.remove("hidden");
       pauseIcon.classList.add("hidden");
       playPauseBtn.setAttribute("aria-label", "Play");
       if (media) media.playbackState = "paused";
+      highlightRow(currentIndex);
     });
     audio.addEventListener("playing", () => { failedInARow = 0; showStatus(""); });
     audio.addEventListener("ended", playNext);
