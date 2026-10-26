@@ -53,6 +53,7 @@ export function trackForPiece(piece: Piece): Track | null {
 export function playlistFor(track: Track): { href: string; label: string } {
   if (track.category === "Nod Krai") return { href: "/playlist/nod-krai", label: "the Nod Krai playlist" };
   if (track.category === "Fontaine") return { href: "/playlist/fontaine", label: "the Fontaine playlist" };
+  if (track.category === "Liyue") return { href: "/playlist/liyue", label: "the Liyue playlist" };
   if (track.category === "Mondstadt") return { href: "/playlist/mondstadt", label: "the Mondstadt playlist" };
   if (track.category === "Natlan") return { href: "/playlist/natlan", label: "the Natlan playlist" };
   if (track.category === "Uncategorized") return { href: "/playlist", label: "the full playlist" };

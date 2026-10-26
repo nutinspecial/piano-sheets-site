@@ -408,20 +408,12 @@
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/cozy-in-the-light-natlan.mp3"
   },
   {
-    "id": "creeks-of-nostalgia",
+    "id": "creeks-of-nostalgia-2",
     "title": "Creeks of Nostalgia",
     "category": "Liyue",
-    "filename": "creeks-of-nostalgia-liyue.mp3",
-    "duration": 120,
-    "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/creeks-of-nostalgia-liyue.mp3"
-  },
-  {
-    "id": "creeks-of-nostalgia-2",
-    "title": "Creeks of Nolstagia",
-    "category": "Liyue",
-    "filename": "creeks-of-nolstagia-liyue.wav",
+    "filename": "creeks-of-nostalgia-liyue.wav",
     "duration": 118,
-    "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/creeks-of-nolstagia-liyue.wav"
+    "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/creeks-of-nostalgia-liyue.wav"
   },
   {
     "id": "curhs-love-you-with",
@@ -1535,5 +1527,14 @@
     "duration": 107,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/les-murmures-des-flots-fontaine.mp3",
     "preview": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/les-murmures-des-flots-fontaine-preview.mp3"
+  },
+  {
+    "id": "another-hopeful-tomorrow-liyue",
+    "title": "Another Hopeful Tomorrow",
+    "category": "Liyue",
+    "filename": "another-hopeful-tomorrow-liyue.mp3",
+    "duration": 96,
+    "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/another-hopeful-tomorrow-liyue.mp3",
+    "preview": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/another-hopeful-tomorrow-liyue-preview.mp3"
   }
 ]

@@ -1,0 +1,97 @@
+---
+// src/pages/playlist/liyue.astro
+// ── Liyue region piano playlist: SEO landing page ─────────────────────
+import CoffeeButton from "../../components/CoffeeButton.astro";
+import PlaylistPlayer from "../../components/PlaylistPlayer.astro";
+import SceneHeader from "../../components/SceneHeader.astro";
+import Layout from "../../layouts/Layout.astro";
+import allTracks from "../../data/tracks.json";
+
+// Listening order: a clear morning over the harbor, the adepti's mountains
+// and the Chasm, then Chenyu Vale and the rain, ending on the night pieces.
+// Tracks not listed here go last, A to Z. A first pass: reorder freely.
+const ORDER = [
+  "Clear Sky over Liyue",
+  "Another Hopeful Tomorrow",
+  "A Mild Melody",
+  "Vague Whispers",
+  "Maiden's Longing",
+  "Adeptus' Solace",
+  "Wordless Cliffs",
+  "Trace of Grace",
+  "Creeks of Nostalgia",
+  "Gentle Rain",
+  "Fading Stories",
+  "Good Night, Liyue",
+];
+const rank = (title: string) => {
+  const i = ORDER.indexOf(title);
+  return i === -1 ? ORDER.length : i;
+};
+
+const tracks = allTracks
+  .filter((t) => t.category === "Liyue")
+  .sort((a, b) => rank(a.title) - rank(b.title) || a.title.localeCompare(b.title));
+
+const totalMinutes = Math.round(tracks.reduce((sum, t) => sum + t.duration, 0) / 60);
+
+const siteUrl = "https://bigpianosmallpiano.com";
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "MusicPlaylist",
+  "name": "Liyue Piano Music | Big Piano Small Piano",
+  "description":
+    "Liyue OST piano covers from Genshin Impact, streamed continuously. Calming piano music to study, sleep or relax to, with free sheet music.",
+  "url": `${siteUrl}/playlist/liyue`,
+  "numTracks": tracks.length,
+  "track": tracks.map((t) => ({
+    "@type": "MusicRecording",
+    "name": t.title,
+    "duration": `PT${Math.floor(t.duration / 60)}M${t.duration % 60}S`,
+    "associatedMedia": { "@type": "MediaObject", "contentUrl": t.url },
+  })),
+};
+---
+
+<Layout
+  floatingCoffee={false}
+  title="Liyue Piano Music to Study &amp; Sleep to: Free Genshin Playlist"
+  description={`${tracks.length} Liyue OST piano covers from Genshin Impact, about ${totalMinutes} minutes of calming music to study, sleep or relax to. Free sheet music for most tracks. No ads, no sign-up.`}
+>
+  <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+
+  <!-- HERO -->
+  <SceneHeader region="Liyue" eyebrow="Genshin Impact · Region" title="Liyue Piano">
+    <p class="mt-3 text-ivory/80 text-sm max-w-md leading-relaxed drop-shadow">
+      {tracks.length} original piano covers &middot; ~{totalMinutes} minutes &middot; free to stream, no ads.
+    </p>
+    <a
+      href="/playlist"
+      class="mt-4 inline-flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-full border border-ivory/25 bg-ebony/60 backdrop-blur-sm text-ivory/80 hover:border-gold/40 hover:text-gold transition-colors"
+    >
+      &larr; All regions playlist
+    </a>
+  </SceneHeader>
+
+  <!-- INTRO -->
+  <section class="max-w-3xl mx-auto px-4 sm:px-6 pt-8">
+    <p class="text-ivory/60 text-sm leading-relaxed">
+      Liyue is the nation of stone and contracts, the second nation in Genshin Impact: Liyue Harbor, the
+      adepti's misty peaks, the Chasm and the tea terraces of Chenyu Vale. Its music is built on Chinese
+      instruments and pentatonic tunes, calm and wide like the mountains. These are my piano covers of
+      {tracks.length} Liyue themes, in order from a clear morning over the harbor to the rain in Chenyu
+      Vale and a last good night, for studying, reading or drifting off. Most have free sheet music:
+      tap Sheet music on any track.
+    </p>
+  </section>
+
+  <PlaylistPlayer tracks={tracks} showCategories={false} shuffle={false}>
+    <div slot="footer">
+      <CoffeeButton
+        variant="inline"
+        message="Every Liyue cover here is free to stream. If it's keeping you company while you study or wind down, a coffee helps keep it going."
+      />
+    </div>
+  </PlaylistPlayer>
+</Layout>
