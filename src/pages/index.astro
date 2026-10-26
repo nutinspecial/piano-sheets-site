@@ -78,7 +78,7 @@ const latestPiece   = latestVideo && pieceByVideoId.get(latestVideo.videoId);
         >
           Subscribe on YouTube ↗
         </a>
-        <a href="/scores" class="btn-outline">
+        <a href="/scores/" class="btn-outline">
           Free Piano Scores
         </a>
       </div>
@@ -90,12 +90,12 @@ const latestPiece   = latestVideo && pieceByVideoId.get(latestVideo.videoId);
           <span class="block text-ivory-muted text-xs uppercase tracking-wider sm:tracking-widest mt-0.5">Videos</span>
         </a>
         <div class="w-px h-8 bg-surface-border" aria-hidden="true"></div>
-        <a href="/scores" class="text-center group/stat">
+        <a href="/scores/" class="text-center group/stat">
           <span class="block font-display text-2xl font-semibold text-gold group-hover/stat:text-gold-light transition-colors tabular-nums">{totalScores}</span>
           <span class="block text-ivory-muted text-xs uppercase tracking-wider sm:tracking-widest mt-0.5">Free scores</span>
         </a>
         <div class="w-px h-8 bg-surface-border" aria-hidden="true"></div>
-        <a href="/playlist" class="text-center group/stat">
+        <a href="/playlist/" class="text-center group/stat">
           <span class="block font-display text-2xl font-semibold text-ivory group-hover/stat:text-gold transition-colors tabular-nums">{totalTracks}</span>
           <span class="block text-ivory-muted text-xs uppercase tracking-wider sm:tracking-widest mt-0.5">Playlist tracks</span>
         </a>
@@ -114,7 +114,7 @@ const latestPiece   = latestVideo && pieceByVideoId.get(latestVideo.videoId);
         <div class="space-y-2 min-w-0">
           <h2 class="font-display text-2xl sm:text-3xl font-semibold text-ivory group-hover:text-gold transition-colors leading-snug">
             <!-- Stretched link: the whole card opens the video page -->
-            <a href={`/videos/${latestVideo.slug}`} class="after:absolute after:inset-0 after:rounded-xl focus-visible:outline-none focus-visible:after:ring-2 focus-visible:after:ring-gold">
+            <a href={`/videos/${latestVideo.slug}/`} class="after:absolute after:inset-0 after:rounded-xl focus-visible:outline-none focus-visible:after:ring-2 focus-visible:after:ring-gold">
               {latestVideo.title}
             </a>
           </h2>
@@ -125,11 +125,11 @@ const latestPiece   = latestVideo && pieceByVideoId.get(latestVideo.videoId);
           <div class="flex flex-wrap items-center gap-x-5 gap-y-2 mt-1 text-sm font-medium">
             <span class="text-gold group-hover:underline" aria-hidden="true">Watch &amp; read more →</span>
             {latestPiece ? (
-              <a href={`/scores/${latestPiece.slug}`} class="relative z-10 text-gold hover:text-gold-light hover:underline">
+              <a href={`/scores/${latestPiece.slug}/`} class="relative z-10 text-gold hover:text-gold-light hover:underline">
                 Get the free sheet →
               </a>
             ) : (
-              <a href="/scores" class="relative z-10 text-ivory-muted hover:text-gold hover:underline">
+              <a href="/scores/" class="relative z-10 text-ivory-muted hover:text-gold hover:underline">
                 Browse all free scores →
               </a>
             )}
@@ -192,7 +192,7 @@ const latestPiece   = latestVideo && pieceByVideoId.get(latestVideo.videoId);
           data-title={video.title.toLowerCase()}
         >
           <!-- Thumbnail -->
-          <a href={`/videos/${video.slug}`} tabindex="-1" aria-hidden="true" class="relative block overflow-hidden aspect-video bg-surface-raised flex-shrink-0">
+          <a href={`/videos/${video.slug}/`} tabindex="-1" aria-hidden="true" class="relative block overflow-hidden aspect-video bg-surface-raised flex-shrink-0">
             {video.thumbnail ? (
               <img
                 src={video.thumbnail}
@@ -217,7 +217,7 @@ const latestPiece   = latestVideo && pieceByVideoId.get(latestVideo.videoId);
 
           <!-- Card body -->
           <div class="p-4 flex flex-col flex-1 gap-2">
-            <a href={`/videos/${video.slug}`} class="font-display font-semibold text-ivory group-hover:text-gold transition-colors leading-snug line-clamp-2">
+            <a href={`/videos/${video.slug}/`} class="font-display font-semibold text-ivory group-hover:text-gold transition-colors leading-snug line-clamp-2">
               {video.title}
             </a>
             <p class="text-ivory-muted text-xs mt-auto">{formatDate(video.publishedAt)}</p>

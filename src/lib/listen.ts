@@ -67,17 +67,17 @@ export function scoresByTrack(pieces: Piece[]): Map<string, Piece> {
 
 /** Where "Keep listening" goes: the region's own page, else the filtered playlist. */
 export function playlistFor(track: Track): { href: string; label: string } {
-  if (track.category === "Nod Krai") return { href: "/playlist/nod-krai", label: "the Nod Krai playlist" };
-  if (track.category === "Fontaine") return { href: "/playlist/fontaine", label: "the Fontaine playlist" };
-  if (track.category === "Sumeru") return { href: "/playlist/sumeru", label: "the Sumeru playlist" };
-  if (track.category === "Snezhnaya") return { href: "/playlist/snezhnaya", label: "the Snezhnaya playlist" };
-  if (track.category === "Inazuma") return { href: "/playlist/inazuma", label: "the Inazuma playlist" };
-  if (track.category === "Liyue") return { href: "/playlist/liyue", label: "the Liyue playlist" };
-  if (track.category === "Mondstadt") return { href: "/playlist/mondstadt", label: "the Mondstadt playlist" };
-  if (track.category === "Natlan") return { href: "/playlist/natlan", label: "the Natlan playlist" };
-  if (track.category === "Uncategorized") return { href: "/playlist", label: "the full playlist" };
+  if (track.category === "Nod Krai") return { href: "/playlist/nod-krai/", label: "the Nod Krai playlist" };
+  if (track.category === "Fontaine") return { href: "/playlist/fontaine/", label: "the Fontaine playlist" };
+  if (track.category === "Sumeru") return { href: "/playlist/sumeru/", label: "the Sumeru playlist" };
+  if (track.category === "Snezhnaya") return { href: "/playlist/snezhnaya/", label: "the Snezhnaya playlist" };
+  if (track.category === "Inazuma") return { href: "/playlist/inazuma/", label: "the Inazuma playlist" };
+  if (track.category === "Liyue") return { href: "/playlist/liyue/", label: "the Liyue playlist" };
+  if (track.category === "Mondstadt") return { href: "/playlist/mondstadt/", label: "the Mondstadt playlist" };
+  if (track.category === "Natlan") return { href: "/playlist/natlan/", label: "the Natlan playlist" };
+  if (track.category === "Uncategorized") return { href: "/playlist/", label: "the full playlist" };
   return {
-    href:  `/playlist?region=${encodeURIComponent(track.category)}`,
+    href:  `/playlist/?region=${encodeURIComponent(track.category)}`,
     label: `the ${track.category} playlist`,
   };
 }

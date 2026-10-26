@@ -159,7 +159,7 @@ const jsonLd = {
           )}
         </ul>
         <p class="mt-4 text-xs text-ivory-muted">
-          {piece && <>See the <a href={`/scores/${piece.slug}`} class="text-gold hover:underline">{piece.name} score page</a>, or </>}browse <a href="/scores" class="text-gold hover:underline">all free piano scores</a>.
+          {piece && <>See the <a href={`/scores/${piece.slug}/`} class="text-gold hover:underline">{piece.name} score page</a>, or </>}browse <a href="/scores/" class="text-gold hover:underline">all free piano scores</a>.
         </p>
       </section>
     )}
@@ -186,7 +186,7 @@ const jsonLd = {
       <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
         {related.map((v) => (
           <a
-            href={`/videos/${v.slug}`}
+            href={`/videos/${v.slug}/`}
             class="group bg-surface rounded-xl border border-surface-border overflow-hidden hover:border-gold/40 transition-all duration-300 flex flex-col"
           >
             {v.thumbnail && (

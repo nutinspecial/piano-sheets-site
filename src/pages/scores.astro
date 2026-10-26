@@ -124,7 +124,7 @@ const jsonLd = {
               <!-- Song title -->
               <td class="px-5 py-3.5">
                 <a
-                  href={`/scores/${row.pageSlug}`}
+                  href={`/scores/${row.pageSlug}/`}
                   class="font-display text-ivory/90 hover:text-gold transition-colors leading-snug"
                 >
                   {row.title}
@@ -167,7 +167,7 @@ const jsonLd = {
           class="score-card bg-surface border border-surface-border rounded-xl p-4 space-y-2"
           data-title={row.title.toLowerCase()}
         >
-          <a href={`/scores/${row.pageSlug}`} class="font-display text-ivory/90 hover:text-gold transition-colors leading-snug block">
+          <a href={`/scores/${row.pageSlug}/`} class="font-display text-ivory/90 hover:text-gold transition-colors leading-snug block">
             {row.title}
           </a>
           {row.credit && (

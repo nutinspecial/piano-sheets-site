@@ -167,7 +167,7 @@ const offClass  = "border-surface-border text-ivory-muted hover:border-gold/40 h
         <span class="text-ivory-muted text-xs font-mono flex-shrink-0">{formatDuration(t.duration)}</span>
       </button>
       {scoreFor.get(t.id) && (
-        <a href={`/scores/${scoreFor.get(t.id)!.slug}`} class="flex-shrink-0 flex items-center px-3 text-xs text-gold/80 hover:text-gold hover:bg-surface-raised transition-colors"
+        <a href={`/scores/${scoreFor.get(t.id)!.slug}/`} class="flex-shrink-0 flex items-center px-3 text-xs text-gold/80 hover:text-gold hover:bg-surface-raised transition-colors"
            aria-label={`Free sheet music for ${t.title}`}>Sheet<span class="hidden sm:inline">&nbsp;music</span></a>
       )}
       </div>

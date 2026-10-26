@@ -84,7 +84,7 @@ const jsonLd = [
     <nav slot="top" class="text-xs text-ivory/70 flex items-center gap-1.5 mb-6 drop-shadow whitespace-nowrap" aria-label="Breadcrumb">
       <a href="/" class="hover:text-gold transition-colors">Home</a>
       <span>/</span>
-      <a href="/scores" class="hover:text-gold transition-colors">Free Scores</a>
+      <a href="/scores/" class="hover:text-gold transition-colors">Free Scores</a>
       <span class="hidden sm:inline">/</span>
       <span class="hidden sm:inline text-ivory/60 truncate max-w-xs">{piece.name}</span>
     </nav>
@@ -145,7 +145,7 @@ const jsonLd = [
       <ul class="text-sm space-y-1">
         {piece.versions.map((v) => (
           <li>
-            <a href={`/videos/${v.slug}`} class="text-gold hover:text-gold-light transition-colors">
+            <a href={`/videos/${v.slug}/`} class="text-gold hover:text-gold-light transition-colors">
               {piece.versions.length > 1 ? v.title : "Video notes and description"} →
             </a>
           </li>
@@ -171,7 +171,7 @@ const jsonLd = [
         <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4">
           {related.map((p) => (
             <a
-              href={`/scores/${p.slug}`}
+              href={`/scores/${p.slug}/`}
               class="group bg-surface rounded-xl border border-surface-border overflow-hidden hover:border-gold/40 transition-all duration-300 flex flex-col"
             >
               {p.versions[0].thumbnail && (
@@ -197,7 +197,7 @@ const jsonLd = [
           ))}
         </div>
         <p class="mt-6 text-sm">
-          <a href="/scores" class="text-gold hover:text-gold-light transition-colors">See all free piano scores →</a>
+          <a href="/scores/" class="text-gold hover:text-gold-light transition-colors">See all free piano scores →</a>
         </p>
       </section>
     </>
