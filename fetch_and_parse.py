@@ -43,6 +43,13 @@ SCORE_LINK_PATTERNS = [
     r"https?://gumroad\.com/\S+",
     r"https?://(?:www\.)?patreon\.com/\S+",  # ← ChewieMelodies
     r"https?://(?:www\.)?chaconnescott\.(?:gumroad\.com|com)/\S+",
+    r"https?://(?:www\.)?mymusicsheet\.com/\S+",
+]
+
+# Arrangers named without a link ("Piano Sheet can be obtained via
+# @ChewieMelodies's Patreon."): pattern -> the page to link instead
+MENTION_LINKS = [
+    (r"@ChewieMelodies\W{0,4}s?\s+Patreon", "https://www.patreon.com/ChewieMelodies"),
 ]
 
 # Credit attribution lines
@@ -53,6 +60,8 @@ SCORE_LINK_PATTERNS = [
 CREDIT_PATTERNS = [
     # "Piano Sheet @AnimuzAnimePiano" or "Piano Sheets @name1 @name2 @name3"
     r"piano\s+sheets?\s+((?:@[\w-]+\s*&?\s*)+)",
+    # "Piano Sheet by @punipianoofficial available at ..."
+    r"piano\s+sheets?\s+by\s+@([\w-]+)",
     # "Piano Sheet from @AnimuzAnimePiano"
     r"piano\s+sheets?\s+from\s+@?([\w-]+)",
     # "By @ChaconneScott" at the start of a line
@@ -216,6 +225,11 @@ def extract_score_links(description: str) -> list[str]:
         url = re.sub(r"[,;)\]\"'>]+$", "", url)
         cleaned.append(url)
 
+    if not cleaned:
+        for pattern, url in MENTION_LINKS:
+            if re.search(pattern, description, re.IGNORECASE):
+                cleaned.append(url)
+
     return list(dict.fromkeys(cleaned))   # deduplicate, preserve order
 
 
@@ -252,6 +266,7 @@ NAME_CORRECTIONS = {
     "marupiano999":         "MaruPiano",
     "animenz":              "Animenz",
     "animenzzz":            "Animenz",
+    "punipianoofficial":    "punipiano",
 }
 
 
@@ -387,6 +402,14 @@ def write_json(path: str, data) -> None:
 # ── Main ───────────────────────────────────────────────────────────────────────
 
 def main():
+    # --offline: re-parse the saved videos.json (no API key), e.g. after a
+    # change to the link or credit rules
+    if "--offline" in sys.argv:
+        with open(os.path.join(OUTPUT_DIR, "videos.json"), encoding="utf-8") as f:
+            videos = json.load(f)
+        write_json(os.path.join(OUTPUT_DIR, "scores.json"), parse_scores(videos))
+        return
+
     check_api_key()
 
     print("=" * 55)

@@ -7,17 +7,14 @@ import SceneHeader from "../components/SceneHeader.astro";
 import Layout from "../layouts/Layout.astro";
 import tracks from "../data/tracks.json";
 import { pieces } from "../lib/scores";
-import { trackForPiece } from "../lib/listen";
+import { scoresByTrack } from "../lib/listen";
 
 const totalMinutes = Math.round(tracks.reduce((sum, t) => sum + t.duration, 0) / 60);
 
 
 const siteUrl = "https://bigpianosmallpiano.com";
 const scorePage = new Map<string, string>();
-for (const piece of pieces) {
-  const t = trackForPiece(piece);
-  if (t && !scorePage.has(t.id)) scorePage.set(t.id, `${siteUrl}/scores/${piece.slug}`);
-}
+for (const [id, piece] of scoresByTrack(pieces)) scorePage.set(id, `${siteUrl}/scores/${piece.slug}`);
 
 // Region chips that have their own page offer a link to it
 const regionPages = { "Mondstadt": "/playlist/mondstadt", "Liyue": "/playlist/liyue", "Inazuma": "/playlist/inazuma", "Fontaine": "/playlist/fontaine", "Natlan": "/playlist/natlan", "Nod Krai": "/playlist/nod-krai" };

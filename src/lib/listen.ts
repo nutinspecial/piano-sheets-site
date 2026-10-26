@@ -49,6 +49,22 @@ export function trackForPiece(piece: Piece): Track | null {
   return byName.get(clean(piece.name)) ?? null;
 }
 
+/** Each track's score page. Second takes ("(Re-recorded)", "(Short Ver.)")
+ *  with no page of their own share the page of the take they belong to. */
+export function scoresByTrack(pieces: Piece[]): Map<string, Piece> {
+  const out = new Map<string, Piece>();
+  for (const piece of pieces) {
+    const t = trackForPiece(piece);
+    if (t && !out.has(t.id)) out.set(t.id, piece);
+  }
+  for (const t of tracks) {
+    if (out.has(t.id)) continue;
+    const twin = tracks.find((o) => out.has(o.id) && clean(o.title) === clean(t.title));
+    if (twin) out.set(t.id, out.get(twin.id)!);
+  }
+  return out;
+}
+
 /** Where "Keep listening" goes: the region's own page, else the filtered playlist. */
 export function playlistFor(track: Track): { href: string; label: string } {
   if (track.category === "Nod Krai") return { href: "/playlist/nod-krai", label: "the Nod Krai playlist" };

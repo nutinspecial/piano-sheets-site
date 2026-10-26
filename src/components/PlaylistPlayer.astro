@@ -3,7 +3,7 @@
 // ── Shared browse + continuous shuffle player for playlist pages ──────────
 // Used by /playlist (all tracks) and /playlist/nod-krai (one region).
 import { pieces } from "../lib/scores";
-import { trackForPiece } from "../lib/listen";
+import { scoresByTrack } from "../lib/listen";
 
 export interface Props {
   tracks: {
@@ -30,10 +30,7 @@ const channelUrl = "https://www.youtube.com/channel/UCsKtOGplqKz3uGt9XD8VexQ";
 // Each track's score page and YouTube video, when one matches (the same
 // name match the score pages use for their listen player)
 const scoreFor = new Map<string, { slug: string; videoId: string }>();
-for (const piece of pieces) {
-  const t = trackForPiece(piece);
-  if (t && !scoreFor.has(t.id)) scoreFor.set(t.id, { slug: piece.slug, videoId: piece.versions[0].videoId });
-}
+for (const [id, piece] of scoresByTrack(pieces)) scoreFor.set(id, { slug: piece.slug, videoId: piece.versions[0].videoId });
 const videoIds = tracks.map((t) => scoreFor.get(t.id)?.videoId ?? "");
 
 function formatDuration(sec: number): string {
