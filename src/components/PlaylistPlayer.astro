@@ -2,6 +2,8 @@
 // src/components/PlaylistPlayer.astro
 // ── Shared browse + continuous shuffle player for playlist pages ──────────
 // Used by /playlist (all tracks) and /playlist/nod-krai (one region).
+import { pieces } from "../lib/scores";
+import { trackForPiece } from "../lib/listen";
 
 export interface Props {
   tracks: {
@@ -18,9 +20,21 @@ export interface Props {
   siteName?: string;
   /** Start with shuffle on. Off for pages with a curated listening order. */
   shuffle?: boolean;
+  /** Category -> its own region page, offered when that chip is picked. */
+  regionPages?: Record<string, string>;
 }
 
-const { tracks, showCategories = true, siteName = "Big Piano Small Piano", shuffle = true } = Astro.props;
+const { tracks, showCategories = true, siteName = "Big Piano Small Piano", shuffle = true, regionPages = {} } = Astro.props;
+const channelUrl = "https://www.youtube.com/channel/UCsKtOGplqKz3uGt9XD8VexQ";
+
+// Each track's score page and YouTube video, when one matches (the same
+// name match the score pages use for their listen player)
+const scoreFor = new Map<string, { slug: string; videoId: string }>();
+for (const piece of pieces) {
+  const t = trackForPiece(piece);
+  if (t && !scoreFor.has(t.id)) scoreFor.set(t.id, { slug: piece.slug, videoId: piece.versions[0].videoId });
+}
+const videoIds = tracks.map((t) => scoreFor.get(t.id)?.videoId ?? "");
 
 function formatDuration(sec: number): string {
   if (!sec) return "--:--";
@@ -59,8 +73,14 @@ const offClass  = "border-surface-border text-ivory-muted hover:border-gold/40 h
 <!-- BROWSE -->
 <section class="max-w-3xl mx-auto px-4 sm:px-6 py-8 space-y-4 pb-40">
 
-  <!-- Search -->
-  <div class="relative">
+  <!-- Play all + search -->
+  <div class="flex items-center gap-2">
+  <button id="play-all-btn" type="button"
+          class="flex-shrink-0 inline-flex items-center gap-2 rounded-full bg-gold hover:bg-gold-light text-ebony text-sm font-semibold px-4 py-2.5 transition-colors">
+    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+    Play all
+  </button>
+  <div class="relative flex-1 min-w-0">
     <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-ivory-muted pointer-events-none" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
       <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
     </svg>
@@ -73,11 +93,12 @@ const offClass  = "border-surface-border text-ivory-muted hover:border-gold/40 h
       class="search-field"
     />
   </div>
+  </div>
 
   <!-- Category chips -->
   {showCategories && (
     <div id="category-chips" class="space-y-2" role="group" aria-label="Filter by region">
-      <div class="flex flex-wrap gap-2">
+      <div class="chip-row">
         <button type="button" data-category="All" aria-pressed="true" class={`${chipClass} border-gold bg-gold/10 text-gold`}>All</button>
         {regions.map((cat) => (
           <button type="button" data-category={cat} aria-pressed="false" class={`${chipClass} ${offClass}`}>{cat}</button>
@@ -91,7 +112,7 @@ const offClass  = "border-surface-border text-ivory-muted hover:border-gold/40 h
         ))}
       </div>
       {groups.map((g) => (
-        <div id={g.id} class="chip-panel hidden flex flex-wrap gap-2 pl-3 border-l border-gold/30">
+        <div id={g.id} class="chip-panel chip-row hidden pl-3 border-l border-gold/30">
           {g.cats.map((cat) => (
             <button type="button" data-category={cat} data-in={g.id} aria-pressed="false" class={`${chipClass} ${offClass}`}>{LABEL[cat] ?? cat}</button>
           ))}
@@ -102,7 +123,10 @@ const offClass  = "border-surface-border text-ivory-muted hover:border-gold/40 h
 
   <!-- Controls row -->
   <div class="flex items-center justify-between gap-3 pt-1">
-    <p id="track-count" class="text-ivory-muted text-xs font-mono" aria-live="polite">{tracks.length} tracks</p>
+    <p class="text-ivory-muted text-xs font-mono flex flex-wrap items-center gap-x-3 gap-y-1">
+      <span id="track-count" aria-live="polite">{tracks.length} tracks</span>
+      <a id="region-page-link" class="hidden text-gold hover:text-gold-light font-body" href="#"></a>
+    </p>
     <button
       id="shuffle-toggle"
       type="button"
@@ -127,9 +151,10 @@ const offClass  = "border-surface-border text-ivory-muted hover:border-gold/40 h
   <!-- Track list -->
   <div id="track-list" class="divide-y divide-surface-border border border-surface-border rounded-xl overflow-hidden">
     {tracks.map((t, i) => (
+      <div class="track-item flex items-stretch">
       <button
         type="button"
-        class="track-row w-full flex items-center gap-3 px-4 py-3 text-left hover:bg-surface-raised transition-colors group"
+        class="track-row flex-1 min-w-0 flex items-center gap-3 pl-4 pr-3 py-3 text-left hover:bg-surface-raised transition-colors group"
         data-index={i}
         data-title={t.title.toLowerCase()}
         data-category={t.category}
@@ -144,6 +169,11 @@ const offClass  = "border-surface-border text-ivory-muted hover:border-gold/40 h
         </span>
         <span class="text-ivory-muted text-xs font-mono flex-shrink-0">{formatDuration(t.duration)}</span>
       </button>
+      {scoreFor.get(t.id) && (
+        <a href={`/scores/${scoreFor.get(t.id)!.slug}`} class="flex-shrink-0 flex items-center px-3 text-xs text-gold/80 hover:text-gold hover:bg-surface-raised transition-colors"
+           aria-label={`Free sheet music for ${t.title}`}>Sheet<span class="hidden sm:inline">&nbsp;music</span></a>
+      )}
+      </div>
     ))}
   </div>
 
@@ -164,6 +194,11 @@ const offClass  = "border-surface-border text-ivory-muted hover:border-gold/40 h
         <p class="text-ivory-muted text-xs font-mono">
           <span id="time-current">0:00</span> / <span id="time-total">0:00</span>
         </p>
+        <p class="text-xs mt-0.5 flex flex-wrap gap-x-3">
+          <a id="watch-link" class="hidden text-ivory/70 hover:text-gold" target="_blank" rel="noopener noreferrer" href="#">Watch on YouTube&nbsp;↗</a>
+          <a id="sub-link" class="hidden text-gold hover:text-gold-light" target="_blank" rel="noopener noreferrer"
+             href={`${channelUrl}?sub_confirmation=1`}>Enjoying it? Subscribe&nbsp;↗</a>
+        </p>
       </div>
       <button id="prev-btn" type="button" class="w-11 h-11 flex items-center justify-center text-ivory/60 hover:text-gold transition-colors flex-shrink-0" aria-label="Previous">
         <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M6 6h2v12H6zm3.5 6 8.5 6V6z"/></svg>
@@ -180,7 +215,7 @@ const offClass  = "border-surface-border text-ivory-muted hover:border-gold/40 h
   <audio id="audio-el" preload="metadata"></audio>
 </div>
 
-<script define:vars={{ tracks, siteName }}>
+<script define:vars={{ tracks, siteName, videoIds, regionPages }}>
   (function () {
     const $ = (id) => document.getElementById(id);
     const audio = $("audio-el");
@@ -204,6 +239,9 @@ const offClass  = "border-surface-border text-ivory-muted hover:border-gold/40 h
     const trackCount = $("track-count");
     const chips = document.querySelectorAll(".chip-btn");
     const rows = Array.from(trackList.querySelectorAll(".track-row"));
+    const watchLink = $("watch-link");
+    const subLink = $("sub-link");
+    const regionLink = $("region-page-link");
 
     let shuffleOn = shuffleToggle.getAttribute("aria-pressed") === "true";
     let currentIndex = -1;
@@ -228,7 +266,7 @@ const offClass  = "border-surface-border text-ivory-muted hover:border-gold/40 h
 
     function visibleIndices() {
       return rows
-        .filter((r) => r.style.display !== "none")
+        .filter((r) => r.parentElement.style.display !== "none")
         .map((r) => Number(r.dataset.index));
     }
 
@@ -268,6 +306,9 @@ const offClass  = "border-surface-border text-ivory-muted hover:border-gold/40 h
       playerBar.inert = false;
       if (media) media.metadata = new MediaMetadata({ title: track.title, artist: siteName, album: track.category });
       document.title = `▶ ${track.title} | ${siteName}`;
+      const vid = videoIds[index];
+      watchLink.classList.toggle("hidden", !vid);
+      if (vid) watchLink.href = "https://www.youtube.com/watch?v=" + vid;
     }
 
     function showStatus(msg) {
@@ -304,6 +345,13 @@ const offClass  = "border-surface-border text-ivory-muted hover:border-gold/40 h
     });
 
     // Transport controls
+    // Play all: start the visible list (shuffled if shuffle is on)
+    $("play-all-btn").addEventListener("click", () => {
+      const visible = visibleIndices();
+      if (!visible.length) return;
+      playFromRow(shuffleOn ? visible[Math.floor(Math.random() * visible.length)] : visible[0]);
+    });
+
     playPauseBtn.addEventListener("click", () => {
       if (currentIndex === -1) {
         const visible = visibleIndices();
@@ -332,6 +380,10 @@ const offClass  = "border-surface-border text-ivory-muted hover:border-gold/40 h
     });
     audio.addEventListener("playing", () => { failedInARow = 0; showStatus(""); });
     audio.addEventListener("ended", playNext);
+    // Ask for the subscribe only after real listening
+    audio.addEventListener("timeupdate", () => {
+      if (audio.currentTime >= 30) subLink.classList.remove("hidden");
+    });
 
     // A missing or broken file skips ahead instead of stalling the whole set
     audio.addEventListener("error", () => {
@@ -389,7 +441,7 @@ const offClass  = "border-surface-border text-ivory-muted hover:border-gold/40 h
         // A group chip carries several categories joined with "|"
         const matchesCategory = activeCategory === "All" || activeCategory.split("|").includes(row.dataset.category);
         const show = matchesQuery && matchesCategory;
-        row.style.display = show ? "" : "none";
+        row.parentElement.style.display = show ? "" : "none";
         if (show) visible++;
       });
       noResults.classList.toggle("hidden", visible > 0);
@@ -401,6 +453,10 @@ const offClass  = "border-surface-border text-ivory-muted hover:border-gold/40 h
     chips.forEach((chip) => {
       chip.addEventListener("click", () => {
         activeCategory = chip.dataset.category;
+        // A region with its own page gets a link to it
+        const page = regionPages[activeCategory];
+        regionLink.classList.toggle("hidden", !page);
+        if (page) { regionLink.href = page; regionLink.textContent = "Open the full " + chip.textContent.trim() + " page \u2192"; }
         // Keep open only the row this chip belongs to (or opens)
         const open = chip.dataset.panel || chip.dataset.in || "";
         document.querySelectorAll(".chip-panel").forEach((p) => p.classList.toggle("hidden", p.id !== open));
@@ -428,3 +484,15 @@ const offClass  = "border-surface-border text-ivory-muted hover:border-gold/40 h
     if (startChip) startChip.click();
   })();
 </script>
+
+<style>
+  /* Phones: one row that scrolls sideways (edge to edge), so the tracks stay
+     near the top. From sm up the chips wrap as normal. */
+  .chip-row { display: flex; gap: .5rem; flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none;
+              margin: 0 -1rem; padding: 0 1rem 2px; }
+  .chip-row::-webkit-scrollbar { display: none; }
+  .chip-row > * { flex-shrink: 0; }
+  .chip-panel.chip-row { margin-left: 0; }
+  .chip-row.hidden { display: none; }
+  @media (min-width: 640px) { .chip-row { flex-wrap: wrap; overflow: visible; margin: 0; padding: 0; } .chip-panel.chip-row { padding-left: .75rem; } }
+</style>

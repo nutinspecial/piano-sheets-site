@@ -6,18 +6,37 @@ import PlaylistPlayer from "../components/PlaylistPlayer.astro";
 import SceneHeader from "../components/SceneHeader.astro";
 import Layout from "../layouts/Layout.astro";
 import tracks from "../data/tracks.json";
+import { pieces } from "../lib/scores";
+import { trackForPiece } from "../lib/listen";
 
 const totalMinutes = Math.round(tracks.reduce((sum, t) => sum + t.duration, 0) / 60);
 
 const nodKraiCount = tracks.filter((t) => t.category === "Nod Krai").length;
 
+const siteUrl = "https://bigpianosmallpiano.com";
+const scorePage = new Map<string, string>();
+for (const piece of pieces) {
+  const t = trackForPiece(piece);
+  if (t && !scorePage.has(t.id)) scorePage.set(t.id, `${siteUrl}/scores/${piece.slug}`);
+}
+
+// Region chips that have their own page offer a link to it
+const regionPages = { "Nod Krai": "/playlist/nod-krai" };
+
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "MusicPlaylist",
-  "name": "Big Piano Small Piano: Ambient Piano Playlist",
-  "description": "Free ambient piano music to study, sleep or relax to. Original piano covers, streamed continuously.",
-  "url": "https://bigpianosmallpiano.com/playlist",
+  "name": "Genshin Impact Piano Playlist | Big Piano Small Piano",
+  "description": "Calm piano covers of Genshin Impact music, plus anime, pop and other games, streamed continuously. Free sheet music for most tracks.",
+  "url": `${siteUrl}/playlist`,
   "numTracks": tracks.length,
+  "track": tracks.map((t) => ({
+    "@type": "MusicRecording",
+    "name": t.title,
+    "duration": `PT${Math.floor(t.duration / 60)}M${t.duration % 60}S`,
+    "byArtist": { "@type": "MusicGroup", "name": "Big Piano Small Piano" },
+    ...(scorePage.has(t.id) && { "url": scorePage.get(t.id) }),
+  })),
 };
 ---
 
@@ -30,15 +49,18 @@ const jsonLd = {
 
   <!-- HERO -->
   <SceneHeader region="Gate" eyebrow="Ambient piano" title="Piano Playlist">
-    <p class="mt-3 text-ivory/80 text-sm max-w-md leading-relaxed drop-shadow">
-      {tracks.length} original piano covers &middot; ~{totalMinutes} minutes &middot; free to stream, no ads.
+    <p class="mt-3 text-ivory/90 text-sm sm:text-base max-w-lg leading-relaxed drop-shadow">
+      Calm piano covers of Genshin Impact music, plus anime, pop and other games. Free sheet music for most tracks.
+    </p>
+    <p class="mt-1.5 text-ivory/70 text-xs sm:text-sm drop-shadow">
+      {tracks.length} covers &middot; ~{totalMinutes} minutes &middot; free to stream, no ads
     </p>
     {nodKraiCount > 0 && (
       <a
         href="/playlist/nod-krai"
         class="mt-4 inline-flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-full border border-gold/40 bg-ebony/60 backdrop-blur-sm text-gold hover:bg-gold/20 transition-colors"
       >
-        ❄ Nod Krai region playlist ({nodKraiCount}) &rarr;
+        ❄ Nod Krai playlist, {nodKraiCount} tracks &rarr;
       </a>
     )}
   </SceneHeader>
@@ -66,8 +88,21 @@ const jsonLd = {
     }, true);
   </script>
 
-  <PlaylistPlayer tracks={tracks}>
+  <PlaylistPlayer tracks={tracks} regionPages={regionPages}>
     <div slot="footer">
+      <section class="mb-8 text-ivory/70 text-sm leading-relaxed space-y-3" aria-labelledby="about-playlist">
+        <h2 id="about-playlist" class="font-display text-xl font-semibold text-ivory">About this playlist</h2>
+        <p>
+          These are my piano covers. Most are from Genshin Impact,
+          sorted by region from Mondstadt to Snezhnaya, with the event and Archon Quest music under
+          Genshin Impact (Others). The rest are anime, pop, film and other games.
+        </p>
+        <p>
+          Press Play all for a long calm session to study, read or fall asleep to, or pick a region to
+          stay in one place. Most tracks have a free score: tap Sheet music on a track to download it.
+          The arranger is credited on each score page.
+        </p>
+      </section>
       <CoffeeButton
         variant="inline"
         message="This whole playlist is free to stream. If it's keeping you company while you study or wind down, a coffee helps keep it going."
