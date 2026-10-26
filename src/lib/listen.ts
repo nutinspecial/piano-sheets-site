@@ -3,7 +3,8 @@
 // tracks.json is written by publish_track.py / generate_tracks_manifest.py.
 // A score page and a track match when their names agree after cleaning.
 // track-matches.json overrides that: { "<piece slug>": "<track id>" } to
-// force a match, or null to hide the player for a wrong guess.
+// force a match, or null to hide the player for a wrong guess. A list of ids
+// is for a medley page: the first plays there, all of them link to it.
 import tracksData from "../data/tracks.json";
 import overrides from "../data/track-matches.json";
 import type { Piece } from "./scores";
@@ -35,16 +36,19 @@ const byName = new Map<string, Track>();
 for (const t of tracks) if (!byName.has(clean(t.title))) byName.set(clean(t.title), t);
 const byId = new Map(tracks.map((t) => [t.id, t]));
 
-const manual = overrides as Record<string, string | null>;
-for (const [slug, id] of Object.entries(manual)) {
-  if (id !== null && !byId.has(id)) throw new Error(`track-matches.json: "${slug}" points at unknown track id "${id}"`);
+const manual = overrides as Record<string, string | string[] | null>;
+const manualIds = (slug: string): string[] => [manual[slug] ?? []].flat();
+for (const slug of Object.keys(manual)) {
+  for (const id of manualIds(slug)) {
+    if (!byId.has(id)) throw new Error(`track-matches.json: "${slug}" points at unknown track id "${id}"`);
+  }
 }
 
 /** The track to play on this score page, or null when there isn't one. */
 export function trackForPiece(piece: Piece): Track | null {
   if (piece.slug in manual) {
-    const id = manual[piece.slug];
-    return id === null ? null : byId.get(id)!;
+    const [id] = manualIds(piece.slug);
+    return id === undefined ? null : byId.get(id)!;
   }
   return byName.get(clean(piece.name)) ?? null;
 }
@@ -56,6 +60,7 @@ export function scoresByTrack(pieces: Piece[]): Map<string, Piece> {
   for (const piece of pieces) {
     const t = trackForPiece(piece);
     if (t && !out.has(t.id)) out.set(t.id, piece);
+    for (const id of manualIds(piece.slug)) if (!out.has(id)) out.set(id, piece);
   }
   for (const t of tracks) {
     if (out.has(t.id)) continue;

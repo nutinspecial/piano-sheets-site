@@ -30,7 +30,7 @@ const related  = relatedPieces(piece);
 const allSameRegion = !!piece.region && related.every((p) => p.region === piece.region);
 
 const siteUrl  = "https://bigpianosmallpiano.com";
-const pageUrl  = `${siteUrl}/scores/${piece.slug}`;
+const pageUrl  = `${siteUrl}/scores/${piece.slug}/`;
 // enablejsapi lets the listen player pause the video when the track starts
 const embedUrl = `https://www.youtube.com/embed/${latest.videoId}?enablejsapi=1`;
 const track    = trackForPiece(piece);
@@ -64,7 +64,7 @@ const jsonLd = [
     "@type":    "BreadcrumbList",
     "itemListElement": [
       { "@type": "ListItem", "position": 1, "name": "Home",        "item": siteUrl },
-      { "@type": "ListItem", "position": 2, "name": "Free Scores", "item": `${siteUrl}/scores` },
+      { "@type": "ListItem", "position": 2, "name": "Free Scores", "item": `${siteUrl}/scores/` },
       { "@type": "ListItem", "position": 3, "name": piece.name,    "item": pageUrl },
     ],
   },

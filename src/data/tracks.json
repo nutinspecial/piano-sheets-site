@@ -49,11 +49,11 @@
   },
   {
     "id": "naiva",
-    "title": "Naiva",
+    "title": "Via col vento rosato",
     "category": "Fontaine",
-    "filename": "naiva-fontaine.mp3",
+    "filename": "via-col-vento-rosato-fontaine.mp3",
     "duration": 126,
-    "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/naiva-fontaine.mp3"
+    "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/via-col-vento-rosato-fontaine.mp3"
   },
   {
     "id": "onduations",
@@ -1113,11 +1113,11 @@
   },
   {
     "id": "simu-calm-sea",
-    "title": "Simu Calm Sea",
+    "title": "The Hour Before the Dawn",
     "category": "Simulanka",
-    "filename": "simu-calm-sea-simulanka.mp3",
+    "filename": "the-hour-before-the-dawn-simulanka.mp3",
     "duration": 120,
-    "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/simu-calm-sea-simulanka.mp3"
+    "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/the-hour-before-the-dawn-simulanka.mp3"
   },
   {
     "id": "simulakra-2",
@@ -1193,11 +1193,11 @@
   },
   {
     "id": "teleoco-bay",
-    "title": "Teleoco Bay",
+    "title": "When the Breeze Ceases",
     "category": "Natlan",
-    "filename": "teleoco-bay-natlan.mp3",
+    "filename": "when-the-breeze-ceases-natlan.mp3",
     "duration": 128,
-    "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/teleoco-bay-natlan.mp3"
+    "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/when-the-breeze-ceases-natlan.mp3"
   },
   {
     "id": "tender-strength-2",

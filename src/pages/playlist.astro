@@ -14,7 +14,7 @@ const totalMinutes = Math.round(tracks.reduce((sum, t) => sum + t.duration, 0) /
 
 const siteUrl = "https://bigpianosmallpiano.com";
 const scorePage = new Map<string, string>();
-for (const [id, piece] of scoresByTrack(pieces)) scorePage.set(id, `${siteUrl}/scores/${piece.slug}`);
+for (const [id, piece] of scoresByTrack(pieces)) scorePage.set(id, `${siteUrl}/scores/${piece.slug}/`);
 
 // Region chips that have their own page offer a link to it
 const regionPages = { "Mondstadt": "/playlist/mondstadt/", "Liyue": "/playlist/liyue/", "Inazuma": "/playlist/inazuma/", "Sumeru": "/playlist/sumeru/", "Fontaine": "/playlist/fontaine/", "Natlan": "/playlist/natlan/", "Nod Krai": "/playlist/nod-krai/", "Snezhnaya": "/playlist/snezhnaya/" };
@@ -27,7 +27,7 @@ const jsonLd = {
   "@type": "MusicPlaylist",
   "name": "Genshin Impact Piano Playlist | Big Piano Small Piano",
   "description": "Calm piano covers of Genshin Impact music, plus anime, pop and other games, streamed continuously. Free sheet music for most tracks.",
-  "url": `${siteUrl}/playlist`,
+  "url": `${siteUrl}/playlist/`,
   "numTracks": tracks.length,
   "track": tracks.map((t) => ({
     "@type": "MusicRecording",
