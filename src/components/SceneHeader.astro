@@ -5,7 +5,7 @@
 // as you scroll) and cards over it turn to frosted glass. Regions with no
 // painting get a dark header with a soft gold glow. While any track on the
 // page plays, the painting comes alive in that region's own way, in time
-// with the music: Inazuma petals, Fontaine ripples, Sumeru leaves, Liyue
+// with the music: Inazuma petals, Fontaine light and bubbles, Sumeru leaves, Liyue
 // lanterns, Mondstadt breeze, Natlan cinders, Nod Krai moonlight, Snezhnaya
 // snow. Loud notes throw bigger bursts, soft passages stay sparse, and a
 // region-tinted glow breathes with the volume. It reads the track's
@@ -112,120 +112,143 @@ const art = PAINTED.includes(key) ? key : null;
       return (v0 + (v1 - v0) * f) / 35;
     };
     var phone = function () { return w < 640; };
-    var add = function (o) { if (parts.length < 260) { o.age = 0; o.ph = R() * TAU; parts.push(o); } };
+    // Each look caps how many of its pieces can be on screen at once (fewer on
+    // phones), so a long or loud track never floods the page
+    var count = {};
+    var add = function (o) {
+      var cap = FX[o.fx].cap, n = count[o.fx] || 0;
+      if (parts.length >= 260 || (cap && n >= cap[phone() ? 1 : 0])) return;
+      o.age = 0; o.ph = R() * TAU; parts.push(o); count[o.fx] = n + 1;
+    };
+    // Painted cut-outs in one strip, loaded the first time a look needs them
+    var sprites = {};
+    var sprite = function (src) {
+      if (!sprites[src]) { sprites[src] = new Image(); sprites[src].src = src; }
+      var img = sprites[src];
+      return img.complete && img.naturalWidth ? img : null;
+    };
     // Fade in over the first second, out over the last 15% of life
     var edge = function (p, t) { return Math.min(1, p.age) * (t > 0.85 ? (1 - t) / 0.15 : 1); };
 
     // ── One entry per look. rate = particles a second at full volume (quiet
     // still gets 20%), one() makes a particle, burst(s) answers a note,
-    // step/draw move and paint one particle, back() paints behind them all.
+    // step/draw move and paint one particle, back() paints behind them all,
+    // cap = [most on screen, most on a phone].
     var FX = {};
 
-    // Water ripples with a few sparks on loud notes
-    FX.ripples = {
-      glow: "212,175,55", rate: 0,
+    // Underwater (Fontaine): shafts of light swaying down from the surface,
+    // brightening with the music, and bubbles rising; a loud note lets out a
+    // little cluster of them
+    FX.underwater = {
+      glow: "140,205,255", rate: 7, cap: [45, 24],
+      back: function () {
+        var a = 0.05 + 0.18 * glow;
+        for (var i = 0; i < 5; i++) {
+          var x = w * (0.12 + i * 0.2) + Math.sin(clock * 0.25 + i * 2.1) * w * 0.04;
+          var top = 0.03 * w + 0.02 * w * Math.sin(clock * 0.4 + i), bot = top * 3.2, lean = w * 0.12;
+          var g = ctx.createLinearGradient(0, 0, 0, h * 0.85);
+          g.addColorStop(0, rgba("230,245,255", a * (0.75 + 0.25 * Math.sin(clock * 0.9 + i * 1.3))));
+          g.addColorStop(1, rgba("230,245,255", 0));
+          ctx.beginPath(); ctx.moveTo(x - top, 0); ctx.lineTo(x + top, 0);
+          ctx.lineTo(x + lean + bot, h * 0.85); ctx.lineTo(x + lean - bot, h * 0.85); ctx.closePath();
+          ctx.fillStyle = g; ctx.fill();
+        }
+      },
+      one: function (s, fresh, x, y) {
+        var z = 0.3 + R() * 0.7;
+        add({ fx: "underwater", x: x == null ? w * R() : x + (R() - 0.5) * 30, y: y == null ? h + 10 : y + (R() - 0.5) * 20,
+              z: z, r: (2.2 + R() * 5) * z * (x == null ? 1 : 0.8 + 0.6 * s), vy: -(20 + 45 * z), life: 9 + R() * 5 });
+      },
       burst: function (s) {
-        var x = w * (phone() ? 0.15 + R() * 0.7 : 0.45 + R() * 0.5);
-        var y = h * (phone() ? 0.12 + R() * 0.3 : 0.14 + R() * 0.42);
-        add({ fx: "ripples", x: x, y: y, s: s, life: 2.4 + 1.6 * s, rings: s > 0.65 ? 3 : 2,
-              r: Math.min(Math.max(w * 1.3, 480), 900) * (0.08 + 0.32 * s) });
-        for (var i = Math.round(s * s * 10); i > 0; i--) {
-          var an = R() * TAU, sp = 10 + R() * 30;
-          add({ fx: "ripples", mote: true, x: x, y: y, vx: Math.cos(an) * sp, vy: Math.sin(an) * sp * 0.4 - 12,
-                life: 1.5 + R() * 1.5, size: 0.8 + R() * 1.4 });
-        }
+        if (s < 0.35) return;
+        var x = w * (0.1 + R() * 0.8), y = h * (0.55 + R() * 0.4);
+        for (var i = Math.round(3 + 8 * s); i > 0; i--) this.one(s, true, x, y);
       },
-      step: function (p, dt) { if (p.mote) { p.x += p.vx * dt; p.y += p.vy * dt; p.vy -= 6 * dt; } },
+      step: function (p, dt) {
+        p.y += p.vy * dt; p.x += Math.sin(p.age * 3 + p.ph) * 12 * p.z * dt;
+        if (p.y < -10) p.age = p.life;
+      },
       draw: function (p, t) {
-        if (p.mote) { dot(p.x, p.y, p.size, rgba("255,236,170", 0.85 * (1 - t))); return; }
-        var ease = 1 - Math.pow(1 - t, 3), fade = Math.pow(1 - t, 1.6);
-        for (var k = 0; k < p.rings; k++) {
-          var rr = p.r * ease * (1 - k * 0.24);
-          if (rr < 2) continue;
-          var al = fade * (0.35 + 0.65 * p.s) * (1 - k * 0.3);
-          ctx.beginPath(); ctx.ellipse(p.x, p.y, rr, rr * 0.36, 0, 0, TAU);
-          ctx.lineWidth = 7; ctx.strokeStyle = rgba("212,175,55", al * 0.22); ctx.stroke();
-          ctx.lineWidth = 1.2 + 1.6 * p.s * (1 - t); ctx.strokeStyle = rgba("244,241,234", al * 0.9); ctx.stroke();
-        }
+        var a = edge(p, t) * (0.4 + 0.6 * p.z), r = p.r;
+        var g = ctx.createRadialGradient(p.x, p.y, r * 0.2, p.x, p.y, r);
+        g.addColorStop(0, rgba("200,235,255", 0.04 * a)); g.addColorStop(0.8, rgba("200,235,255", 0.14 * a));
+        g.addColorStop(1, rgba("235,248,255", 0.55 * a));
+        dot(p.x, p.y, r, g);
+        dot(p.x - r * 0.35, p.y - r * 0.35, Math.max(0.6, r * 0.22), rgba("255,255,255", 0.8 * a));
       }
     };
 
-    // Sakura petals drifting down; a loud note brings a gust
+    // Sakura petals (painted cut-outs) drifting and tumbling down; a loud note
+    // brings a gust
     FX.petals = {
-      glow: "235,160,215", rate: 9,
+      glow: "235,160,215", rate: 7, cap: [50, 28],
       one: function (s, fresh) {
-        add({ fx: "petals", x: -0.1 * w + R() * w * 1.1, y: fresh ? -12 : R() * h * 0.5,
-              vx: 14 + R() * 22, vy: 22 + R() * 26, size: (4 + R() * 5) * (0.75 + 0.5 * s),
-              rot: R() * TAU, vr: (R() - 0.5) * 3, life: 14, tint: R() < 0.3 ? "255,225,238" : "255,182,212" });
+        var z = 0.3 + R() * 0.7;
+        add({ fx: "petals", x: -0.1 * w + R() * w * 1.1, y: fresh ? -20 : R() * h * 0.5, z: z, cell: Math.floor(R() * 8),
+              vx: (10 + R() * 18) * z, vy: (14 + R() * 22) * (0.5 + z), size: (9 + 15 * z) * (0.85 + 0.3 * s),
+              rot: R() * TAU, vr: (R() - 0.5) * 2.5, life: 16 });
       },
-      burst: function (s) { wind += 70 * s; for (var i = Math.round(2 + 8 * s); i > 0; i--) this.one(s, R() < 0.6); },
+      burst: function (s) { wind += 60 * s; for (var i = Math.round(1 + 6 * s); i > 0; i--) this.one(s, R() < 0.6); },
       step: function (p, dt) {
-        p.x += (p.vx + wind + Math.sin(p.age * 1.8 + p.ph) * 18) * dt; p.y += p.vy * dt;
-        p.rot += (p.vr + wind * 0.01) * dt; if (p.y > h + 20) p.age = p.life;
+        p.x += (p.vx + wind * p.z + Math.sin(p.age * 1.6 + p.ph) * 16 * p.z) * dt; p.y += p.vy * dt;
+        p.rot += (p.vr + wind * 0.01) * dt; if (p.y > h + 24) p.age = p.life;
       },
       draw: function (p, t) {
+        var img = sprite("/art/petals.webp"); if (!img) return;
         ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.rot);
-        ctx.scale(1, 0.55 + 0.45 * Math.abs(Math.sin(p.age * 2.4 + p.ph)));   // tumbling
-        ctx.beginPath(); ctx.moveTo(0, -p.size);
-        ctx.quadraticCurveTo(p.size * 0.9, -p.size * 0.2, 0, p.size);
-        ctx.quadraticCurveTo(-p.size * 0.9, -p.size * 0.2, 0, -p.size);
-        ctx.fillStyle = rgba(p.tint, 0.9 * edge(p, t)); ctx.fill(); ctx.restore();
+        // Turning over in the air: squash on both axes at different speeds
+        ctx.scale(0.35 + 0.65 * Math.abs(Math.cos(p.age * 1.7 + p.ph)), 0.5 + 0.5 * Math.abs(Math.sin(p.age * 1.1 + p.ph)));
+        ctx.globalAlpha = edge(p, t) * (0.55 + 0.45 * p.z);
+        ctx.drawImage(img, p.cell * 64, 0, 64, 64, -p.size / 2, -p.size / 2, p.size, p.size);
+        ctx.restore();
       }
     };
 
-    // Forest leaves: bigger and slower than petals, with a midrib; a loud note
-    // shakes a few more loose
+    // Forest leaves (painted cut-outs): bigger and slower than petals, rocking
+    // side to side as they fall; a loud note shakes a few more loose
     FX.leaves = {
-      glow: "150,215,110", rate: 5,
+      glow: "150,215,110", rate: 3.5, cap: [24, 14],
       one: function (s, fresh) {
-        var c = [["120,190,80", "170,225,110"], ["90,160,70", "140,200,90"], ["200,200,90", "230,225,130"]][Math.floor(R() * 3)];
-        add({ fx: "leaves", x: -0.05 * w + R() * w * 1.1, y: fresh ? -16 : R() * h * 0.5,
-              vx: -6 + R() * 18, vy: 16 + R() * 18, size: (6 + R() * 6) * (0.8 + 0.4 * s),
-              rot: R() * TAU, vr: (R() - 0.5) * 2, life: 16, col: c[0], vein: c[1] });
+        var z = 0.3 + R() * 0.7;
+        add({ fx: "leaves", x: -0.05 * w + R() * w * 1.1, y: fresh ? -30 : R() * h * 0.5, z: z, cell: Math.floor(R() * 8),
+              vx: (-6 + R() * 14) * z, vy: (12 + R() * 16) * (0.5 + z), size: (16 + 26 * z) * (0.85 + 0.3 * s),
+              rot: R() * TAU, vr: (R() - 0.5) * 1.5, life: 20 });
       },
-      burst: function (s) { wind += 40 * s; for (var i = Math.round(1 + 5 * s); i > 0; i--) this.one(s, R() < 0.6); },
+      burst: function (s) { wind += 35 * s; for (var i = Math.round(s * 4); i > 0; i--) this.one(s, R() < 0.6); },
       step: function (p, dt) {
-        // Side-to-side flutter, like a leaf rocking on the air
-        p.x += (p.vx + wind * 0.6 + Math.sin(p.age * 1.4 + p.ph) * 26) * dt; p.y += p.vy * dt;
-        p.rot += (p.vr + Math.cos(p.age * 1.4 + p.ph) * 0.8) * dt; if (p.y > h + 24) p.age = p.life;
+        p.x += (p.vx + wind * 0.6 * p.z + Math.sin(p.age * 1.3 + p.ph) * 24 * p.z) * dt; p.y += p.vy * dt;
+        p.rot += (p.vr + Math.cos(p.age * 1.3 + p.ph) * 0.7) * dt; if (p.y > h + 40) p.age = p.life;
       },
       draw: function (p, t) {
-        var a = 0.88 * edge(p, t), z = p.size;
+        var img = sprite("/art/leaves.webp"); if (!img) return;
         ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.rot);
-        ctx.scale(0.5 + 0.5 * Math.abs(Math.sin(p.age * 1.9 + p.ph)), 1);
-        ctx.beginPath(); ctx.moveTo(0, -z);
-        ctx.bezierCurveTo(z * 0.75, -z * 0.5, z * 0.6, z * 0.5, 0, z);
-        ctx.bezierCurveTo(-z * 0.6, z * 0.5, -z * 0.75, -z * 0.5, 0, -z);
-        ctx.fillStyle = rgba(p.col, a); ctx.fill();
-        ctx.beginPath(); ctx.moveTo(0, -z * 0.85); ctx.lineTo(0, z * 1.25);
-        ctx.lineWidth = 0.8; ctx.strokeStyle = rgba(p.vein, a); ctx.stroke();
+        ctx.scale(0.45 + 0.55 * Math.abs(Math.sin(p.age * 1.4 + p.ph)), 1);
+        ctx.globalAlpha = edge(p, t) * (0.6 + 0.4 * p.z);
+        ctx.drawImage(img, p.cell * 96, 0, 96, 96, -p.size / 2, -p.size / 2, p.size, p.size);
         ctx.restore();
       }
     };
 
     // Lanterns rising slowly, their light pulsing with the volume
     FX.lanterns = {
-      glow: "255,170,80", rate: 1,
+      glow: "255,170,80", rate: 0.9, cap: [14, 8],
       // Painted sky lanterns (public/art/lanterns.webp: 4 cut-outs, 96x128
-      // each, transparent). Loaded only once a Liyue page plays.
-      sheet: null,
+      // each, transparent).
       // z is depth: far lanterns are small, dim and slow. Steady ones rise from
       // the bottom edge; ones a note sets off appear partway up, so the sky
       // fills without a long wait
       one: function (s, fresh) {
-        if (!this.sheet) { this.sheet = new Image(); this.sheet.src = "/art/lanterns.webp"; }
         var z = 0.25 + R() * 0.75 * (0.6 + 0.4 * s);
         add({ fx: "lanterns", x: w * (0.04 + R() * 0.92), y: fresh ? h + 70 : h * (0.4 + R() * 0.55),
               vy: -(5 + 17 * z), z: z, cell: Math.floor(R() * 4), life: 26 + R() * 10 });
       },
-      burst: function (s) { for (var i = s > 0.7 ? 2 : 1; i > 0; i--) this.one(s, false); },
+      burst: function (s) { if (s > 0.2) this.one(s, false); },
       step: function (p, dt) {
         p.y += p.vy * dt; p.x += Math.sin(p.age * 0.5 + p.ph) * 5 * p.z * dt;
         if (p.y < -90) p.age = p.life;
       },
       draw: function (p, t) {
-        var img = this.sheet;
-        if (!img || !img.complete || !img.naturalWidth) return;
+        var img = sprite("/art/lanterns.webp"); if (!img) return;
         var ht = (16 + 46 * p.z) * (phone() ? 0.75 : 1), wd = ht * 0.75;
         var a = edge(p, t) * (0.45 + 0.55 * p.z);
         var flick = 0.9 + 0.1 * Math.sin(p.age * 9 + p.ph) * Math.sin(p.age * 3.7);
@@ -247,7 +270,7 @@ const art = PAINTED.includes(key) ? key : null;
 
     // Wind streaks and dandelion seeds sweeping across
     FX.breeze = {
-      glow: "200,240,205", rate: 4,
+      glow: "200,240,205", rate: 4, cap: [40, 22],
       one: function () {
         add({ fx: "breeze", seed: true, x: -10, y: h * (0.1 + R() * 0.7), vx: 50 + R() * 50, vy: -(4 + R() * 10),
               size: 2 + R() * 2, life: 18 });
@@ -288,7 +311,7 @@ const art = PAINTED.includes(key) ? key : null;
 
     // Embers floating up from the bottom, flickering
     FX.cinders = {
-      glow: "255,110,40", rate: 14,
+      glow: "255,110,40", rate: 14, cap: [80, 40],
       one: function (s) {
         add({ fx: "cinders", x: w * R(), y: h + 6, vx: (R() - 0.5) * 20, vy: -(30 + R() * 50) * (0.7 + 0.6 * s),
               size: 0.9 + R() * 1.8 * (0.6 + s), life: 2.5 + R() * 3 });
@@ -305,7 +328,7 @@ const art = PAINTED.includes(key) ? key : null;
     // Moonbeams from the top corner that brighten with the music, a halo on
     // loud notes, and silver glints drifting down
     FX.moonlight = {
-      glow: "175,195,255", rate: 3,
+      glow: "175,195,255", rate: 3, cap: [30, 16],
       // Where the painted moon sits in each crop, mapped through object-fit: cover
       moon: function () {
         var img = scene.querySelector(".scene-art img"), nw = img.naturalWidth || 1600, nh = img.naturalHeight || 907;
@@ -343,7 +366,7 @@ const art = PAINTED.includes(key) ? key : null;
 
     // Snow: small flakes always, six-armed stars on loud notes
     FX.snow = {
-      glow: "200,225,255", rate: 16,
+      glow: "200,225,255", rate: 16, cap: [110, 55],
       one: function (s, fresh, star) {
         add({ fx: "snow", x: w * R() * 1.1 - w * 0.05, y: fresh ? -8 : R() * h * 0.4, vx: -6 + R() * 12,
               vy: star ? 18 + R() * 14 : 16 + R() * 30, star: star, rot: R() * TAU,
@@ -371,7 +394,7 @@ const art = PAINTED.includes(key) ? key : null;
       }
     };
 
-    var LOOK = { inazuma: "petals", fontaine: "ripples", sumeru: "leaves", liyue: "lanterns",
+    var LOOK = { inazuma: "petals", fontaine: "underwater", sumeru: "leaves", liyue: "lanterns",
                  mondstadt: "breeze", natlan: "cinders", "nod-krai": "moonlight", snezhnaya: "snow" };
 
     var size = function () {
@@ -386,7 +409,7 @@ const art = PAINTED.includes(key) ? key : null;
       var dt = Math.min(0.05, lastT ? (now - lastT) / 1000 : 0.016); lastT = now; clock += dt;
       var playing = audio && !audio.paused && !audio.ended;
       // Read the look every frame: the playlist chips swap the painting
-      var fx = FX[LOOK[scene.dataset.art] || "ripples"];
+      var fx = FX[LOOK[scene.dataset.art] || "underwater"];
 
       if (playing) {
         var lv = levelAt(audio);
@@ -416,7 +439,7 @@ const art = PAINTED.includes(key) ? key : null;
         var p = parts[i], kind = FX[p.fx];
         p.age += dt;
         if (p.age < p.life) kind.step(p, dt);
-        if (p.age >= p.life) { parts.splice(i, 1); continue; }
+        if (p.age >= p.life) { parts.splice(i, 1); count[p.fx]--; continue; }
         kind.draw(p, p.age / p.life);
       }
 
