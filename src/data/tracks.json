@@ -177,11 +177,11 @@
   },
   {
     "id": "oasis",
-    "title": "Oasis",
+    "title": "Resonance of Khvarena",
     "category": "Sumeru",
-    "filename": "oasis-sumeru.mp3",
+    "filename": "resonance-of-khvarena-sumeru.mp3",
     "duration": 116,
-    "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/oasis-sumeru.mp3"
+    "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/resonance-of-khvarena-sumeru.mp3"
   },
   {
     "id": "riddles",
@@ -970,10 +970,10 @@
   {
     "id": "port-osmo-night-2",
     "title": "Sleepless Night",
-    "category": "Fontaine",
-    "filename": "sleepless-night-fontaine.wav",
+    "category": "Sumeru",
+    "filename": "sleepless-night-sumeru.wav",
     "duration": 138,
-    "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/sleepless-night-fontaine.wav"
+    "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/sleepless-night-sumeru.wav"
   },
   {
     "id": "pure-imagination",
@@ -1513,5 +1513,32 @@
     "duration": 234,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/fading-stories-liyue.mp3",
     "preview": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/fading-stories-liyue-preview.mp3"
+  },
+  {
+    "id": "unfulfilled-aurora-snezhnaya",
+    "title": "Unfulfilled Aurora",
+    "category": "Snezhnaya",
+    "filename": "unfulfilled-aurora-snezhnaya.mp3",
+    "duration": 48,
+    "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/unfulfilled-aurora-snezhnaya.mp3",
+    "preview": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/unfulfilled-aurora-snezhnaya-preview.mp3"
+  },
+  {
+    "id": "where-the-moon-kisses-the-water-snezhnaya",
+    "title": "Where the Moon Kisses the Water",
+    "category": "Snezhnaya",
+    "filename": "where-the-moon-kisses-the-water-snezhnaya.mp3",
+    "duration": 145,
+    "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/where-the-moon-kisses-the-water-snezhnaya.mp3",
+    "preview": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/where-the-moon-kisses-the-water-snezhnaya-preview.mp3"
+  },
+  {
+    "id": "snowy-reunion-snezhnaya",
+    "title": "Snowy Reunion",
+    "category": "Snezhnaya",
+    "filename": "snowy-reunion-snezhnaya.mp3",
+    "duration": 129,
+    "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/snowy-reunion-snezhnaya.mp3",
+    "preview": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/snowy-reunion-snezhnaya-preview.mp3"
   }
 ]

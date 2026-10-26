@@ -17,7 +17,7 @@ const scorePage = new Map<string, string>();
 for (const [id, piece] of scoresByTrack(pieces)) scorePage.set(id, `${siteUrl}/scores/${piece.slug}`);
 
 // Region chips that have their own page offer a link to it
-const regionPages = { "Mondstadt": "/playlist/mondstadt", "Liyue": "/playlist/liyue", "Inazuma": "/playlist/inazuma", "Fontaine": "/playlist/fontaine", "Natlan": "/playlist/natlan", "Nod Krai": "/playlist/nod-krai" };
+const regionPages = { "Mondstadt": "/playlist/mondstadt", "Liyue": "/playlist/liyue", "Inazuma": "/playlist/inazuma", "Sumeru": "/playlist/sumeru", "Fontaine": "/playlist/fontaine", "Natlan": "/playlist/natlan", "Nod Krai": "/playlist/nod-krai", "Snezhnaya": "/playlist/snezhnaya" };
 const regionPills = Object.entries(regionPages)
   .map(([name, href]) => ({ name, href, count: tracks.filter((t) => t.category === name).length }))
   .filter((r) => r.count > 0);
