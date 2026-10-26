@@ -79,3 +79,13 @@
 - Lesson: check every region's tracks for twins and placeholder names before building its page; the
   fingerprint pass took minutes and found 7 bad entries across 4 regions.
 - Next: Sumeru and Snezhnaya (6 tracks each) once more covers exist; Search Console review of region pages.
+
+## Phase 4c: Sumeru + Snezhnaya pages, loudness pass (2026-10-26)
+
+- Built /playlist/sumeru (7) and /playlist/snezhnaya (9). Published Snowy Reunion, Where the Moon Kisses
+  the Water, Unfulfilled Aurora (picked the file matching each YouTube upload). Oasis = Resonance of
+  Khvarena; Sleepless Night moved Fontaine -> Sumeru. Menu now lists all 8 regions in story order.
+- Loudness (user: older audio too soft): measured all 191 live tracks (median -18 LUFS, range -39 to -14).
+  32 had headroom; raised with plain gain toward -16 LUFS, capped at -1 dBTP, re-encoded 320k, same R2
+  keys (loudness_measure.py, loudness_raise.py; originals in r2-upload/loudness-backup-2026-10-26).
+  The other tracks already peak near 0 dB, so they can only get louder with a limiter (not done).
