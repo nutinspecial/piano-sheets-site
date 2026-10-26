@@ -53,3 +53,14 @@
 - Near miss: Clair de lune was briefly moved to Classical. It is the Genshin Opera Epiclese night
   theme, not Debussy (the video description says so). Check the video description before recategorising.
 - Next: Search Console check on /playlist/fontaine in 1-2 weeks; phase 4 Natlan then Mondstadt.
+
+## Phase 4a: Natlan + Mondstadt region pages (2026-10-26, live 5db73ce, 93e8d16)
+
+- Shipped: /playlist/natlan (20 tracks, tribes by day > partings > Capitano's war > night) and
+  /playlist/mondstadt (12 tracks, morning > Springvale > Dragonspine > night > dawn at the winery),
+  both copies of the Fontaine page. Linked from menu, score pages' Keep listening, /playlist pills.
+- Built without waiting for Fontaine Search Console data (user's call); review all region pages together.
+- Caught by fingerprint: Mondstadt "Waves" was the same recording as Mesmerizing Waves (Golden Apple),
+  quarantined. Natlan had Whirl of Chalchiuhtlicue twice (WAV + MP3), MP3 quarantined.
+- Caught by user: "Dragon Spine" placeholder is Fragile Fantasy (renamed, new R2 key, old key deleted).
+- Next: Liyue, Inazuma, Sumeru, Snezhnaya region pages; Search Console review of all region pages.
