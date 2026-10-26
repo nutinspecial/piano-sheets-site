@@ -29,9 +29,31 @@ function formatDuration(sec: number): string {
   return `${m}:${s}`;
 }
 
-const categories = showCategories
-  ? ["All", ...Array.from(new Set(tracks.map((t) => t.category))).sort()]
-  : [];
+// Chips: the eight regions in story order up front, then two groups that
+// open a second row, so the list stays short. A group chip plays the whole
+// group; its sub-chips narrow to one category. Categories not listed here
+// fall into More Music, with Uncategorized always last.
+const REGION_ORDER = ["Mondstadt", "Liyue", "Inazuma", "Sumeru", "Fontaine", "Natlan", "Nod Krai", "Snezhnaya"];
+const GENSHIN_OTHER = ["Genshin Archon Quests", "Simulanka", "Veluriyam Mirage", "Golden Apple Archipelago"];
+const MORE_ORDER = ["Honkai Starrail", "Honkai Impact", "Wuthering Waves", "ZZZ", "Pop Covers", "Anime", "K-Drama", "Film", "Classical", "Chinese"];
+const LABEL: Record<string, string> = {
+  "Genshin Archon Quests": "Archon Quests", "Honkai Starrail": "Honkai: Star Rail",
+  "ZZZ": "Zenless Zone Zero", "Uncategorized": "Other",
+};
+
+const present  = new Set(tracks.map((t) => t.category));
+const regions  = REGION_ORDER.filter((c) => present.has(c));
+const listed   = new Set([...REGION_ORDER, ...GENSHIN_OTHER, ...MORE_ORDER, "Uncategorized"]);
+const groups = [
+  { id: "chips-genshin", label: "Genshin Impact (Others)", cats: GENSHIN_OTHER.filter((c) => present.has(c)) },
+  { id: "chips-more", label: "More Music", cats: [
+      ...MORE_ORDER.filter((c) => present.has(c)),
+      ...[...present].filter((c) => !listed.has(c)).sort(),
+      ...(present.has("Uncategorized") ? ["Uncategorized"] : []),
+  ] },
+].filter((g) => g.cats.length);
+const chipClass = "chip-btn px-3.5 py-2 rounded-full text-xs font-medium border transition-all";
+const offClass  = "border-surface-border text-ivory-muted hover:border-gold/40 hover:text-ivory/80";
 ---
 
 <!-- BROWSE -->
@@ -53,17 +75,27 @@ const categories = showCategories
   </div>
 
   <!-- Category chips -->
-  {categories.length > 0 && (
-    <div id="category-chips" class="flex flex-wrap gap-2" role="group" aria-label="Filter by region">
-      {categories.map((cat, i) => (
-        <button
-          type="button"
-          data-category={cat}
-          aria-pressed={i === 0 ? "true" : "false"}
-          class={`chip-btn px-3.5 py-2 rounded-full text-xs font-medium border transition-all
-            ${i === 0 ? "border-gold bg-gold/10 text-gold" : "border-surface-border text-ivory-muted hover:border-gold/40 hover:text-ivory/80"}`}>
-          {cat}
-        </button>
+  {showCategories && (
+    <div id="category-chips" class="space-y-2" role="group" aria-label="Filter by region">
+      <div class="flex flex-wrap gap-2">
+        <button type="button" data-category="All" aria-pressed="true" class={`${chipClass} border-gold bg-gold/10 text-gold`}>All</button>
+        {regions.map((cat) => (
+          <button type="button" data-category={cat} aria-pressed="false" class={`${chipClass} ${offClass}`}>{cat}</button>
+        ))}
+        {groups.map((g) => (
+          <button type="button" data-category={g.cats.join("|")} data-panel={g.id} aria-pressed="false"
+                  aria-expanded="false" aria-controls={g.id} class={`${chipClass} ${offClass} inline-flex items-center gap-1`}>
+            {g.label}
+            <svg class="chip-caret w-3 h-3 transition-transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </button>
+        ))}
+      </div>
+      {groups.map((g) => (
+        <div id={g.id} class="chip-panel hidden flex flex-wrap gap-2 pl-3 border-l border-gold/30">
+          {g.cats.map((cat) => (
+            <button type="button" data-category={cat} data-in={g.id} aria-pressed="false" class={`${chipClass} ${offClass}`}>{LABEL[cat] ?? cat}</button>
+          ))}
+        </div>
       ))}
     </div>
   )}
@@ -108,7 +140,7 @@ const categories = showCategories
         </span>
         <span class="flex-1 min-w-0">
           <span class="block text-ivory/85 text-sm font-medium truncate track-title-text">{t.title}</span>
-          <span class="block text-ivory-muted text-xs mt-0.5">{t.category}</span>
+          <span class="block text-ivory-muted text-xs mt-0.5">{LABEL[t.category] ?? t.category}</span>
         </span>
         <span class="text-ivory-muted text-xs font-mono flex-shrink-0">{formatDuration(t.duration)}</span>
       </button>
@@ -354,7 +386,8 @@ const categories = showCategories
       let visible = 0;
       rows.forEach((row) => {
         const matchesQuery = !query || row.dataset.title.includes(query);
-        const matchesCategory = activeCategory === "All" || row.dataset.category === activeCategory;
+        // A group chip carries several categories joined with "|"
+        const matchesCategory = activeCategory === "All" || activeCategory.split("|").includes(row.dataset.category);
         const show = matchesQuery && matchesCategory;
         row.style.display = show ? "" : "none";
         if (show) visible++;
@@ -368,8 +401,16 @@ const categories = showCategories
     chips.forEach((chip) => {
       chip.addEventListener("click", () => {
         activeCategory = chip.dataset.category;
+        // Keep open only the row this chip belongs to (or opens)
+        const open = chip.dataset.panel || chip.dataset.in || "";
+        document.querySelectorAll(".chip-panel").forEach((p) => p.classList.toggle("hidden", p.id !== open));
         chips.forEach((c) => {
           const active = c === chip;
+          if (c.dataset.panel) {
+            const expanded = c.dataset.panel === open;
+            c.setAttribute("aria-expanded", String(expanded));
+            c.querySelector(".chip-caret").classList.toggle("rotate-180", expanded);
+          }
           c.setAttribute("aria-pressed", String(active));
           c.classList.toggle("border-gold", active);
           c.classList.toggle("bg-gold/10", active);

@@ -29,7 +29,7 @@ const jsonLd = {
   <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
 
   <!-- HERO -->
-  <SceneHeader region="Fontaine" eyebrow="Ambient piano" title="Piano Playlist">
+  <SceneHeader region="Gate" eyebrow="Ambient piano" title="Piano Playlist">
     <p class="mt-3 text-ivory/80 text-sm max-w-md leading-relaxed drop-shadow">
       {tracks.length} original piano covers &middot; ~{totalMinutes} minutes &middot; free to stream, no ads.
     </p>
@@ -51,8 +51,9 @@ const jsonLd = {
       var scene = document.getElementById("scene");
       if (!chip || !scene) return;
       var painted = ["fontaine", "inazuma", "liyue", "mondstadt", "natlan", "nod-krai", "snezhnaya", "sumeru"];
+      // All, the groups and non-region chips show the gate above the clouds
       var key = (chip.dataset.category || "").toLowerCase().replace(/[^a-z]+/g, "-");
-      if (painted.indexOf(key) === -1) key = "fontaine";
+      if (painted.indexOf(key) === -1) key = "gate";
       if (scene.dataset.art === key) return;
       scene.dataset.art = key;
       var img = scene.querySelector(".scene-art img"), src = scene.querySelector(".scene-art source");
