@@ -3,8 +3,12 @@
 // ── Region painting header (the Overture look, light edition) ─────────────
 // The painting sits behind the title and fades into the page. Regions with no
 // painting get a dark header with a soft gold glow. While any track on the
-// page plays, ripples spread across the foot of the painting (still image
-// for reduced motion). No WebGL here: score pages must stay fast.
+// page plays, ripples bloom on the painting in time with the music: loud
+// notes throw big bright rings, soft passages small faint ones, and a glow
+// breathes with the volume. It reads the track's precomputed loudness curve
+// (public/envelopes/<file>.txt, 20 frames a second, digits 0-z) because the
+// audio host sends no CORS header, so live analysis is not possible.
+// Still image for reduced motion. Canvas 2D only: score pages must stay fast.
 interface Props {
   region?:  string | null;  // "Fontaine", "Nod-Krai", "Nod Krai" ...
   eyebrow?: string;
@@ -26,7 +30,7 @@ const art = PAINTED.includes(key) ? key : null;
       <img src={`/art/${art}.webp`} alt="" width="1600" height="907" fetchpriority="high" decoding="async" />
     </picture>
   )}
-  <div class="scene-ripples" aria-hidden="true"><i></i><i></i><i></i></div>
+  <canvas class="scene-ripples" aria-hidden="true"></canvas>
   <div class="scene-fade" aria-hidden="true"></div>
 
   <div class="scene-body max-w-4xl mx-auto px-4 sm:px-6">
@@ -50,31 +54,139 @@ const art = PAINTED.includes(key) ? key : null;
   /* Small gold caps need a real halo to read over bright skies (Liyue) */
   .scene-eyebrow { text-shadow: 0 0 2px rgb(13 13 13 / .9), 0 1px 8px rgb(13 13 13 / .85), 0 0 18px rgb(13 13 13 / .6); }
 
-  /* Pond ripples: only while something plays */
-  /* Upper right, clear of the title block at the foot of the header */
-  /* Bright enough to read over busy art (blossom, clouds): solid ivory ring plus a gold glow */
-  .scene-ripples { position: absolute; left: 70%; top: 18%; width: min(62vw, 580px); aspect-ratio: 3 / 1;
-                   transform: translateX(-50%); z-index: -1; pointer-events: none; opacity: 0; transition: opacity 1.2s ease; }
+  /* Music ripples: drawn on a canvas over the painting, under the fade */
+  .scene-ripples { position: absolute; inset: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none;
+                   mix-blend-mode: screen; }
   .scene--plain .scene-ripples { display: none; }
-  .scene-ripples i { position: absolute; inset: 0; border-radius: 50%; border: 2.5px solid rgb(244 241 234 / .9);
-                     box-shadow: 0 0 14px 2px rgb(212 175 55 / .45), inset 0 0 14px 2px rgb(212 175 55 / .3);
-                     transform: scale(.1); opacity: 0; }
-  html.is-playing .scene-ripples { opacity: 1; }
-  html.is-playing .scene-ripples i { animation: scene-ripple 6s cubic-bezier(.2,.6,.3,1) infinite; }
-  html.is-playing .scene-ripples i:nth-child(2) { animation-delay: 2s; }
-  html.is-playing .scene-ripples i:nth-child(3) { animation-delay: 4s; }
-  @keyframes scene-ripple { 0% { transform: scale(.1); opacity: 0; } 15% { opacity: .9; } 100% { transform: scale(1); opacity: 0; } }
   @media (prefers-reduced-motion: reduce) { .scene-ripples { display: none; } }
 </style>
 
 <script is:inline>
-  // One flag on <html> for "a track is playing", whichever player started it
+  // One flag on <html> for "a track is playing", whichever player started it,
+  // and the music ripples that follow that track's loudness curve.
   (function () {
     if (window.__sceneFlag) return; window.__sceneFlag = true;
-    var sync = function () {
+    var reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    var envs = {};          // file stem -> loudness string, or "" while loading / missing
+    var audio = null;       // the element that is playing
+    var ripples = [], motes = [];
+    var cv, ctx, w = 0, h = 0, dpr = 1, inView = true, raf = 0;
+    var level = 0, slow = 0, glow = 0, lastSpawn = 0, lastT = 0;
+
+    var stem = function (a) {
+      var f = (a.currentSrc || a.src || "").split("?")[0].split("/").pop() || "";
+      return decodeURIComponent(f.replace(/\.[a-z0-9]+$/i, ""));
+    };
+    var loadEnv = function (a) {
+      var k = stem(a);
+      if (!k || k in envs) return;
+      envs[k] = "";
+      fetch("/envelopes/" + encodeURIComponent(k) + ".txt")
+        .then(function (r) { return r.ok ? r.text() : ""; })
+        .then(function (t) { envs[k] = t.trim(); }, function () {});
+    };
+    // 0..1 loudness at the current playback time; a gentle made-up swell if no curve
+    var levelAt = function (a) {
+      var e = envs[stem(a)];
+      if (!e) return 0.35 + 0.25 * Math.sin(a.currentTime * 1.7) * Math.sin(a.currentTime * 0.43);
+      var x = a.currentTime * 20, i = Math.floor(x), f = x - i;
+      var v0 = parseInt(e.charAt(i) || "0", 36), v1 = parseInt(e.charAt(i + 1) || "0", 36);
+      return (v0 + (v1 - v0) * f) / 35;
+    };
+
+    var size = function () {
+      dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+      w = cv.clientWidth; h = cv.clientHeight;
+      cv.width = Math.round(w * dpr); cv.height = Math.round(h * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    };
+    // Rings land on the painting, away from the title block at the bottom left
+    var spawn = function (strength) {
+      var phone = w < 640;
+      var x = w * (phone ? 0.15 + Math.random() * 0.7 : 0.45 + Math.random() * 0.5);
+      var y = h * (phone ? 0.12 + Math.random() * 0.3 : 0.14 + Math.random() * 0.42);
+      var reach = Math.min(Math.max(w * 1.3, 480), 900) * (0.08 + 0.32 * strength);
+      ripples.push({ x: x, y: y, r: reach, s: strength, age: 0, life: 2.4 + 1.6 * strength,
+                     rings: strength > 0.65 ? 3 : 2 });
+      var n = Math.round(strength * strength * 10);
+      for (var i = 0; i < n; i++) {
+        var ang = Math.random() * Math.PI * 2, sp = 10 + Math.random() * 30;
+        motes.push({ x: x, y: y, vx: Math.cos(ang) * sp, vy: Math.sin(ang) * sp * 0.4 - 12,
+                     age: 0, life: 1.5 + Math.random() * 1.5, r: 0.8 + Math.random() * 1.4 });
+      }
+    };
+
+    var frame = function (now) {
+      raf = 0;
+      var dt = Math.min(0.05, lastT ? (now - lastT) / 1000 : 0.016); lastT = now;
+      var playing = audio && !audio.paused && !audio.ended;
+
+      if (playing) {
+        var lv = levelAt(audio);
+        level += (lv - level) * 0.5;
+        slow += (level - slow) * 0.03;
+        // A note that jumps clear of the recent average throws a ring; quiet
+        // stretches still get a small one now and then so the pond never stops
+        var gap = now - lastSpawn;
+        if ((level > slow * 1.2 + 0.03 && level > 0.08 && gap > 160) || gap > 1200) {
+          spawn(Math.max(0.12, Math.min(1, level * 1.15)));
+          lastSpawn = now;
+        }
+      } else level *= 0.94;
+      glow += (level - glow) * 0.08;
+
+      ctx.clearRect(0, 0, w, h);
+      if (glow > 0.01) {
+        var gx = w * (w < 640 ? 0.5 : 0.7), gy = h * 0.32, gr = Math.max(w, h) * 0.55;
+        var g = ctx.createRadialGradient(gx, gy, 0, gx, gy, gr);
+        g.addColorStop(0, "rgba(212,175,55," + (0.04 + 0.22 * glow) + ")");
+        g.addColorStop(1, "rgba(212,175,55,0)");
+        ctx.fillStyle = g; ctx.fillRect(0, 0, w, h);
+      }
+
+      for (var i = ripples.length - 1; i >= 0; i--) {
+        var rp = ripples[i]; rp.age += dt;
+        var p = rp.age / rp.life;
+        if (p >= 1) { ripples.splice(i, 1); continue; }
+        var ease = 1 - Math.pow(1 - p, 3), fade = Math.pow(1 - p, 1.6);
+        for (var k = 0; k < rp.rings; k++) {
+          var rr = rp.r * ease * (1 - k * 0.24);
+          if (rr < 2) continue;
+          var al = fade * (0.35 + 0.65 * rp.s) * (1 - k * 0.3);
+          ctx.beginPath(); ctx.ellipse(rp.x, rp.y, rr, rr * 0.36, 0, 0, Math.PI * 2);
+          ctx.lineWidth = 7; ctx.strokeStyle = "rgba(212,175,55," + al * 0.22 + ")"; ctx.stroke();
+          ctx.lineWidth = 1.2 + 1.6 * rp.s * (1 - p); ctx.strokeStyle = "rgba(244,241,234," + al * 0.9 + ")"; ctx.stroke();
+        }
+      }
+      for (var j = motes.length - 1; j >= 0; j--) {
+        var m = motes[j]; m.age += dt;
+        if (m.age >= m.life) { motes.splice(j, 1); continue; }
+        m.x += m.vx * dt; m.y += m.vy * dt; m.vy -= 6 * dt;
+        ctx.beginPath(); ctx.arc(m.x, m.y, m.r, 0, Math.PI * 2);
+        ctx.fillStyle = "rgba(255,236,170," + 0.85 * (1 - m.age / m.life) + ")"; ctx.fill();
+      }
+
+      if (inView && (playing || ripples.length || motes.length || glow > 0.01)) raf = requestAnimationFrame(frame);
+      else lastT = 0;
+    };
+    var kick = function () { if (!raf && cv && inView) raf = requestAnimationFrame(frame); };
+
+    var sync = function (e) {
       var on = Array.prototype.some.call(document.querySelectorAll("audio"), function (a) { return !a.paused; });
       document.documentElement.classList.toggle("is-playing", on);
+      if (e && e.type === "play" && e.target.tagName === "AUDIO") { audio = e.target; loadEnv(audio); }
+      kick();
     };
     ["play", "pause", "ended"].forEach(function (t) { document.addEventListener(t, sync, true); });
+
+    var init = function () {
+      cv = document.querySelector("canvas.scene-ripples");
+      if (!cv || reduced || getComputedStyle(cv).display === "none") { cv = null; return; }
+      ctx = cv.getContext("2d");
+      size(); addEventListener("resize", size);
+      // No drawing while the header is scrolled away
+      new IntersectionObserver(function (es) { inView = es[0].isIntersecting; kick(); }).observe(cv);
+    };
+    if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init); else init();
   })();
 </script>

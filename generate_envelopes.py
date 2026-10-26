@@ -56,9 +56,12 @@ def main() -> None:
     OUT.mkdir(parents=True, exist_ok=True)
     tracks = json.loads(TRACKS.read_text(encoding="utf-8"))
 
+    # Renamed copies sit in subfolders such as r2-upload/renamed/
+    staged = {p.name: p for p in SOURCE.rglob("*") if p.is_file()}
+
     made = skipped = missing = 0
     for t in tracks:
-        src = SOURCE / t["filename"]
+        src = staged.get(t["filename"], SOURCE / t["filename"])
         dst = OUT / (Path(t["filename"]).stem + ".txt")
         if dst.exists() and not force:
             skipped += 1
