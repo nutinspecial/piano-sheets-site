@@ -1519,5 +1519,77 @@
     "duration": 91,
     "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/enchanting-bedtime-stories-sumeru.mp3",
     "preview": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/enchanting-bedtime-stories-sumeru-preview.mp3"
+  },
+  {
+    "id": "when-the-mead-first-ferments-natlan",
+    "title": "When the Mead First Ferments",
+    "category": "Natlan",
+    "filename": "when-the-mead-first-ferments-natlan.mp3",
+    "duration": 125,
+    "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/when-the-mead-first-ferments-natlan.mp3",
+    "preview": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/when-the-mead-first-ferments-natlan-preview.mp3"
+  },
+  {
+    "id": "silent-voices-of-the-night-natlan",
+    "title": "Silent Voices of the Night",
+    "category": "Natlan",
+    "filename": "silent-voices-of-the-night-natlan.mp3",
+    "duration": 103,
+    "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/silent-voices-of-the-night-natlan.mp3",
+    "preview": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/silent-voices-of-the-night-natlan-preview.mp3"
+  },
+  {
+    "id": "homeward-bound-natlan",
+    "title": "Homeward Bound",
+    "category": "Natlan",
+    "filename": "homeward-bound-natlan.mp3",
+    "duration": 70,
+    "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/homeward-bound-natlan.mp3",
+    "preview": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/homeward-bound-natlan-preview.mp3"
+  },
+  {
+    "id": "twilight-wanderings-simulanka",
+    "title": "Twilight Wanderings",
+    "category": "Simulanka",
+    "filename": "twilight-wanderings-simulanka.mp3",
+    "duration": 106,
+    "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/twilight-wanderings-simulanka.mp3",
+    "preview": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/twilight-wanderings-simulanka-preview.mp3"
+  },
+  {
+    "id": "down-by-the-forgotten-gardens-simulanka",
+    "title": "Down by the Forgotten Gardens",
+    "category": "Simulanka",
+    "filename": "down-by-the-forgotten-gardens-simulanka.mp3",
+    "duration": 90,
+    "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/down-by-the-forgotten-gardens-simulanka.mp3",
+    "preview": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/down-by-the-forgotten-gardens-simulanka-preview.mp3"
+  },
+  {
+    "id": "dream-of-the-black-snow-swan-snezhnaya",
+    "title": "Dream of the Black Snow Swan",
+    "category": "Snezhnaya",
+    "filename": "dream-of-the-black-snow-swan-snezhnaya.mp3",
+    "duration": 173,
+    "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/dream-of-the-black-snow-swan-snezhnaya.mp3",
+    "preview": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/dream-of-the-black-snow-swan-snezhnaya-preview.mp3"
+  },
+  {
+    "id": "abiding-nowhere-snezhnaya",
+    "title": "Abiding Nowhere",
+    "category": "Snezhnaya",
+    "filename": "abiding-nowhere-snezhnaya.mp3",
+    "duration": 63,
+    "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/abiding-nowhere-snezhnaya.mp3",
+    "preview": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/abiding-nowhere-snezhnaya-preview.mp3"
+  },
+  {
+    "id": "kevin-kern-sundial-dreams-popcovers",
+    "title": "Kevin Kern - Sundial Dreams",
+    "category": "Pop Covers",
+    "filename": "kevin-kern-sundial-dreams-popcovers.mp3",
+    "duration": 200,
+    "url": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/kevin-kern-sundial-dreams-popcovers.mp3",
+    "preview": "https://pub-9ea7a49f5df1482d8170a302c30ae134.r2.dev/kevin-kern-sundial-dreams-popcovers-preview.mp3"
   }
 ]

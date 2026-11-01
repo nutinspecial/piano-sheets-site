@@ -46,3 +46,4 @@ art-inbox/*
 match_results.json
 match-review/
 rename_plan.csv
+audio_sync_plan.csv
