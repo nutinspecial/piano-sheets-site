@@ -8,6 +8,8 @@ export interface Props {
   image?:      string;
   type?:       string;
   noindex?:    boolean;
+  /** Absolute or root-relative URL when another page is the main copy. */
+  canonical?:  string;
   /** Floating coffee button. Off on pages that already carry an inline ask. */
   floatingCoffee?: boolean;
 }
@@ -18,11 +20,12 @@ const {
   image    = "/og-default.jpg",
   type     = "website",
   noindex  = false,
+  canonical,
   floatingCoffee = true,
 } = Astro.props;
 
 const siteUrl      = "https://bigpianosmallpiano.com";
-const canonicalURL = new URL(Astro.url.pathname, siteUrl).href;
+const canonicalURL = new URL(canonical ?? Astro.url.pathname, siteUrl).href;
 const fullTitle    = title.includes("Big Piano") ? title : `${title} | Big Piano Small Piano`;
 
 // ── Social links — update Instagram when you have it ──────────────────────

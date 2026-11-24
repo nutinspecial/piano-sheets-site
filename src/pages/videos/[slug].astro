@@ -6,6 +6,7 @@ import Layout from "../../layouts/Layout.astro";
 import videos from "../../data/videos.json";
 import scores from "../../data/scores.json";
 import { pieceByVideoId, linkArranger, orderedLinks } from "../../lib/scores";
+import { videoRole, tracklist, collectionRegion } from "../../lib/videoPages";
 
 export async function getStaticPaths() {
   return videos.map((video) => ({
@@ -19,6 +20,12 @@ const { video } = Astro.props;
 // Find any scores associated with this video
 const videoScores = scores.filter((s) => s.videoId === video.videoId);
 const piece       = pieceByVideoId.get(video.videoId);
+
+// Role decides canonical / noindex (see lib/videoPages.ts)
+const role   = videoRole(video);
+const rows   = role.kind === "collection" ? tracklist(video) : [];
+const region = role.kind === "collection" ? collectionRegion(rows, video.title) : null;
+const scorePage = role.kind === "score" ? `/scores/${role.piece.slug}/` : null;
 
 // Build a clean meta description from the first 155 chars of description
 const metaDescription = video.description
@@ -79,6 +86,8 @@ const jsonLd = {
   description={metaDescription || `Watch ${video.title}, a piano cover by Big Piano Small Piano.`}
   image={video.thumbnail || "/og-default.jpg"}
   type="video.other"
+  canonical={scorePage ?? undefined}
+  noindex={role.kind === "thin"}
 >
   <!-- ── JSON-LD ─────────────────────────────────────────────────────────── -->
   <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
@@ -131,6 +140,60 @@ const jsonLd = {
       ></iframe>
     </div>
 
+    <!-- ── Score page call-out ─────────────────────────────────────────── -->
+    {scorePage && role.kind === "score" && (
+      <a
+        href={scorePage}
+        class="mb-10 flex items-center justify-between gap-4 rounded-xl border border-gold/40 bg-surface px-5 py-4 sm:px-6 hover:border-gold transition-colors group"
+      >
+        <span>
+          <span class="block font-display text-lg sm:text-xl font-semibold text-ivory group-hover:text-gold transition-colors">
+            Sheet music + listen
+          </span>
+          <span class="block text-sm text-ivory-muted">
+            Free score, the audio and more {role.piece.region ?? ""} pieces on the {role.piece.name} page
+          </span>
+        </span>
+        <span class="text-gold text-2xl flex-shrink-0" aria-hidden="true">→</span>
+      </a>
+    )}
+
+    <!-- ── Tracklist (compilations) ────────────────────────────────────── -->
+    {rows.length > 0 && (
+      <section class="mb-10 bg-surface rounded-xl border border-gold/20 p-5 sm:p-6">
+        <div class="flex flex-wrap items-baseline justify-between gap-2 mb-4">
+          <h2 class="font-display text-xl font-semibold text-ivory">Tracklist</h2>
+          {region && (
+            <a href={region.href} class="text-sm text-gold hover:text-gold-light transition-colors">
+              Listen to the {region.name} playlist →
+            </a>
+          )}
+        </div>
+        <ol class="divide-y divide-surface-border text-sm">
+          {rows.map((r) => (
+            <li class="flex items-baseline gap-3 py-2">
+              <a
+                href={`${watchUrl}&t=${r.seconds}s`}
+                target="_blank" rel="noopener noreferrer"
+                class="font-mono text-xs text-ivory-muted hover:text-gold w-16 flex-shrink-0 tabular-nums"
+              >{r.time}</a>
+              <span class="min-w-0">
+                {r.piece
+                  ? <a href={`/scores/${r.piece.slug}/`} class="text-ivory hover:text-gold transition-colors">{r.name}</a>
+                  : <span class="text-ivory/80">{r.name}</span>}
+                {r.note && <span class="text-ivory-muted"> · {r.note}</span>}
+                {r.piece && <span class="text-gold text-xs ml-1">sheet ♪</span>}
+              </span>
+            </li>
+          ))}
+        </ol>
+        <p class="mt-4 text-xs text-ivory-muted">
+          Names with a ♪ link to their free score page. Timestamps open the video at that track.
+          {!region && <> Or play the <a href="/playlist/" class="text-gold hover:underline">full piano playlist</a>.</>}
+        </p>
+      </section>
+    )}
+
     <!-- ── Piano Scores block (if any found) ───────────────────────────── -->
     {videoScores.length > 0 && (
       <section class="mb-10 bg-surface rounded-xl border border-gold/20 p-5 sm:p-6">
@@ -165,12 +228,21 @@ const jsonLd = {
     )}
 
     <!-- ── Description ─────────────────────────────────────────────────── -->
-    <section class="mb-10">
-      <h2 class="font-display text-xl font-semibold text-ivory mb-4">About this video</h2>
-      <div class="text-ivory/70 text-sm leading-relaxed whitespace-pre-wrap bg-surface rounded-xl border border-surface-border p-5 sm:p-6">
-        {video.description}
-      </div>
-    </section>
+    {rows.length > 0 ? (
+      <details class="mb-10 group">
+        <summary class="cursor-pointer font-display text-lg text-ivory-muted hover:text-gold">YouTube description</summary>
+        <div class="mt-3 text-ivory/70 text-sm leading-relaxed whitespace-pre-wrap bg-surface rounded-xl border border-surface-border p-5 sm:p-6">
+          {video.description}
+        </div>
+      </details>
+    ) : (
+      <section class="mb-10">
+        <h2 class="font-display text-xl font-semibold text-ivory mb-4">About this video</h2>
+        <div class="text-ivory/70 text-sm leading-relaxed whitespace-pre-wrap bg-surface rounded-xl border border-surface-border p-5 sm:p-6">
+          {video.description}
+        </div>
+      </section>
+    )}
   <CoffeeButton
   variant="inline"
   message="Enjoyed this piece? You can support more free piano covers and sheet music for the price of a coffee."
