@@ -1,0 +1,227 @@
+---
+// src/components/ArchonShadow.astro
+// ── Archon Shadows: a region's character as a black silhouette ────────────
+// Walks slowly along the bottom of a region page, over the painting and behind
+// the cards, while a track plays. Frames are traced vector outlines
+// (public/archon/<name>.json, made in workspace/archon-shadows) mixed live from
+// short clips: walk, stop, idle, start, turn and one signature action. It
+// follows the playing track's loudness curve (public/envelopes/, the same one
+// the scene effects use), looking a few seconds ahead:
+//   music flowing -> walks (turns near the edges)
+//   quiet for 4 s ahead -> eases to a stop and idles
+//   swell after quiet, or a soft dip after a long walk -> signature action
+//     (at most once every 50 s)
+//   paused / ended -> finishes the step, stops, stands still
+// Before any play it stands still at one side. Reduced motion: stands still.
+// If the file fails to load, nothing shows and the page is as before.
+interface Props {
+  character: string;   // file stem in public/archon/
+  action?: string;     // name of the signature clip
+  credit?: string;     // model credit, shown small at the end of the page
+}
+const { character, action = "lyre", credit = "" } = Astro.props;
+---
+
+<canvas class="archon-shadow" data-character={character} data-action={action} aria-hidden="true"></canvas>
+{credit && <p class="max-w-3xl mx-auto px-4 sm:px-6 mt-10 text-[11px] text-ivory/35">{credit}</p>}
+
+<style is:global>
+  /* Lighter fade at the bottom of the painting so the silhouette reads (look C) */
+  body:has(.archon-shadow) .scene-fade {
+    background: linear-gradient(to bottom, rgb(13 13 13 / .35) 0%, rgb(13 13 13 / .2) 30%, rgb(13 13 13 / .45) 60%, rgb(13 13 13 / .38) 100%); }
+  .archon-shadow { position: fixed; left: 0; bottom: 0; width: 100%; height: 0;
+                   z-index: -1; pointer-events: none; opacity: .9; }
+</style>
+
+<script is:inline>
+  (function () {
+    var cv = document.querySelector("canvas.archon-shadow");
+    if (!cv) return;
+    var ctx = cv.getContext("2d");
+    var reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    var data = null, paths = {}, W = 0, H = 0, dpr = 1;
+    var FPS = 25, INK = "#0b0907";
+    // Phones: a soft light halo behind the figure, so it reads on the dark
+    // grass at the bottom of the phone painting
+    var GLOW = 0;
+
+    // ── Character state ───────────────────────────────────────────────────
+    var clip = "idle", fi = 0, acc = 0;   // current clip, frame index, time carry
+    var x = 0, face = 1;                   // root x (css px); face -1 = left, +1 = right
+    var frozen = true, lastAction = -1e9, walkedSince = 0, clock = 0;
+    var audio = null, envs = {};
+
+    var stem = function (a) {
+      var f = (a.currentSrc || a.src || "").split("?")[0].split("/").pop() || "";
+      return decodeURIComponent(f.replace(/\.[a-z0-9]+$/i, ""));
+    };
+    var loadEnv = function (a) {
+      var k = stem(a);
+      if (!k || k in envs) return;
+      envs[k] = "";
+      fetch("/envelopes/" + encodeURIComponent(k) + ".txt")
+        .then(function (r) { return r.ok ? r.text() : ""; })
+        .then(function (t) { envs[k] = t.trim(); }, function () {});
+    };
+    // Loudness 0..1 at time t of the playing track (20 values a second)
+    var lv = function (t) {
+      var e = audio && envs[stem(audio)];
+      if (!e) return 0.4;
+      var c = e.charAt(Math.floor(t * 20));
+      return c ? parseInt(c, 36) / 35 : 0;
+    };
+    var maxAhead = function (t, secs) {
+      var m = 0;
+      for (var s = 0; s < secs; s += 0.25) m = Math.max(m, lv(t + s));
+      return m;
+    };
+    var avg = function (t0, t1) {
+      var s = 0, n = 0;
+      for (var t = t0; t < t1; t += 0.25) { s += lv(Math.max(0, t)); n++; }
+      return n ? s / n : 0;
+    };
+    var playing = function () { return !!(audio && !audio.paused && !audio.ended); };
+
+    // What the music asks for right now: "walk", "rest" or "action"
+    var QUIET = 0.12, SWELL = 0.3;
+    var want = function () {
+      if (!playing()) return "rest";
+      var t = audio.currentTime;
+      var e = envs[stem(audio)];
+      if (e && t > 2 && maxAhead(t, 4) < QUIET) return "rest";
+      if (clock - lastAction > 50) {
+        if (clip === "idle" && lv(t) > SWELL && avg(t - 3, t) < QUIET * 1.6) return "action";
+        if (walkedSince > 70 && lv(t) < 0.22 && maxAhead(t, 1.5) < 0.3) return "action";
+      }
+      return "walk";
+    };
+
+    // Feet stand on the bottom edge, or on top of the player bar while it shows.
+    // Size stays the same either way (always leaves room for the bar).
+    var G = 0, SZ = 0;
+    var bar = function () { return document.getElementById("player-bar"); };
+    var ground = function () {
+      var b = bar(), g = H;
+      if (b) {
+        var top = b.getBoundingClientRect().top - cv.getBoundingClientRect().top;
+        if (top > 0) g = Math.min(H, top);
+      }
+      return g;
+    };
+    // Character height: about a third of the screen on desktop, smaller on phones.
+    // The canvas is that plus the player bar's height, so it fits above the bar.
+    var fit = function () {
+      var b = bar(), ph = innerWidth < 640, vh = innerHeight;
+      GLOW = ph ? 0.35 : 0;
+      SZ = Math.round(ph ? Math.min(160, Math.max(100, vh * 0.17)) : Math.min(340, Math.max(150, vh * 0.3)));
+      cv.style.height = (SZ + (b ? b.offsetHeight : 0) + 8) + "px";
+    };
+    var scale = function () { return SZ / data.size; };          // px per frame pixel
+    var mpx = function () { return SZ / data.frame_m; };          // px per metre
+    var nearEdge = function () {
+      // turn about one body width in from the edge (a walk cycle covers ~0.5 SZ)
+      var m = Math.max(W * 0.05, SZ * 0.25) + SZ * 0.5;
+      return (face < 0 && x < m) || (face > 0 && x > W - m);
+    };
+
+    // Called when the current clip finishes (or a loop comes round)
+    var next = function () {
+      var w = want();
+      if (clip === "walk") {
+        if (w !== "walk") return "stop";
+        if (nearEdge()) return "turn";
+        return "walk";
+      }
+      if (clip === "stop") return "idle";
+      if (clip === "idle" || clip === data.action) {
+        if (w === "rest") { if (!playing()) frozen = true; return "idle"; }
+        if (w === "action" && clip === "idle") { lastAction = clock; walkedSince = 0; return data.action; }
+        if (clip === data.action) return "idle";
+        return "start";
+      }
+      if (clip === "start") return "walk";
+      if (clip === "turn") { face = -face; return "walk"; }
+      return "idle";
+    };
+
+    var path = function (name, i) {
+      var k = name + i;
+      if (!paths[k]) paths[k] = new Path2D(data.clips[name].f[i]);
+      return paths[k];
+    };
+    var draw = function () {
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ctx.clearRect(0, 0, W, H);
+      if (!data) return;
+      G = ground();
+      var s = scale(), half = data.size / 2;
+      ctx.translate(0, G - SZ);
+      // Clips are drawn facing left; the turn clip starts facing left
+      var flip = face > 0;
+      ctx.translate(x, 0);
+      ctx.scale(flip ? -s : s, s);
+      ctx.translate(-half, 0);
+      ctx.fillStyle = INK;
+      if (GLOW) { ctx.shadowColor = "rgba(243,236,220," + GLOW + ")"; ctx.shadowBlur = 14 * dpr; }
+      ctx.fill(path(clip, Math.min(fi, data.clips[clip].f.length - 1)), "evenodd");
+    };
+
+    var raf = 0, lastT = 0;
+    var step = function () {
+      var c = data.clips[clip];
+      // forward travel this frame (metres, + = the way it faces at clip start)
+      x += face * c.dx[fi] * mpx();
+      if (clip === "walk" || clip === "start") walkedSince += 1 / FPS;
+      fi++;
+      if (fi >= c.f.length) { fi = 0; clip = next(); }
+    };
+    var frame = function (now) {
+      raf = 0;
+      var dt = lastT ? Math.min(0.1, (now - lastT) / 1000) : 0;
+      lastT = now; clock += dt; acc += dt;
+      var moved = false;
+      while (acc >= 1 / FPS && !frozen) { acc -= 1 / FPS; step(); moved = true; }
+      if (frozen) acc = 0;
+      if (moved) draw();
+      if (!frozen) raf = requestAnimationFrame(frame); else lastT = 0;
+    };
+    var kick = function () {
+      if (reduced || !data) return;
+      if (playing()) frozen = false;
+      if (!frozen && !raf) raf = requestAnimationFrame(frame);
+    };
+
+    var size = function () {
+      var r = cv.getBoundingClientRect();
+      var oldW = W;
+      dpr = Math.min(2, window.devicePixelRatio || 1);
+      W = r.width; H = r.height;
+      cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr);
+      if (oldW) x = x * W / oldW;
+      draw();
+    };
+
+    ["play", "pause", "ended"].forEach(function (t) {
+      document.addEventListener(t, function (e) {
+        if (e.target.tagName !== "AUDIO") return;
+        if (t === "play") { audio = e.target; loadEnv(audio); }
+        kick();
+      }, true);
+    });
+
+    var load = function () {
+      fetch("/archon/" + cv.dataset.character + ".json")
+        .then(function (r) { if (!r.ok) throw 0; return r.json(); })
+        .then(function (d) {
+          data = d; data.action = cv.dataset.action;
+          fit(); size(); addEventListener("resize", function () { fit(); size(); });
+          x = W * 0.16; face = 1;                       // waits at the left, facing in
+          draw();
+          var a = Array.prototype.find.call(document.querySelectorAll("audio"), function (el) { return !el.paused; });
+          if (a) { audio = a; loadEnv(a); kick(); }
+        }, function () { cv.remove(); });
+    };
+    var later = window.requestIdleCallback || function (f) { setTimeout(f, 600); };
+    if (document.readyState === "complete") later(load); else addEventListener("load", function () { later(load); });
+  })();
+</script>

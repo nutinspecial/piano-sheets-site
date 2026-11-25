@@ -1,6 +1,7 @@
 ---
 // src/pages/playlist/mondstadt.astro
 // ── Mondstadt region piano playlist: SEO landing page ─────────────────────
+import ArchonShadow from "../../components/ArchonShadow.astro";
 import CoffeeButton from "../../components/CoffeeButton.astro";
 import PlaylistPlayer from "../../components/PlaylistPlayer.astro";
 import SceneHeader from "../../components/SceneHeader.astro";
@@ -95,4 +96,9 @@ const jsonLd = {
       />
     </div>
   </PlaylistPlayer>
+
+  <ArchonShadow
+    character="venti"
+    credit="Venti silhouette made from the official Genshin Impact MMD model (© miHoYo / HoYoverse, model by 神帝宇), motion from Mixamo."
+  />
 </Layout>
