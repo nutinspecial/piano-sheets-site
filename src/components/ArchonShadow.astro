@@ -14,23 +14,33 @@
 //   paused / ended -> finishes the step, stops, stands still
 // Before any play it stands still at one side. Reduced motion: stands still.
 // If the file fails to load, nothing shows and the page is as before.
+// On /playlist (followChips) it shows the picked region chip's character and
+// hides for chips with none; the cast lives in src/data/archons.ts.
+import { ARCHONS } from "../data/archons";
 interface Props {
-  character: string;   // file stem in public/archon/
-  action?: string;     // name of the signature clip
-  credit?: string;     // model credit, shown small at the end of the page
+  region?: string;        // a region page: always show this region's character
+  followChips?: boolean;  // /playlist: follow the region chips
 }
-const { character, action = "lyre", credit = "" } = Astro.props;
+const { region, followChips = false } = Astro.props;
+const fixed = region ? ARCHONS[region] : undefined;
+const cast = Object.fromEntries(Object.entries(ARCHONS).map(([r, a]) => [r, { character: a.character, action: a.action }]));
 ---
 
-<canvas class="archon-shadow" data-character={character} data-action={action} aria-hidden="true"></canvas>
-{credit && <p class="max-w-3xl mx-auto px-4 sm:px-6 mt-10 text-[11px] text-ivory/35">{credit}</p>}
+<canvas class="archon-shadow" aria-hidden="true" hidden={followChips}
+  data-character={fixed?.character} data-action={fixed?.action}
+  data-cast={followChips ? JSON.stringify(cast) : undefined}></canvas>
+{fixed && <p class="max-w-3xl mx-auto px-4 sm:px-6 mt-10 text-[11px] text-ivory/35">{fixed.credit}</p>}
+{followChips && Object.entries(ARCHONS).map(([r, a]) => (
+  <p class="archon-credit max-w-3xl mx-auto px-4 sm:px-6 mt-10 text-[11px] text-ivory/35" data-region={r} hidden>{a.credit}</p>
+))}
 
 <style is:global>
   /* Lighter fade at the bottom of the painting so the silhouette reads (look C) */
-  body:has(.archon-shadow) .scene-fade {
+  body:has(.archon-shadow:not([hidden])) .scene-fade {
     background: linear-gradient(to bottom, rgb(13 13 13 / .35) 0%, rgb(13 13 13 / .2) 30%, rgb(13 13 13 / .45) 60%, rgb(13 13 13 / .38) 100%); }
   .archon-shadow { position: fixed; left: 0; bottom: 0; width: 100%; height: 0;
                    z-index: -1; pointer-events: none; opacity: .9; }
+  .archon-shadow[hidden], .archon-credit[hidden] { display: none; }
 </style>
 
 <script is:inline>
@@ -209,19 +219,55 @@ const { character, action = "lyre", credit = "" } = Astro.props;
       }, true);
     });
 
-    var load = function () {
-      fetch("/archon/" + cv.dataset.character + ".json")
-        .then(function (r) { if (!r.ok) throw 0; return r.json(); })
+    // Load a character (files cached per name) and stand it at the left
+    var files = {}, want_c = "", resized = false;
+    var show = function (name, action) {
+      want_c = name;
+      cv.hidden = false;
+      document.querySelectorAll(".archon-credit").forEach(function (p) { p.hidden = p.dataset.region !== region; });
+      (files[name] || (files[name] = fetch("/archon/" + name + ".json")
+        .then(function (r) { if (!r.ok) throw 0; return r.json(); })))
         .then(function (d) {
-          data = d; data.action = cv.dataset.action;
-          fit(); size(); addEventListener("resize", function () { fit(); size(); });
+          if (want_c !== name) return;               // another chip was picked meanwhile
+          data = d; data.action = action;
+          clip = "idle"; fi = 0; acc = 0; frozen = true; lastAction = -1e9; walkedSince = 0;
+          if (!resized) { resized = true; addEventListener("resize", function () { if (data) { fit(); size(); } }); }
+          fit(); size();
           x = W * 0.16; face = 1;                       // waits at the left, facing in
           draw();
-          var a = Array.prototype.find.call(document.querySelectorAll("audio"), function (el) { return !el.paused; });
-          if (a) { audio = a; loadEnv(a); kick(); }
-        }, function () { cv.remove(); });
+          if (!audio) audio = Array.prototype.find.call(document.querySelectorAll("audio"), function (el) { return !el.paused; }) || null;
+          if (audio) { loadEnv(audio); kick(); }
+        }, function () { delete files[name]; hide(); });
     };
+    var hide = function () {
+      want_c = ""; data = null; frozen = true;
+      if (raf) { cancelAnimationFrame(raf); raf = 0; lastT = 0; }
+      cv.hidden = true;
+      document.querySelectorAll(".archon-credit").forEach(function (p) { p.hidden = true; });
+    };
+
+    var cast = cv.dataset.cast ? JSON.parse(cv.dataset.cast) : null;
+    var region = "";
+    var follow = function (cat) {
+      region = cat || "";
+      var a = cast[region];
+      if (a) { if (want_c !== a.character) show(a.character, a.action); }
+      else if (want_c || !cv.hidden) hide();
+    };
+
+    var start = function () {
+      if (!cast) { show(cv.dataset.character, cv.dataset.action); return; }
+      // ?region= may have pressed a chip before this ran
+      var on = document.querySelector('.chip-btn[aria-pressed="true"]');
+      follow(on && on.dataset.category);
+    };
+    if (cast) {
+      document.addEventListener("click", function (e) {
+        var chip = e.target.closest && e.target.closest(".chip-btn");
+        if (chip) follow(chip.dataset.category);
+      });
+    }
     var later = window.requestIdleCallback || function (f) { setTimeout(f, 600); };
-    if (document.readyState === "complete") later(load); else addEventListener("load", function () { later(load); });
+    if (document.readyState === "complete") later(start); else addEventListener("load", function () { later(start); });
   })();
 </script>
