@@ -173,7 +173,25 @@ const cast = Object.fromEntries(Object.entries(ARCHONS).map(([r, a]) => [r, { ch
       ctx.translate(-half, 0);
       ctx.fillStyle = INK;
       if (GLOW) { ctx.shadowColor = "rgba(243,236,220," + GLOW + ")"; ctx.shadowBlur = 14 * dpr; }
-      ctx.fill(path(clip, Math.min(fi, data.clips[clip].f.length - 1)), "evenodd");
+      var k = Math.min(fi, data.clips[clip].f.length - 1);
+      ctx.fill(path(clip, k), "evenodd");
+      // Notes (a singing action): placed with the figure, but each note's own
+      // shape is drawn unmirrored so a right-facing singer still shows ♪ not its mirror
+      var ns = data.clips[clip].notes;
+      if (ns && ns[k]) {
+        var sg = flip ? -1 : 1;
+        ns[k].forEach(function (n) {
+          n[2].forEach(function (p) {          // each piece on its own: head, stem, flag
+            ctx.beginPath();
+            for (var i = 0; i < p.length; i += 2) {
+              var px = n[0] + sg * p[i], py = n[1] + p[i + 1];
+              if (i) ctx.lineTo(px, py); else ctx.moveTo(px, py);
+            }
+            ctx.closePath();
+            ctx.fill();
+          });
+        });
+      }
     };
 
     var raf = 0, lastT = 0;

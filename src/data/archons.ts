@@ -15,4 +15,10 @@ export const ARCHONS: Record<string, Archon> = {
     credit:
       "Venti silhouette made from the official Genshin Impact MMD model (© miHoYo / HoYoverse, model by 神帝宇), motion from Mixamo.",
   },
+  Snezhnaya: {
+    character: "vodyanitsa",
+    action: "sing",
+    credit:
+      "Vodyanitsa silhouette made from the official Genshin Impact MMD model (© miHoYo / HoYoverse, model by 观海), motion from Mixamo.",
+  },
 };
